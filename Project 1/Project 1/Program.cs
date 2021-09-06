@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 namespace Project_1
@@ -7,10 +8,14 @@ namespace Project_1
     {
         static void Main(string[] args)
         {
-            Record r = new Record("abc", 4, 100);
-            Record a = new Record("def", 5, 50);
-            Console.WriteLine("Size of r = " + Marshal.SizeOf(r));
-            Console.WriteLine("Size of a = " + Marshal.SizeOf(a));
+            List<Record> records = new List<Record>();
+            Block b = new Block(records, 100);
+
+            Record r = new Record("abc", 5.6, 1000);
+            b.addNewRecord(r);
+            
+            //doesn't work
+            //Console.WriteLine(b.getBlockSize()>Marshal.SizeOf(b));
         }
     }
 }

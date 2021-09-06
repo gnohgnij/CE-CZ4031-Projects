@@ -2,13 +2,13 @@
 
 namespace Project_1
 {
-    struct Record
+    public struct Record
     {
         private string tconst;
-        private int averageRating;
+        private double averageRating;
         private int numVotes;
         
-        public Record(string tconst, int averageRating, int numVotes)
+        public Record(string tconst, double averageRating, int numVotes)
         {
             this.tconst = tconst;
             this.averageRating = averageRating;
@@ -20,7 +20,7 @@ namespace Project_1
             return this.tconst;
         }
 
-        public int getAverageRating()
+        public double getAverageRating()
         {
             return this.averageRating;
         }
