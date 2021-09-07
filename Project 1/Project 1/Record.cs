@@ -4,20 +4,20 @@ namespace Project_1
 {
     public struct Record
     {
-        private string tconst;
+        private string tConst;
         private double averageRating;
         private int numVotes;
         
-        public Record(string tconst, double averageRating, int numVotes)
+        public Record(string tConst, double averageRating, int numVotes)
         {
-            this.tconst = tconst;
+            this.tConst = tConst;
             this.averageRating = averageRating;
             this.numVotes = numVotes;
         }
 
         public string getTConst()
         {
-            return this.tconst;
+            return this.tConst;
         }
 
         public double getAverageRating()
@@ -28,6 +28,15 @@ namespace Project_1
         public int getNumVotes()
         {
             return this.numVotes;
+        }
+
+        public int getBytes()
+        {
+            return (
+                System.Text.ASCIIEncoding.ASCII.GetByteCount(this.tConst) + 
+                System.Text.ASCIIEncoding.ASCII.GetByteCount(this.averageRating.ToString()) +
+                System.Text.ASCIIEncoding.ASCII.GetByteCount(this.numVotes.ToString())
+            );
         }
     }
 }

@@ -7,9 +7,8 @@ namespace Project_1
     public struct Block
     {
         private List<Record> records;
-        private int blockSize;
 
-        public Block(List<Record> records, int blockSize)
+        public Block(List<Record> records)
         {
             this.records = records;
 
@@ -18,32 +17,39 @@ namespace Project_1
                 // sort the records based on their numVotes in ascending order
                 records.Sort((r1, r2) => r1.getNumVotes().CompareTo(r2.getNumVotes()));    
             }
-            
-            this.blockSize = blockSize;
         }
 
         public int getBlockSize()
         {
-            return this.blockSize;
-        }
-
-        public void setBlockSize(int blockSize)
-        {
-            this.blockSize = blockSize;
+            int totalBytes = 0;
+            foreach (var record in records) 
+            {
+                totalBytes += record.getBytes();
+            }
+            return totalBytes;
         }
         
         public List<Record> getRecords()
         {
-            return this.records;
+            foreach (var record in records) 
+            {
+                Console.WriteLine(record.getTConst() + " " + record.getAverageRating() + " " + record.getNumVotes());
+            }
+            return records;
         }
 
-        // public Boolean checkAvailableSpace()
-        // {
-        //     if (this.blockSize > Marshal.SizeOf(this.records))
-        //         return true;
-        //     else
-        //         return false;
-        // }
+        public Boolean checkAvailableSpace()
+        {
+            if (getBlockSize() < 100)
+                return true;
+            else
+                return false;
+        }
+
+        public int availableSpace()
+        {
+            return (100 - getBlockSize());
+        }
         
         public void addNewRecord(Record record)
         { 

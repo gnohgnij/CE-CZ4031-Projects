@@ -8,19 +8,19 @@
     "net5.0": []
   },
   "packageFolders": {
-    "C:\\Users\\jingh\\.nuget\\packages\\": {}
+    "C:\\Users\\bghx9\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jingh\\Desktop\\CE-CZ4031-Projects\\Project 1\\Project 1\\Project 1.csproj",
+      "projectUniqueName": "C:\\Users\\bghx9\\Desktop\\CZ4031 Database System Principals\\CE-CZ4031-Projects\\Project 1\\Project 1\\Project 1.csproj",
       "projectName": "Project 1",
-      "projectPath": "C:\\Users\\jingh\\Desktop\\CE-CZ4031-Projects\\Project 1\\Project 1\\Project 1.csproj",
-      "packagesPath": "C:\\Users\\jingh\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\jingh\\Desktop\\CE-CZ4031-Projects\\Project 1\\Project 1\\obj\\",
+      "projectPath": "C:\\Users\\bghx9\\Desktop\\CZ4031 Database System Principals\\CE-CZ4031-Projects\\Project 1\\Project 1\\Project 1.csproj",
+      "packagesPath": "C:\\Users\\bghx9\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\bghx9\\Desktop\\CZ4031 Database System Principals\\CE-CZ4031-Projects\\Project 1\\Project 1\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\jingh\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\bghx9\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net5.0"
@@ -58,7 +58,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
       }
     }
   }

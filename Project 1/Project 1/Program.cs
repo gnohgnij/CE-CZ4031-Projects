@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace Project_1
 {
@@ -9,13 +10,15 @@ namespace Project_1
         static void Main(string[] args)
         {
             List<Record> records = new List<Record>();
-            Block b = new Block(records, 100);
+            Block b = new Block(records);
 
             Record r = new Record("abc", 5.6, 1000);
+            Record er = new Record("def", 4.321, 1000);
             b.addNewRecord(r);
-            
-            //doesn't work
-            //Console.WriteLine(b.getBlockSize()>Marshal.SizeOf(b));
+            b.addNewRecord(er);
+            b.getRecords();
+
+            // Console.WriteLine(b.getRecords());
         }
     }
 }
