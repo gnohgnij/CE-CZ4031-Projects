@@ -15,8 +15,8 @@ namespace Project_1
 
             if (records.Count > 1)
             {
-                // sort the records based on their numVotes in ascending order
-                records.Sort((r1, r2) => r1.getNumVotes().CompareTo(r2.getNumVotes()));    
+                // sort the records based on their tconst in ascending order
+                records.Sort((r1, r2) => r1.getTConst().CompareTo(r2.getTConst()));    
             }
 
             this.blockSize = blockSize;
@@ -49,7 +49,7 @@ namespace Project_1
                 return false;
         }
 
-        public int availableSpace()
+        public int getAvailableSpace()
         {
             return (this.blockSize - getBlockSize());
         }
@@ -68,6 +68,12 @@ namespace Project_1
         public int getNumberOfRecords()
         {
             return records.Count;
+        }
+
+        public string getSmallestTConst()
+        {
+            // assuming list already sorted in ascending order of tconst
+            return records[0].getTConst();
         }
     }
 }

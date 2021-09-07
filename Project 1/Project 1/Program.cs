@@ -8,27 +8,33 @@ namespace Project_1
     // automate parsing in / resolve other conflicts
     class Program
     {
-        public static List<Record> records = new List<Record>();
-        public static List<Block> blocks = new List<Block>();
-        public static Disk disk = new Disk(blocks);
 
         public static void Main(string[] args)
-        {   
-            Block block = new Block(records, 100);
+        {
+            List<Record> records1 = new List<Record>();
+            Record r1 = new Record("t001", 7.9, 123);
+            Record r2 = new Record("t002", 6.0, 430);
+            Record r3 = new Record("t003", 6.4, 499);
+            records1.Add(r1);
+            records1.Add(r2);
+            records1.Add(r3);
+            Block b1 = new Block(records1, 100);
+            
+            List<Record> records2 = new List<Record>();
+            Record r4 = new Record("t004", 7.9, 123);
+            Record r5 = new Record("t005", 6.0, 430);
+            Record r6 = new Record("t006", 6.4, 499);
+            records2.Add(r4);
+            records2.Add(r5);
+            records2.Add(r6);
+            Block b2 = new Block(records2, 100);
 
-            block.addNewRecord(new Record("Sinkhole", 7.8, 1000)); //15B
-            block.addNewRecord(new Record("The Medium", 8.8, 1000)); //17B
-            block.addNewRecord(new Record("Parasite", 10.0, 1000)); //16B
+            List<Block> blocks = new List<Block>();
+            blocks.Add(b1);
+            blocks.Add(b2);
+            Disk d1 = new Disk(blocks);
 
-            Record test = new Record("Parasite", 10.1, 1000);
-            Console.WriteLine("Record Size:" + test.getBytes());
-
-            disk.addNewBlock(new Block(records, 100));
-            Console.WriteLine("Disk Size:" + disk.noOfBlocks());
-
-            block.getRecords();
-            Console.WriteLine("Block Size:" + block.getBlockSize());
-            Console.WriteLine("No of Records:" + block.getNumberOfRecords());
+            d1.getBlocks();
 
         } 
     }
