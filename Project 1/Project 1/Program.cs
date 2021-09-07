@@ -10,8 +10,7 @@ namespace Project_1
         static void Main(string[] args)
         {
             List<Record> records = new List<Record>();
-            Block b = new Block(records);
-
+            Block block = new Block(records);
             Record r = new Record("abc", 5.6, 1000);
             Record er = new Record("def", 4.321, 1000);
             b.addNewRecord(r);

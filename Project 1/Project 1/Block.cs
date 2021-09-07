@@ -7,8 +7,9 @@ namespace Project_1
     public struct Block
     {
         private List<Record> records;
+        private int blockSize;
 
-        public Block(List<Record> records)
+        public Block(List<Record> records, int blockSize)
         {
             this.records = records;
 
@@ -17,6 +18,8 @@ namespace Project_1
                 // sort the records based on their numVotes in ascending order
                 records.Sort((r1, r2) => r1.getNumVotes().CompareTo(r2.getNumVotes()));    
             }
+
+            this.blockSize = blockSize;
         }
 
         public int getBlockSize()
@@ -40,7 +43,7 @@ namespace Project_1
 
         public Boolean checkAvailableSpace()
         {
-            if (getBlockSize() < 100)
+            if (getBlockSize() < this.blockSize)
                 return true;
             else
                 return false;
@@ -48,7 +51,7 @@ namespace Project_1
 
         public int availableSpace()
         {
-            return (100 - getBlockSize());
+            return (this.blockSize() - getBlockSize());
         }
         
         public void addNewRecord(Record record)
