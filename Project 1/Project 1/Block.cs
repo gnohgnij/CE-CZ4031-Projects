@@ -51,7 +51,7 @@ namespace Project_1
 
         public int availableSpace()
         {
-            return (this.blockSize() - getBlockSize());
+            return (this.blockSize - getBlockSize());
         }
         
         public void addNewRecord(Record record)
