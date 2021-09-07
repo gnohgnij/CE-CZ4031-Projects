@@ -52,7 +52,7 @@ namespace Project_1
             if (records.Count > 1)
             {
                 // sort the records based on their numVotes in ascending order
-                records.Sort((r1, r2) => r1.getNumVotes().CompareTo(r2.getNumVotes()));
+                records.Sort((r1, r2) => r1.getTConst().CompareTo(r2.getTConst()));
             }
         }
 
