@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.IO;
 
 namespace Project_1
 {
@@ -13,7 +14,7 @@ namespace Project_1
         {
             try
             {
-                string[] file = File.ReadAllLines("C:\\DSP\\data.tsv");
+                string[] file = File.ReadAllLines("data.tsv");
                 foreach (string s in file)
                 {
                     string line;
