@@ -11,6 +11,28 @@ namespace Project_1
 
         public static void Main(string[] args)
         {
+            try
+            {
+                string[] file = File.ReadAllLines("C:\\DSP\\data.tsv");
+                foreach (string s in file)
+                {
+                    string line;
+                    if(s == "tconst  averageRating  numVotes")
+                    {
+                        continue;
+                    }
+                    line = s.Replace('\t', ',');
+                    Console.WriteLine(line);
+                }
+                Console.ReadKey();
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("Cannot read file.");
+                Console.WriteLine(e.Message);
+            }
+            Console.Read();
+
             List<Record> records1 = new List<Record>();
             Record r1 = new Record("t001", 7.9, 123);
             Record r2 = new Record("t002", 6.0, 430);
@@ -35,7 +57,6 @@ namespace Project_1
             Disk d1 = new Disk(blocks);
 
             d1.getBlocks();
-
         } 
     }
 }
