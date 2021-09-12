@@ -12,9 +12,13 @@ namespace Project_1
 
         public static void Main(string[] args)
         {
+            List<string> firstList = new List<string>();
+            List<string> tconst = new List<string>();
+            List<double> avgRating = new List<double>();
+            List<int> numVote = new List<int>();
             try
             {
-                string[] file = File.ReadAllLines("data.tsv");
+                string[] file = File.ReadAllLines("testing.tsv");
                 foreach (string s in file)
                 {
                     string line;
@@ -23,11 +27,45 @@ namespace Project_1
                         continue;
                     }
                     line = s.Replace('\t', ',');
-                    Console.WriteLine(line);
+                    if (line == "tconst,averageRating,numVotes")
+                    {
+                        continue;
+                    }
+                    //Console.WriteLine(line);
+                    firstList.Add(line);
                 }
-                Console.ReadKey();
+                foreach (string item in firstList)
+                {
+                    string[] words = item.Split(',');
+                    int count = 0;
+                    foreach(string word in words)
+                    {
+                        if(count == 0)
+                        {
+                            tconst.Add(word);
+                            count++;
+                            continue;
+                        }
+                        if (count == 1)
+                        {
+                            avgRating.Add(Convert.ToDouble(word));
+                            count++;
+                            continue;
+                        }
+                        if (count == 2)
+                        {
+                            numVote.Add(Convert.ToInt32(word));
+                            count++;
+                            break;
+                        }
+                    }
+                }
+                foreach (var month in numVote)
+                {
+                    Console.WriteLine(month);
+                }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine("Cannot read file.");
                 Console.WriteLine(e.Message);

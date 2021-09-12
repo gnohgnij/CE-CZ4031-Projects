@@ -30,3 +30,19 @@ C:\Users\bghx9\Desktop\CZ4031 Database System Principals\CE-CZ4031-Projects\Proj
 C:\Users\bghx9\Desktop\CZ4031 Database System Principals\CE-CZ4031-Projects\Project 1\Project 1\obj\Debug\net5.0\ref\Project 1.dll
 C:\Users\bghx9\Desktop\CZ4031 Database System Principals\CE-CZ4031-Projects\Project 1\Project 1\obj\Debug\net5.0\Project 1.pdb
 C:\Users\bghx9\Desktop\CZ4031 Database System Principals\CE-CZ4031-Projects\Project 1\Project 1\obj\Debug\net5.0\Project 1.genruntimeconfig.cache
+C:\Users\jeral\OneDrive\Desktop\DSP\Project 1\Project 1\bin\Debug\net5.0\Project 1.exe
+C:\Users\jeral\OneDrive\Desktop\DSP\Project 1\Project 1\bin\Debug\net5.0\Project 1.deps.json
+C:\Users\jeral\OneDrive\Desktop\DSP\Project 1\Project 1\bin\Debug\net5.0\Project 1.runtimeconfig.json
+C:\Users\jeral\OneDrive\Desktop\DSP\Project 1\Project 1\bin\Debug\net5.0\Project 1.runtimeconfig.dev.json
+C:\Users\jeral\OneDrive\Desktop\DSP\Project 1\Project 1\bin\Debug\net5.0\Project 1.dll
+C:\Users\jeral\OneDrive\Desktop\DSP\Project 1\Project 1\bin\Debug\net5.0\ref\Project 1.dll
+C:\Users\jeral\OneDrive\Desktop\DSP\Project 1\Project 1\bin\Debug\net5.0\Project 1.pdb
+C:\Users\jeral\OneDrive\Desktop\DSP\Project 1\Project 1\obj\Debug\net5.0\Project 1.csprojAssemblyReference.cache
+C:\Users\jeral\OneDrive\Desktop\DSP\Project 1\Project 1\obj\Debug\net5.0\Project 1.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\jeral\OneDrive\Desktop\DSP\Project 1\Project 1\obj\Debug\net5.0\Project 1.AssemblyInfoInputs.cache
+C:\Users\jeral\OneDrive\Desktop\DSP\Project 1\Project 1\obj\Debug\net5.0\Project 1.AssemblyInfo.cs
+C:\Users\jeral\OneDrive\Desktop\DSP\Project 1\Project 1\obj\Debug\net5.0\Project 1.csproj.CoreCompileInputs.cache
+C:\Users\jeral\OneDrive\Desktop\DSP\Project 1\Project 1\obj\Debug\net5.0\Project 1.dll
+C:\Users\jeral\OneDrive\Desktop\DSP\Project 1\Project 1\obj\Debug\net5.0\ref\Project 1.dll
+C:\Users\jeral\OneDrive\Desktop\DSP\Project 1\Project 1\obj\Debug\net5.0\Project 1.pdb
+C:\Users\jeral\OneDrive\Desktop\DSP\Project 1\Project 1\obj\Debug\net5.0\Project 1.genruntimeconfig.cache
