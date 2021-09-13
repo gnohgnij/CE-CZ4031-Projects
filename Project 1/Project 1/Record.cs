@@ -4,18 +4,18 @@ namespace Project_1
 {
     public struct Record
     {
-        private string tConst;
+        private char[] tConst;
         private double averageRating;
         private int numVotes;
         
-        public Record(string tConst, double averageRating, int numVotes)
+        public Record(char[] tConst, double averageRating, int numVotes)
         {
             this.tConst = tConst;
             this.averageRating = averageRating;
             this.numVotes = numVotes;
         }
 
-        public string getTConst()
+        public char[] getTConst()
         {
             return this.tConst;
         }
@@ -32,11 +32,7 @@ namespace Project_1
 
         public int getBytes()
         {
-            return (
-                System.Text.ASCIIEncoding.ASCII.GetByteCount(this.tConst) + 
-                System.Text.ASCIIEncoding.ASCII.GetByteCount(this.averageRating.ToString()) +
-                System.Text.ASCIIEncoding.ASCII.GetByteCount(this.numVotes.ToString())
-            );
+            return sizeof(char) * 7 + sizeof(double) + sizeof(int); //2*7 + 8 + 4 = 26
         }
     }
 }

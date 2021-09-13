@@ -12,90 +12,71 @@ namespace Project_1
 
         public static void Main(string[] args)
         {
-            List<string> firstList = new List<string>();
-            List<string> tconst = new List<string>();
-            List<double> avgRating = new List<double>();
-            List<int> numVote = new List<int>();
-            try
-            {
-                string[] file = File.ReadAllLines("testing.tsv");
-                foreach (string s in file)
-                {
-                    string line;
-                    if(s == "tconst  averageRating  numVotes")
-                    {
-                        continue;
-                    }
-                    line = s.Replace('\t', ',');
-                    if (line == "tconst,averageRating,numVotes")
-                    {
-                        continue;
-                    }
-                    //Console.WriteLine(line);
-                    firstList.Add(line);
-                }
-                foreach (string item in firstList)
-                {
-                    string[] words = item.Split(',');
-                    int count = 0;
-                    foreach(string word in words)
-                    {
-                        if(count == 0)
-                        {
-                            tconst.Add(word);
-                            count++;
-                            continue;
-                        }
-                        if (count == 1)
-                        {
-                            avgRating.Add(Convert.ToDouble(word));
-                            count++;
-                            continue;
-                        }
-                        if (count == 2)
-                        {
-                            numVote.Add(Convert.ToInt32(word));
-                            count++;
-                            break;
-                        }
-                    }
-                }
-                foreach (var month in numVote)
-                {
-                    Console.WriteLine(month);
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Cannot read file.");
-                Console.WriteLine(e.Message);
-            }
-            Console.Read();
-
-            List<Record> records1 = new List<Record>();
-            Record r1 = new Record("t001", 7.9, 123);
-            Record r2 = new Record("t002", 6.0, 430);
-            Record r3 = new Record("t003", 6.4, 499);
-            records1.Add(r1);
-            records1.Add(r2);
-            records1.Add(r3);
-            Block b1 = new Block(records1, 100);
+            // char[] a = new char[7];
+            // a[0] = 't';
+            // a[1] = 't';
+            // a[2] = '0';
+            // a[3] = '1';
+            //
+            // Record r1 = new Record(a, 5.5, 100);
+            // Console.WriteLine(r1.getBytes());   //returns 26 bytes
             
-            List<Record> records2 = new List<Record>();
-            Record r4 = new Record("t004", 7.9, 123);
-            Record r5 = new Record("t005", 6.0, 430);
-            Record r6 = new Record("t006", 6.4, 499);
-            records2.Add(r4);
-            records2.Add(r5);
-            records2.Add(r6);
-            Block b2 = new Block(records2, 100);
+            List<Record> recordList = new List<Record>();
 
-            List<Block> blocks = new List<Block>();
-            blocks.Add(b1);
-            blocks.Add(b2);
-            Disk d1 = new Disk(blocks);
+            /*
+             * This part reads the tsv file and creates records per row
+             */
+            using (var reader =
+                new StreamReader(""))   // change to your own directory
+            {
+                bool firstLine = true;
+                while (!reader.EndOfStream)
+                {
+                    string tuples = reader.ReadLine(); //Process row
+                    if (firstLine == true)
+                    {
+                        firstLine = false;
+                    }
+                    else
+                    {
+                        string[] values = tuples.Split("\t");
+                        char[] tconstArray = new char[7];
+                        for (int i = 0; i < tconstArray.Length; i++)
+                        {
+                            tconstArray[i] = values[0][i];
+                        }
 
-            d1.getBlocks();
+                        Record r = new Record(tconstArray, Double.Parse(values[1]), Int32.Parse(values[2]));
+                        Console.WriteLine(r.getBytes());
+                        recordList.Add(r);
+                    }
+                }
+            }
+            
+            // List<Record> records1 = new List<Record>();
+            // Record r1 = new Record("t001", 7.9, 123);
+            // Record r2 = new Record("t002", 6.0, 430);
+            // Record r3 = new Record("t003", 6.4, 499);
+            // records1.Add(r1);
+            // records1.Add(r2);
+            // records1.Add(r3);
+            // Block b1 = new Block(records1, 100);
+            //
+            // List<Record> records2 = new List<Record>();
+            // Record r4 = new Record("t004", 7.9, 123);
+            // Record r5 = new Record("t005", 6.0, 430);
+            // Record r6 = new Record("t006", 6.4, 499);
+            // records2.Add(r4);
+            // records2.Add(r5);
+            // records2.Add(r6);
+            // Block b2 = new Block(records2, 100);
+            //
+            // List<Block> blocks = new List<Block>();
+            // blocks.Add(b1);
+            // blocks.Add(b2);
+            // Disk d1 = new Disk(blocks);
+            //
+            // d1.getBlocks();
         } 
     }
 }
