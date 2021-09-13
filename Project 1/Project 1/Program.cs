@@ -12,46 +12,37 @@ namespace Project_1
 
         public static void Main(string[] args)
         {
-            // char[] a = new char[7];
-            // a[0] = 't';
-            // a[1] = 't';
-            // a[2] = '0';
-            // a[3] = '1';
-            //
-            // Record r1 = new Record(a, 5.5, 100);
-            // Console.WriteLine(r1.getBytes());   //returns 26 bytes
-            
-            List<Record> recordList = new List<Record>();
-
+            Console.WriteLine("hello world");
             /*
-             * This part reads the tsv file and creates records per row
-             */
-            using (var reader =
-                new StreamReader(""))   // change to your own directory
-            {
-                bool firstLine = true;
-                while (!reader.EndOfStream)
-                {
-                    string tuples = reader.ReadLine(); //Process row
-                    if (firstLine == true)
-                    {
-                        firstLine = false;
-                    }
-                    else
-                    {
-                        string[] values = tuples.Split("\t");
-                        char[] tconstArray = new char[7];
-                        for (int i = 0; i < tconstArray.Length; i++)
-                        {
-                            tconstArray[i] = values[0][i];
-                        }
+            * This part reads the tsv file and creates records per row
+            */
+            
+            // using (var reader =
+            //     new StreamReader(""))   // change to your own directory
+            // {
+            //     bool firstLine = true;
+            //     while (!reader.EndOfStream)
+            //     {
+            //         string tuples = reader.ReadLine(); //Process row
+            //         if (firstLine == true)
+            //         {
+            //             firstLine = false;
+            //         }
+            //         else
+            //         {
+            //             string[] values = tuples.Split("\t");
+            //             char[] tconstArray = new char[7];
+            //             for (int i = 0; i < tconstArray.Length; i++)
+            //             {
+            //                 tconstArray[i] = values[0][i];
+            //             }
 
-                        Record r = new Record(tconstArray, Double.Parse(values[1]), Int32.Parse(values[2]));
-                        Console.WriteLine(r.getBytes());
-                        recordList.Add(r);
-                    }
-                }
-            }
+            //             Record r = new Record(tconstArray, Double.Parse(values[1]), Int32.Parse(values[2]));
+            //             Console.WriteLine(r.getBytes());
+            //             recordList.Add(r);
+            //         }
+            //     }
+            // }
             
             // List<Record> records1 = new List<Record>();
             // Record r1 = new Record("t001", 7.9, 123);

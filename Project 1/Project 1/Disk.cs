@@ -43,7 +43,6 @@ namespace Project_1
             {
                 Console.WriteLine("tconst = " + block.getSmallestTConst());
             }
-
             return this.blocks;
         }
     }
