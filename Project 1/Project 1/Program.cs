@@ -6,13 +6,12 @@ using System.IO;
 
 namespace Project_1
 {
-    // automate parsing in / resolve other conflicts
     class Program
     {
 
         public static void Main(string[] args)
         {
-            Console.WriteLine("hello world");
+            // Console.WriteLine("hello world");
             /*
             * This part reads the tsv file and creates records per row
             */
@@ -46,7 +45,7 @@ namespace Project_1
             
             // List<Record> records1 = new List<Record>();
             // Record r1 = new Record("t001", 7.9, 123);
-            // Record r2 = new Record("t002", 6.0, 430);
+            Record r2 = new Record(new char[]{'a', 'b', 'c'}, 6.0, 430);
             // Record r3 = new Record("t003", 6.4, 499);
             // records1.Add(r1);
             // records1.Add(r2);
@@ -68,6 +67,8 @@ namespace Project_1
             // Disk d1 = new Disk(blocks);
             //
             // d1.getBlocks();
+            
+            Console.WriteLine(Marshal.SizeOf(typeof(BPlusTreeNode<>)));
         } 
     }
 }
