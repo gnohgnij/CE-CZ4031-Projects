@@ -60,9 +60,10 @@ namespace Project_1
                         }
                     }
                 }
-                foreach (var month in numVote)
+                //Can comment out 
+                foreach (var month in numVote)//For testing the content in the 3 loops
                 {
-                    Console.WriteLine(month);
+                    Console.WriteLine(month); //month is just a random variable
                 }
             }
             catch (Exception e)
