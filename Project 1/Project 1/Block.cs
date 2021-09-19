@@ -16,7 +16,8 @@ namespace Project_1
             if (records.Count > 1)
             {
                 // sort the records based on their tconst in ascending order
-                records.Sort((r1, r2) => r1.getTConst().CompareTo(r2.getTConst()));    
+                // convert the tconst array to string first then compare
+                records.Sort((r1, r2) => new String(r1.getTConst()).CompareTo(new String(r2.getTConst())));    
             }
 
             this.blockSize = blockSize;
@@ -60,8 +61,9 @@ namespace Project_1
 
             if (records.Count > 1)
             {
-                // sort the records based on their numVotes in ascending order
-                records.Sort((r1, r2) => r1.getTConst().CompareTo(r2.getTConst()));
+                // sort the records based on their tconst in ascending order
+                // convert the tconst array to string first then compare
+                records.Sort((r1, r2) => new String(r1.getTConst()).CompareTo(new String(r2.getTConst())));
             }
         }
 
@@ -73,7 +75,8 @@ namespace Project_1
         public string getSmallestTConst()
         {
             // assuming list already sorted in ascending order of tconst
-            return records[0].getTConst();
+            // convert tconst char array to string
+            return new String(records[0].getTConst());
         }
     }
 }
