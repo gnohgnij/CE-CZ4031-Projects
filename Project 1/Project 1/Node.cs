@@ -15,7 +15,7 @@ namespace Project_1
 
         public void addLeafNode(Record record) 
         {
-            leafList.AddLast(new LeafNode(record.getNumVotes(), 10)); // get pointer from record
+            leafList.AddLast(new LeafNode(record.getNumVotes())); // get pointer from record
             // easy cause inserting in sequence
         }
 

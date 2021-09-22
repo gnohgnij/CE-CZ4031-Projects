@@ -67,8 +67,8 @@ namespace Project_1
             // Disk d1 = new Disk(blocks);
             //
             // d1.getBlocks();
-            
-            Console.WriteLine(Marshal.SizeOf(typeof(BPlusTreeNode<>)));
-        } 
+
+            // Console.WriteLine(Marshal.SizeOf(typeof(BPlusTreeNode<>)));
+        }
     }
 }

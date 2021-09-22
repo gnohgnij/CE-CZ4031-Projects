@@ -3,12 +3,12 @@ namespace Project_1
     public struct LeafNode
     {
         private int index;
-        private LeafNode next;
+        // private LeafNode next;
 
-        public LeafNode(int index, int pointer)
+        public LeafNode(int index)
         {
             this.index = index;
-            this.pointer = pointer;
+            //this.pointer = pointer;
         }
 
         public bool isLeaf()
@@ -21,9 +21,9 @@ namespace Project_1
             return index;
         }
 
-        public int getPointer()
-        {
-            return pointer;
-        }
+        //public int getPointer()
+        //{
+        //    return pointer;
+        //}
     }
 }
