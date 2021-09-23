@@ -11,15 +11,11 @@ namespace Project_1
             //this.pointer = pointer;
         }
 
-        public bool isLeaf()
-        {
-            return true;
-        }
-
         public int getIndex()
         {
             return index;
         }
+
 
         //public int getPointer()
         //{
