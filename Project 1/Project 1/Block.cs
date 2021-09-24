@@ -25,6 +25,11 @@ namespace Project_1
 
         public int getBlockSize()
         {
+            return this.blockSize;
+        }
+
+        public int getBytes()
+        {
             int totalBytes = 0;
             foreach (var record in records) 
             {
@@ -42,17 +47,9 @@ namespace Project_1
             return records;
         }
 
-        public Boolean checkAvailableSpace()
-        {
-            if (getBlockSize() < this.blockSize)
-                return true;
-            else
-                return false;
-        }
-
         public int getAvailableSpace()
         {
-            return (this.blockSize - getBlockSize());
+            return (getBlockSize() - getBytes());
         }
         
         public void addNewRecord(Record record)
