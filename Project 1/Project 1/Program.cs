@@ -98,7 +98,7 @@ namespace Project_1
             Record r3 = new Record(new char[]{'a', 'b'}, 5.4, 2);
             Record r4 = new Record(new char[]{'a', 'b'}, 5.4, 3);
 
-            BPlusTree b = new BPlusTree(l1);
+            BPlusTree b = new BPlusTree();
             l1.Add(new LeafNode(new List<int>(), new List<Record>()));
             b.insert(r1.getNumVotes(), r1);
             b.insert(r2.getNumVotes(), r2);
