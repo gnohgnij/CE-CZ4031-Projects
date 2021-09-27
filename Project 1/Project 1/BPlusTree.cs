@@ -9,66 +9,46 @@ namespace Project_1
     {
         private List<LeafNode> leafNodes;
 
+        public BPlusTree(List<LeafNode> leafNodes)
+        {
+            this.leafNodes = leafNodes;
+        }
+
         public void insert(int numVotes, Record record)
         {
-            if (leafNodes == null)  //when BPlusTree is empty
+            if (leafNodes.Count == 1)
             {
-                Console.WriteLine("leafNodes == null");
-                this.leafNodes = new List<LeafNode>();
-                leafNodes.Add(new LeafNode(new List<int>(), new List<Record>()));
+                // leafNodes.Add(new LeafNode(new List<int>(), new List<Record>()));
                 leafNodes[0].getKeys().Add(numVotes);
                 leafNodes[0].getPointers().Add(record);
-                Console.WriteLine("LeafNodes[0]: ");
-                leafNodes[0].printAllKeys();
-                Console.WriteLine("--------------");
-            }
-
-            else
-            {
-                int currIndex = this.leafNodes.Count - 1;   //need to change this when searching for which leafnode to insert to
-                if (leafNodes[currIndex].getKeys().Count == leafNodes[0].getMaxNumberOfKeys())  //when current leaf node is at max capacity
-                {
-                    List<int> keyArr = new List<int>();
-                    foreach (int i in leafNodes[currIndex].getKeys())
-                    {
-                        keyArr.Add(i);
-                    }
-                    leafNodes[currIndex].getKeys().Clear();
-                    
-                    keyArr.Add(numVotes);
-                    
-                    keyArr.Sort((k1, k2) => k1.CompareTo(k2));
-                    
-                    for (int i = 0; i < (leafNodes[currIndex].getMaxNumberOfKeys() / 2) + 1; i++)
-                    {
-                        leafNodes[currIndex].getKeys().Add(keyArr[i]);
-                    }
-                    Console.WriteLine("LeafNode[{0}]: ", currIndex);
-                    leafNodes[currIndex].printAllKeys();
-                    Console.WriteLine("--------------");
-                    
-                    leafNodes.Add(new LeafNode(new List<int>(), new List<Record>()));
-                    currIndex++;
-                    for (int i = (leafNodes[currIndex].getMaxNumberOfKeys() / 2) + 1;
-                        i < leafNodes[currIndex].getMaxNumberOfKeys();
-                        i++)
-                    {
-                        leafNodes[currIndex].getKeys().Add(keyArr[i]);
-                    }
-                    leafNodes[currIndex].getKeys().Add(keyArr[keyArr.Count-1]);
-                    Console.WriteLine("LeafNode[{0}]: ", currIndex);
-                    leafNodes[currIndex].printAllKeys();
-                    Console.WriteLine("--------------");
-                }
+                // Console.Write("LeafNode[0] = ");
+                // leafNodes[0].printAllKeys();
                 
-                else //when leafnode still has spaces
-                {
-                    leafNodes[currIndex].getKeys().Add(numVotes);
-                    leafNodes[currIndex].getPointers().Add(record);
-                    Console.WriteLine("LeafNodes[{0}]: ", currIndex);
-                    leafNodes[currIndex].printAllKeys();
-                    Console.WriteLine("--------------");
-                }
+                Console.WriteLine(leafNodes[0].getKeys().Count);
+            }
+            
+            if (leafNodes[0].getKeys().Count >= leafNodes[0].getMaxNumberOfKeys())
+            {
+                Console.WriteLine("hello");
+                List<int> temp = leafNodes[0].getKeys();
+                temp.Add(numVotes);
+                temp.Sort((k1, k2) => k1.CompareTo(k2));
+                leafNodes.Add(new LeafNode(new List<int>(), new List<Record>()));
+
+                leafNodes[0].getKeys().Add(999);
+                // for (int i = 0; i < leafNodes[0].getMaxNumberOfKeys()/2; i++)
+                // {
+                //     // leafNodes[0].getKeys().Add(temp[i]);
+                // }
+                // for (int i = leafNodes[0].getMaxNumberOfKeys()/2; i < leafNodes[0].getMaxNumberOfKeys(); i++)
+                // {
+                //     leafNodes[1].getKeys().Add(temp[i]);
+                // }
+
+                Console.Write("LeafNode[0] = ");
+                leafNodes[0].printAllKeys();
+                Console.Write("LeafNode[1] = ");
+                leafNodes[1].printAllKeys();
             }
         }
     }
