@@ -34,5 +34,11 @@ namespace Project_1
         {
             return sizeof(char) * 7 + sizeof(double) + sizeof(int); //2*7 + 8 + 4 = 26
         }
+
+        public void printRecord()
+        {
+            Console.WriteLine("tconst = " + getTConst().ToString() + ", averageRating = " + getAverageRating()
+            + ", numVotes = " + getNumVotes());
+        }
     }
 }
