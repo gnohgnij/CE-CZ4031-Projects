@@ -1,56 +1,58 @@
 
 
-//using System;
-//using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 
-//namespace Project_1
-//{
-//    public struct Insert
-//    {
-//        private LinkedList<LeafNode> linkedLists;
+namespace Project_1
+{
+    public struct Insert
+    {
+        private List<int> keys;
+        private List<Record> pointers;
 
-//        private int index;
-//        private int pointing;
+        private int index;
+        private int pointing;
 
-//        public Insert()
-//        {
-//            linkedLists = null;
-//            Node node = new Node(linkedLists);
-//            if (node.getSize() > 3) //if node is more than 3
-//            {
-//                // floor function for floorfunction(n+1) + 1 
-                
-//            }
+        public InsertRecord()
+        {
+            keys = null;
+            pointers = null;
+            LeafNode node = new LeafNode(keys, pointers);
+            if (node.getMaxNumberOfKeys() > 3) 
+            {
+                // floor function for floorfunction(n+1) + 1 
 
-//        }
+            }
 
-//        public LinkedList<LeafNode> leftNode()
-//        {
-//            LinkedList<LeafNode> leftNode = new LinkedList<LeafNode>();
-//            return leftNode;
-//        }
+        }
 
-//        public LinkedList<LeafNode> rightNode()
-//        {
-//            LinkedList<LeafNode> rightNode = new LinkedList<LeafNode>();
-//            return rightNode;
-//        }
+        public List<LeafNode> leftNode()
+        {
+            List<LeafNode> leftNode = new List<LeafNode>();
+            return leftNode;
+        }
 
-//        public int floorFunctionLeafNode(float value)
-//        {
-//            int floor = (int)Math.Floor((value + 1)/2);
-//            return floor;
-//        }
+        public List<LeafNode> rightNode()
+        {
+            List<LeafNode> rightNode = new List<LeafNode>();
+            return rightNode;
+        }
 
-//        public int floorFunctionNonLeafNode(float value)
-//        {
-//            int floor = (int)Math.Floor(value/2);
-//            return floor;
-//        }
+        public int floorFunctionLeafNode(float value)
+        {
+            int floor = (int)Math.Floor((value + 1) / 2);
+            return floor;
+        }
 
-//        public bool isLeaf()
-//        {
-//            return false;
-//        }
-//    }
-//}
+        public int floorFunctionNonLeafNode(float value)
+        {
+            int floor = (int)Math.Floor(value / 2);
+            return floor;
+        }
+
+        public bool isLeaf()
+        {
+            return false;
+        }
+    }
+}
