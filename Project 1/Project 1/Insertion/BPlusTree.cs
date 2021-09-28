@@ -91,9 +91,16 @@ namespace Project_1
                         leafNodes[nodeIndex].printAllKeys();
                         leafNodes[nodeIndex].printAllRecords();
                         Console.WriteLine("--------------");
+                        //
+                        // if ()
+                        //{
+                        //NonLeafNode nonLeafNode = new NonLeafNode();
+
+                        //}
                     }
-                    else 
-                    {
+                    else
+                    { // Enters when splitting node
+                        Console.WriteLine("Entered");
                         nodeIndex++;
                         leafNodes.Add(new LeafNode(new List<int>(), new List<Record>(), 1));
                         for (int i = 0; i < leafNodes[nodeIndex-1].getKeys().Count; i++)
@@ -143,6 +150,8 @@ namespace Project_1
                     Console.WriteLine("--------------");
                     // nonLeafNodes[0].printAllKeys();
                 }
+
+
                 /*
                 * When LeafNode has empty space
                 */
@@ -168,6 +177,9 @@ namespace Project_1
 
                     leafNodes[nodeIndex].getKeys().Add(numVotes);
                     leafNodes[nodeIndex].getPointers().Add(record);
+
+                    leafNodes[nodeIndex].reOrderNode(leafNodes[nodeIndex].getKeys());
+
                     Console.WriteLine("LeafNodes[{0}]: ", nodeIndex);
                     leafNodes[nodeIndex].printAllKeys();
                     leafNodes[nodeIndex].printAllRecords();

@@ -61,9 +61,35 @@ namespace Project_1
             }
         }
 
+        public void checkNonLeaf()
+        {
+
+        }
+
+        public List<int> reOrderNode(List<int> keys)
+        {
+            keys.Sort((k1, k2) => k1.CompareTo(k2));
+            pointers.Sort((r1, r2) => r1.getNumVotes().CompareTo(r2.getNumVotes()));
+            return keys;
+        }
+        public void checkDuplicate()
+        {
+            //Logic to check for duplicate
+        }
         public bool isRoot()
         {
             return true;
+        }
+        public int floorFunctionLeafNode(float value)
+        {
+            int floor = (int)Math.Floor((value + 1) / 2);
+            return floor;
+        }
+
+        public int floorFunctionNonLeafNode(float value)
+        {
+            int floor = (int)Math.Floor(value / 2);
+            return floor;
         }
     }
 }

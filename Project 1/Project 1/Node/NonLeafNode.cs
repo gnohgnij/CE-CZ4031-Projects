@@ -9,9 +9,10 @@ namespace Project_1
         private List<NonLeafNode> nonLeafNodes;
         private List<LeafNode> leafNodes;
         private static int maxNumberOfKeys = 3;
+        private static int maxNumberOfPointers = 4;
         private int level;
 
-        public NonLeafNode(List<int> keys, List<LeafNode> leafNodes, List<NonLeafNode> nonLeafNodes, int level)
+        public NonLeafNode(List<int> keys, LeafNode leafNode, List<LeafNode> leafNodes, List<NonLeafNode> nonLeafNodes, int level)
         {
             this.keys = keys;
             this.leafNodes = leafNodes;
@@ -21,6 +22,11 @@ namespace Project_1
         public int getMaxNumberOfKeys()
         {
             return maxNumberOfKeys;
+        }
+
+        public int getMaxNumberOfPointers()
+        {
+            return maxNumberOfPointers;
         }
 
         public List<int> getKeys()
@@ -70,6 +76,24 @@ namespace Project_1
             {
                 count++;
                 Console.WriteLine("NonLeafNode[{0}] = " + i, count);
+            }
+        }
+
+        public List<int> reOrderNode(List<int> keys)
+        {
+            keys.Sort((k1, k2) => k1.CompareTo(k2));  
+            return keys;
+        }
+
+        public bool checkNewNonLeafNeeded(int value)
+        {
+            if (value > getMaxNumberOfPointers())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }
