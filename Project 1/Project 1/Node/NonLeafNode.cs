@@ -8,17 +8,21 @@ namespace Project_1
         private List<int> keys;
         private List<NonLeafNode> nonLeafNodes;
         private List<LeafNode> leafNodes;
+        private List<NonLeafNode> parent;
+        private List<NonLeafNode> children;
         private static int maxNumberOfKeys = 3;
         private static int maxNumberOfPointers = 4;
         private int level;
 
-        public NonLeafNode(List<int> keys, LeafNode leafNode, List<LeafNode> leafNodes, List<NonLeafNode> nonLeafNodes, int level)
+        public NonLeafNode(List<int> keys, LeafNode leafNode, List<LeafNode> leafNodes, List<NonLeafNode> nonLeafNodes, int level, List<NonLeafNode> )
         {
             this.keys = keys;
             this.leafNodes = leafNodes;
             this.nonLeafNodes = nonLeafNodes;
             this.level = level;
+            
         }
+        
         public int getMaxNumberOfKeys()
         {
             return maxNumberOfKeys;
@@ -96,5 +100,7 @@ namespace Project_1
                 return false;
             }
         }
+
+        public List<Parent> 
     }
 }
