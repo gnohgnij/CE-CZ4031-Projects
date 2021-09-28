@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.VisualBasic;
 
 namespace Project_1
 {
@@ -37,7 +38,8 @@ namespace Project_1
 
         public void printRecord()
         {
-            Console.WriteLine("tconst = " + getTConst().ToString() + ", averageRating = " + getAverageRating()
+            string str = new string(getTConst());
+            Console.WriteLine("tconst = " + str + ", averageRating = " + getAverageRating()
             + ", numVotes = " + getNumVotes());
         }
     }
