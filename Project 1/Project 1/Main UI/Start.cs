@@ -43,26 +43,36 @@ namespace Project_1
                         "the height of the updated B + tree," +
                         " the content of the root node and its 1st child node of the updated B + tree");
                     Console.WriteLine("5: Reset Program");
+                    Console.WriteLine("6: Quit Program");
                     string Input = Console.ReadLine();
                     if (Input == "1")
                     {
                         //Exp 1
+                        continue;
                     }
                     if (Input == "2")
                     {
                         //Exp 2
+                        continue;
+                        
                     }
                     if (Input == "3")
                     {
                         //Exp 3
+                        continue;
                     }
                     if (Input == "4")
                     {
                         //Exp 4
+                        continue;
                     }
                     if (Input == "5")
                     {
                         continue;
+                    }
+                    if( Input == "6")
+                    {
+                        break;
                     }
                 }
 
