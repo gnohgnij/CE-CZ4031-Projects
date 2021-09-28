@@ -63,12 +63,12 @@ namespace Project_1
             this.level = level;
         }
 
-        public void printAllKeys()
-        {
-            foreach (int i in keys)
-            {
-                Console.WriteLine("key = " + i);
-            }
-        }
+        // public void printAllKeys()
+        // {
+        //foreach (int i in keys)
+        // {
+        // Console.WriteLine("key = " + i);
+        //}
+        // }
     }
 }

@@ -60,5 +60,10 @@ namespace Project_1
                 r.printRecord();
             }
         }
+
+        public bool isRoot()
+        {
+            return true;
+        }
     }
 }

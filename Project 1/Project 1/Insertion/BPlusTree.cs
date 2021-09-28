@@ -77,19 +77,19 @@ namespace Project_1
                     }
                     leafNodes[currIndex].getKeys().Add(keyArr[keyArr.Count-1]);
                     leafNodes[currIndex].getPointers().Add(recordArr[recordArr.Count-1]);
-                    
-                    nonLeafNodes[0].getKeys().Add(leafNodes[currIndex].getKeys()[0]);
-                    
+
+                    //nonLeafNodes[0].getKeys().Add(leafNodes[currIndex].getKeys()[0]);
+
                     Console.WriteLine("LeafNode[{0}]: ", currIndex);
                     leafNodes[currIndex].printAllKeys();
                     leafNodes[currIndex].printAllRecords();
                     Console.WriteLine("--------------");
-                    
-                    nonLeafNodes[0].printAllKeys();
-                    
-                    
+
+                    //nonLeafNodes[0].printAllKeys();
+
+
                 }
-                
+
                 else //when leafnode still has spaces
                 {
                     leafNodes[currIndex].getKeys().Add(numVotes);
