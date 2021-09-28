@@ -42,14 +42,24 @@ namespace Project_1
                     if (Input == "1")
                     {
                         //Exp 1: Report number of blocks and size of DB
+                        Console.WriteLine("Number of blocks: ");
+                        Console.WriteLine("Size of DB: ");
                     }
                     if (Input == "2")
                     {
                         //Exp 2: Sequential insertion and report n value, number of nodes height of the B+ tree and content of root & 1st child node
+                        Console.WriteLine("n value: ");
+                        Console.WriteLine("Number of nodes height: ");
+                        Console.WriteLine("Content of Root Node: ");
+                        Console.WriteLine("Content of 1st Child Node: ");
                     }
                     if (Input == "3")
                     {
                         //Exp 3: Report number and content of index nodes, number and content of data blocks the program accesses and avergae rating of records that are returned
+                        Console.WriteLine("Number of index nodes: ");
+                        Console.WriteLine("Content of index nodes: "); 
+                        Console.WriteLine("Content of data blocks: ");
+                        Console.WriteLine("Average rating of of records: ");
                     }
                     if (Input == "4")
                     {
@@ -58,6 +68,11 @@ namespace Project_1
                         //Report the number nodes of the updated B + tree, " +
                         //Report the height of the updated B + tree," +
                         //Report the content of the root node and its 1st child node of the updated B + tree"
+                        Console.WriteLine("Number of node deletion: ");
+                        Console.WriteLine("Number of node mergers: ");
+                        Console.WriteLine("Height of updated B+ Tree: ");
+                        Console.WriteLine("Content of the Root Node: ");
+                        Console.WriteLine("Content of the 1st Child Node: ");
                     }
                     if (Input == "5")
                     {
