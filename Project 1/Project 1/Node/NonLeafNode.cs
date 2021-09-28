@@ -8,13 +8,17 @@ namespace Project_1
         //   private int pointing;
         private List<Record> pointers;
         private List<int> keys;
+        private static int maxNumberOfKeys = 3;
 
-        public NonLeafNode(List<Record> pointers, List<int> keys)
+        public NonLeafNode(List<int> keys, List<Record> pointers)
         {
-            this.pointers = pointers;
             this.keys = keys;
+            this.pointers = pointers;
         }
-
+        public int getMaxNumberOfKeys()
+        {
+            return maxNumberOfKeys;
+        }
         public bool isLeaf()
         {
             return false;

@@ -11,7 +11,7 @@ namespace Project_1
         public List<Record> readAllTuples()
         {
             List<Record> temp = new List<Record>();
-            using (var reader = new StreamReader("testing.tsv"))    //change for actual tsv file
+            using (var reader = new StreamReader("C:\\Users\\jeral\\OneDrive\\Desktop\\DSP\\Project 1\\Project 1\\testing.tsv"))    //change for actual tsv file
             {
                 bool firstLine = true;
                 while (!reader.EndOfStream)
@@ -71,24 +71,7 @@ namespace Project_1
         {
             List<Record> list = readAllTuples();
             return recordsIntoDisk(list, blockSize);
-        }
-        
-        public static void Main(string[] args)
-        {
-            /*
-             * For testing.tsv,
-             * if block size = 100B, each block can hold 3 records, total number of blocks = 499/3 = 167
-             * if block size = 500B, each block can hold 19 records, total number of blocks = 499/19 = 27
-             */
-            
-            // Program program = new Program();
-            // Console.WriteLine("Enter size of block:");
-            // String blockSizeInput = Console.ReadLine();
-            // Disk disk = program.start(int.Parse(blockSizeInput));
-
-            Program p = new Program();
-            p.test();
-        }
+        }      
 
         public void test()
         {

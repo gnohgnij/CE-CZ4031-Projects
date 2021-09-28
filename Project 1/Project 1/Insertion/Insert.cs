@@ -10,23 +10,31 @@ namespace Project_1
         private List<int> keys;
         private List<Record> pointers;
 
-        private int index;
-        private int pointing;
+        //private int index;
+        // private int pointing;
 
-        public InsertRecord()
+        public Insert(List<int> keys, List<Record> pointers)
         {
-            keys = null;
-            pointers = null;
-            LeafNode node = new LeafNode(keys, pointers);
-            if (node.getMaxNumberOfKeys() > 3) 
-            {
-                // floor function for floorfunction(n+1) + 1 
+            this.keys = null;
+            this.pointers = null;
+            LeafNode leafNode = new LeafNode(keys, pointers);
 
+            if (leafNode.getMaxNumberOfKeys() > 3)
+            {
+                //leftNode();
+                //leftNode = floorFunctionLeafNode(keys.Count);
             }
+            NonLeafNode nonLeafNode = new NonLeafNode(keys, pointers);
+            if (nonLeafNode.getMaxNumberOfKeys() > 3)
+            {
+                rightNode();
+                // rightNode = floorFunctionNonLeafNode(keys.Count);
+            }
+
 
         }
 
-        public List<LeafNode> leftNode()
+        public List<LeafNode> leftNode(List<int> keys)
         {
             List<LeafNode> leftNode = new List<LeafNode>();
             return leftNode;
