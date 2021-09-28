@@ -72,21 +72,5 @@ namespace Project_1
             List<Record> list = readAllTuples();
             return recordsIntoDisk(list, blockSize);
         }      
-
-        // public void test()
-        // {
-        //     List<LeafNode> l1 = new List<LeafNode>();
-        //     Record r1 = new Record(new char[]{'a', 'b'}, 5.4, 0);
-        //     Record r2 = new Record(new char[]{'b', 'c'}, 5.4, 1);
-        //     Record r3 = new Record(new char[]{'c', 'd'}, 5.4, 2);
-        //     Record r4 = new Record(new char[]{'e', 'f'}, 5.4, 3);
-        //
-        //     BPlusTree b = new BPlusTree();
-        //     l1.Add(new LeafNode(new List<int>(), new List<Record>()));
-        //     b.insert(r1.getNumVotes(), r1);
-        //     b.insert(r2.getNumVotes(), r2);
-        //     b.insert(r3.getNumVotes(), r3);
-        //     b.insert(r4.getNumVotes(), r4);
-        // }
     }
 }
