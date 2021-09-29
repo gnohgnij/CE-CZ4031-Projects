@@ -98,9 +98,9 @@ namespace Project_1
             Record r4 = new Record(new char[]{'a', 'b'}, 5.4, 10);
             Record r5 = new Record(new char[]{'a', 'b'}, 5.4, 17);
             Record r6 = new Record(new char[]{'a', 'b'}, 5.4, 21);
-             Record r7 = new Record(new char[]{'a', 'b'}, 5.4, 31);
-             Record r8 = new Record(new char[]{'a', 'b'}, 5.4, 25);
-             Record r9 = new Record(new char[]{'a', 'b'}, 5.4, 19);
+            Record r7 = new Record(new char[]{'a', 'b'}, 5.4, 31);
+            Record r8 = new Record(new char[]{'a', 'b'}, 5.4, 25);
+            Record r9 = new Record(new char[]{'a', 'b'}, 5.4, 19);
             Record r10 = new Record(new char[]{'a', 'b'}, 5.4, 20);
             BPTree b = new BPTree();
             b.insert(r1.getNumVotes(), r1);
@@ -114,6 +114,9 @@ namespace Project_1
             b.insert(r9.getNumVotes(), r9);
             b.insert(r10.getNumVotes(), r10);
             // b.search(6);
+            
+            BPlusTreeNode pter = b.getRoot();
+            b.printTree(pter);
         }
     }
 }

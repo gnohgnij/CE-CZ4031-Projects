@@ -8,15 +8,43 @@ namespace Project_1.Node
         private static int maxChildLimit = 4;
         private static int maxLeafNodeLimit = 3;   //to change
         private BPlusTreeNode root;
+        
+        public BPlusTreeNode getRoot()
+        {
+            return this.root;
+        }
+        
+        public void printTree(BPlusTreeNode cursor)
+        {
+            if (cursor == null) return;
+            Queue<BPlusTreeNode> q = new Queue<BPlusTreeNode>();
+            q.Enqueue(cursor);
 
-        // public void printAllNodes()
-        // {
-        //     BPlusTreeNode cursor = root;
-        //     while (cursor != null)
-        //     {
-        //         cursor
-        //     }
-        // }
+            while (q.Count > 0)
+            {
+                int size = q.Count;
+                for (int i = 0; i<size; i++)
+                {
+                    BPlusTreeNode u = q.Peek();
+                    q.Dequeue();
+                    
+                    Console.Write("|");
+                    foreach (int val in u.getAllKeys())
+                    {
+                        Console.Write(val + " ");
+                    }
+                    Console.Write("|");
+                    if (u.checkIsLeaf() == false)
+                    {
+                        foreach (BPlusTreeNode v in u.getPointer2TreeOrData(null, null).getPointer2InternalNodes())
+                        {
+                            q.Enqueue(v);
+                        }
+                    }
+                }
+                Console.WriteLine("");
+            }
+        }
 
         public void search(int key)
         {
