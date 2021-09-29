@@ -116,14 +116,21 @@ namespace Project_1.Node
                 {
                     parent = cursor;
                     int index = -1;
+                    int max = -1;
                     List<int> temp = cursor.getAllKeys();
+                    Console.WriteLine("Cursor Value"+cursor.getAllKeys()[0]);
                     foreach (int i in temp)
                     {
                         index++;
-                        if (i >= key)
+                        if (i >= key) 
+                        {
+                            max = i;
+                            Console.WriteLine("Max"+max);
                             break;
+                        }
                     }
-
+                    if (temp.Count == 1 || max > key)
+                        index++;
                     cursor = cursor.getPointer2TreeOrData(null, null).getPointer2InternalNodes()[index];
                 }
                 
