@@ -66,7 +66,7 @@ namespace Project_1
 
         }
 
-        public List<int> reOrderNode(List<int> keys)
+        public List<int> reOrderNode(List<int> keys, List<Record> pointers)
         {
             keys.Sort((k1, k2) => k1.CompareTo(k2));
             pointers.Sort((r1, r2) => r1.getNumVotes().CompareTo(r2.getNumVotes()));

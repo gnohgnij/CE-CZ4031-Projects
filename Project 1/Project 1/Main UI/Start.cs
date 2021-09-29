@@ -95,10 +95,10 @@ namespace Project_1
             Record r2 = new Record(new char[]{'a', 'b'}, 5.4, 4);
             Record r3 = new Record(new char[]{'a', 'b'}, 5.4, 7);
             Record r4 = new Record(new char[]{'a', 'b'}, 5.4, 10);
-            Record r5 = new Record(new char[]{'a', 'b'}, 5.4, 5);
-            Record r6 = new Record(new char[]{'a', 'b'}, 5.4, 6);
-            Record r7 = new Record(new char[]{'a', 'b'}, 5.4, 3);
-            Record r8 = new Record(new char[]{'a', 'b'}, 5.4, 13);
+           // Record r5 = new Record(new char[]{'a', 'b'}, 5.4, 5);
+           // Record r6 = new Record(new char[]{'a', 'b'}, 5.4, 6);
+           // Record r7 = new Record(new char[]{'a', 'b'}, 5.4, 3);
+            //Record r8 = new Record(new char[]{'a', 'b'}, 5.4, 13);
             //Record r9 = new Record(new char[]{'a', 'b'}, 5.4, 11);
             //Record r10 = new Record(new char[]{'a', 'b'}, 5.4, 14);
             // 1 4 5 | 7 10
@@ -107,10 +107,10 @@ namespace Project_1
             b.insert(r2.getNumVotes(), r2);
             b.insert(r3.getNumVotes(), r3);
             b.insert(r4.getNumVotes(), r4);
-            b.insert(r5.getNumVotes(), r5);
-            b.insert(r6.getNumVotes(), r6);
-            b.insert(r7.getNumVotes(), r7);
-            b.insert(r8.getNumVotes(), r8);
+           // b.insert(r5.getNumVotes(), r5);
+           // b.insert(r6.getNumVotes(), r6);
+            // b.insert(r7.getNumVotes(), r7);
+            // b.insert(r8.getNumVotes(), r8);
             // b.insert(r9.getNumVotes(), r9);
             // b.insert(r10.getNumVotes(), r10);
         }

@@ -9,7 +9,7 @@ namespace Project_1
         /*
         * Instantiation
         */
-
+        private Insert insert;
         private List<NonLeafNode> nonLeafNodes;
         private List<LeafNode> leafNodes;
 
@@ -17,29 +17,19 @@ namespace Project_1
         * Insert Function
         */
 
-        public void insert(int numVotes, Record record)
+        public void insertRecord(int numVotes, Record record)
         {
+            this.insert = new Insert();
             /*
             * When LeafNode is empty
             */
-            if (leafNodes == null) 
+            if (leafNodes == null)
             {
-                Console.WriteLine("LeafNodes == null");
-
-                this.leafNodes = new List<LeafNode>();
-                leafNodes.Add(new LeafNode(new List<int>(), new List<Record>(), 1));
-
-                leafNodes[0].getKeys().Add(numVotes);
-                leafNodes[0].getPointers().Add(record);
-                Console.WriteLine("LeafNodes[0]: ");
-                leafNodes[0].printAllKeys();
-                Console.WriteLine("--------------");
+                insert.isEmpty(leafNodes, numVotes, record);
             }
             else
             {
-                int[] indexIJ = search(numVotes);
-                int nodeIndex = indexIJ[0];  
-                int leafNodeIndex = indexIJ[1];
+                insert.notEmpty(this.leafNodes, this.nonLeafNodes, numVotes, record);
 
                 /*
                 * When LeafNode reaches max capacity
@@ -178,7 +168,7 @@ namespace Project_1
                     leafNodes[nodeIndex].getKeys().Add(numVotes);
                     leafNodes[nodeIndex].getPointers().Add(record);
 
-                    leafNodes[nodeIndex].reOrderNode(leafNodes[nodeIndex].getKeys());
+                    leafNodes[nodeIndex].reOrderNode(leafNodes[nodeIndex].getKeys(), leafNodes[nodeIndex].getPointers());
 
                     Console.WriteLine("LeafNodes[{0}]: ", nodeIndex);
                     leafNodes[nodeIndex].printAllKeys();
@@ -188,28 +178,7 @@ namespace Project_1
             }
         }
          
-        public int[] search(int numVotes) 
-        {
-            if (nonLeafNodes == null) 
-            {
-                for (int i = 0; i < leafNodes.Count; i++) 
-                {
-                    for (int j = 0; j < leafNodes[i].getKeys().Count; j++)
-                    {
-                        if (numVotes >= leafNodes[i].getKeys()[j])
-                        {
-                            return new int[] {i, j+1};
-                        }
-                    }
-                }
-                return new int[] {0, 0};
-            }
-            return new int[] {0, 0};
-            // else
-            // {
-
-            // }
-        }
+        
 
         public void increaseLevel(List<LeafNode> leafNodes)
         {
