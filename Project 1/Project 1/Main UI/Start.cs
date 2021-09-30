@@ -148,11 +148,10 @@ namespace Project_1
             b.insert(r24.getNumVotes(), r24);
             b.insert(r25.getNumVotes(), r25);
 
-
-            // b.search(6);
-            
             BPlusTreeNode pter = b.getRoot();
             b.printTree(pter);
+            
+            b.search(100);
         }
     }
 }
