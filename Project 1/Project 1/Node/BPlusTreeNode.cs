@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Project_1.Node
 {
@@ -6,7 +7,7 @@ namespace Project_1.Node
     {
         private bool isLeaf;
         private List<int> keys;
-        private BPlusTree pointer2next; //only for leaf nodes
+        private BPlusTreeNode pointer2next; //only for leaf nodes
         private pointer2TreeOrData _pointer2TreeOrData;
 
         public BPlusTreeNode(List<int> keys)
@@ -34,9 +35,23 @@ namespace Project_1.Node
             return keys;
         }
 
-        public pointer2TreeOrData getPointer2TreeOrData()
+        public BPlusTreeNode getPointer2Next()
         {
-            return this._pointer2TreeOrData;
+            return this.pointer2next;
+        }
+
+        public void setPointer2Next(BPlusTreeNode newNode)
+        {
+            this.pointer2next = newNode;
+        }
+
+        public pointer2TreeOrData getPointer2TreeOrData(List<BPlusTreeNode> pointer2InternalNodes, 
+            List<Record> pointer2Records)
+        {
+            if(this._pointer2TreeOrData != null)
+                return this._pointer2TreeOrData;
+            this._pointer2TreeOrData = new pointer2TreeOrData(pointer2InternalNodes, pointer2Records);
+            return _pointer2TreeOrData;
         }
     }
 
@@ -44,6 +59,12 @@ namespace Project_1.Node
     {
         private List<BPlusTreeNode> pointer2InternalNodes;
         private List<Record> pointer2Records;
+
+        public pointer2TreeOrData(List<BPlusTreeNode> pointer2InternalNodes, List<Record> pointer2Records)
+        {
+            this.pointer2InternalNodes = pointer2InternalNodes;
+            this.pointer2Records = pointer2Records;
+        }
 
         public List<BPlusTreeNode> getPointer2InternalNodes()
         {
@@ -53,6 +74,15 @@ namespace Project_1.Node
         public List<Record> getPointer2Records()
         {
             return this.pointer2Records;
+        }
+
+        public void printAllRecords()
+        {
+            foreach (Record r in pointer2Records)
+            {
+                r.printRecord();
+            }
+            Console.WriteLine("-----------------");
         }
     }
 

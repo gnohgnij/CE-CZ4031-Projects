@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Project_1.Node;
 
 namespace Project_1
 {
@@ -95,24 +96,27 @@ namespace Project_1
             Record r2 = new Record(new char[]{'a', 'b'}, 5.4, 4);
             Record r3 = new Record(new char[]{'a', 'b'}, 5.4, 7);
             Record r4 = new Record(new char[]{'a', 'b'}, 5.4, 10);
-           // Record r5 = new Record(new char[]{'a', 'b'}, 5.4, 5);
-           // Record r6 = new Record(new char[]{'a', 'b'}, 5.4, 6);
-           // Record r7 = new Record(new char[]{'a', 'b'}, 5.4, 3);
-            //Record r8 = new Record(new char[]{'a', 'b'}, 5.4, 13);
-            //Record r9 = new Record(new char[]{'a', 'b'}, 5.4, 11);
-            //Record r10 = new Record(new char[]{'a', 'b'}, 5.4, 14);
-            // 1 4 5 | 7 10
-            BPlusTree b = new BPlusTree();
+            Record r5 = new Record(new char[]{'a', 'b'}, 5.4, 17);
+            Record r6 = new Record(new char[]{'a', 'b'}, 5.4, 21);
+            Record r7 = new Record(new char[]{'a', 'b'}, 5.4, 31);
+            Record r8 = new Record(new char[]{'a', 'b'}, 5.4, 25);
+            Record r9 = new Record(new char[]{'a', 'b'}, 5.4, 19);
+            Record r10 = new Record(new char[]{'a', 'b'}, 5.4, 20);
+            BPTree b = new BPTree();
             b.insert(r1.getNumVotes(), r1);
             b.insert(r2.getNumVotes(), r2);
             b.insert(r3.getNumVotes(), r3);
             b.insert(r4.getNumVotes(), r4);
-           // b.insert(r5.getNumVotes(), r5);
-           // b.insert(r6.getNumVotes(), r6);
-            // b.insert(r7.getNumVotes(), r7);
-            // b.insert(r8.getNumVotes(), r8);
-            // b.insert(r9.getNumVotes(), r9);
-            // b.insert(r10.getNumVotes(), r10);
+            b.insert(r5.getNumVotes(), r5);
+            b.insert(r6.getNumVotes(), r6);
+            b.insert(r7.getNumVotes(), r7);
+            b.insert(r8.getNumVotes(), r8);
+            b.insert(r9.getNumVotes(), r9);
+            b.insert(r10.getNumVotes(), r10);
+            // b.search(6);
+            
+            BPlusTreeNode pter = b.getRoot();
+            b.printTree(pter);
         }
     }
 }
