@@ -151,7 +151,9 @@ namespace Project_1
             BPlusTreeNode pter = b.getRoot();
             b.printTree(pter);
             
-            b.search(100);
+            // b.search(100);
+            b.delete(22);
+            b.printTree(pter);
         }
     }
 }
