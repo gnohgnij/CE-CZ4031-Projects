@@ -92,8 +92,8 @@ namespace Project_1
         public void test()
         {
             List<LeafNode> l1 = new List<LeafNode>();
-            Record r1 = new Record(new char[]{'a', 'b'}, 5.4, 1);
-            Record r2 = new Record(new char[]{'a', 'b'}, 5.4, 4);
+            Record r1 = new Record(new char[]{'a', 'b'}, 5.4, 4);
+            Record r2 = new Record(new char[]{'a', 'b'}, 5.4, 1);
             Record r3 = new Record(new char[]{'a', 'b'}, 5.4, 7);
             Record r4 = new Record(new char[]{'a', 'b'}, 5.4, 10);
             Record r5 = new Record(new char[]{'a', 'b'}, 5.4, 17);
@@ -102,6 +102,25 @@ namespace Project_1
             Record r8 = new Record(new char[]{'a', 'b'}, 5.4, 25);
             Record r9 = new Record(new char[]{'a', 'b'}, 5.4, 19);
             Record r10 = new Record(new char[]{'a', 'b'}, 5.4, 20);
+            Record r11 = new Record(new char[]{'a', 'b'}, 5.4, 28);
+            Record r12 = new Record(new char[]{'a', 'b'}, 5.4, 42);
+            Record r13 = new Record(new char[]{'a', 'b'}, 5.4, 5);
+            Record r14 = new Record(new char[]{'a', 'b'}, 5.4, 6);
+            Record r15 = new Record(new char[]{'a', 'b'}, 5.4, 2);
+            Record r16 = new Record(new char[]{'a', 'b'}, 5.4, 3);
+            Record r17 = new Record(new char[]{'a', 'b'}, 5.4, 32);
+            Record r18 = new Record(new char[]{'a', 'b'}, 5.4, 33);
+            Record r19 = new Record(new char[]{'a', 'b'}, 5.4, 34);
+            Record r20 = new Record(new char[]{'a', 'b'}, 5.4, 30);
+            Record r21 = new Record(new char[]{'a', 'b'}, 5.4, 29);
+            Record r22 = new Record(new char[]{'a', 'b'}, 5.4, 26);
+            Record r23 = new Record(new char[]{'a', 'b'}, 5.4, 27);
+            Record r24 = new Record(new char[]{'a', 'b'}, 5.4, 24);
+            Record r25 = new Record(new char[]{'a', 'b'}, 5.4, 22);
+
+
+
+
             BPTree b = new BPTree();
             b.insert(r1.getNumVotes(), r1);
             b.insert(r2.getNumVotes(), r2);
@@ -113,6 +132,23 @@ namespace Project_1
             b.insert(r8.getNumVotes(), r8);
             b.insert(r9.getNumVotes(), r9);
             b.insert(r10.getNumVotes(), r10);
+            b.insert(r11.getNumVotes(), r11);
+            b.insert(r12.getNumVotes(), r12);
+            b.insert(r13.getNumVotes(), r13);
+            b.insert(r14.getNumVotes(), r14);
+            b.insert(r15.getNumVotes(), r15);
+            b.insert(r16.getNumVotes(), r16);
+            b.insert(r17.getNumVotes(), r17);
+            b.insert(r18.getNumVotes(), r18);
+            b.insert(r19.getNumVotes(), r19);
+            b.insert(r20.getNumVotes(), r20);
+            b.insert(r21.getNumVotes(), r21);
+            b.insert(r22.getNumVotes(), r22);
+            b.insert(r23.getNumVotes(), r23);
+            b.insert(r24.getNumVotes(), r24);
+            b.insert(r25.getNumVotes(), r25);
+
+
             // b.search(6);
             
             BPlusTreeNode pter = b.getRoot();
