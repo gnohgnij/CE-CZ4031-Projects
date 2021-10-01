@@ -96,13 +96,13 @@ namespace Project_1
             Record r2 = new Record(new char[]{'a', 'b'}, 5.4, 1);
             Record r3 = new Record(new char[]{'a', 'b'}, 5.4, 7);
             Record r4 = new Record(new char[]{'a', 'b'}, 5.4, 10);
-            Record r5 = new Record(new char[]{'a', 'b'}, 5.4, 17);
-            Record r6 = new Record(new char[]{'a', 'b'}, 5.4, 21);
-            Record r7 = new Record(new char[]{'a', 'b'}, 5.4, 31);
+            Record r5 = new Record(new char[]{'a', 'b'}, 9.9, 17);
+            Record r6 = new Record(new char[]{'a', 'b'}, 5.3, 21);
+            Record r7 = new Record(new char[]{'a', 'b'}, 6.3, 31);
             Record r8 = new Record(new char[]{'a', 'b'}, 5.4, 25);
             Record r9 = new Record(new char[]{'a', 'b'}, 5.4, 19);
             Record r10 = new Record(new char[]{'a', 'b'}, 5.4, 20);
-            Record r11 = new Record(new char[]{'a', 'b'}, 5.4, 28);
+            Record r11 = new Record(new char[]{'a', 'b'}, 2.3, 28);
             Record r12 = new Record(new char[]{'a', 'b'}, 5.4, 42);
             Record r13 = new Record(new char[]{'a', 'b'}, 5.4, 5);
             Record r14 = new Record(new char[]{'a', 'b'}, 5.4, 6);
@@ -177,54 +177,54 @@ namespace Project_1
             b.insert(r18.getNumVotes(), r18);
             b.insert(r19.getNumVotes(), r19);
             b.insert(r20.getNumVotes(), r20);
-            b.insert(r21.getNumVotes(), r21);
-            b.insert(r22.getNumVotes(), r22);
-            b.insert(r23.getNumVotes(), r23);
-            b.insert(r24.getNumVotes(), r24);
+            //b.insert(r21.getNumVotes(), r21);
+            //b.insert(r22.getNumVotes(), r22);
+            //b.insert(r23.getNumVotes(), r23);
+            //b.insert(r24.getNumVotes(), r24);
 
-            b.insert(r25.getNumVotes(), r25);
+            //b.insert(r25.getNumVotes(), r25);
 
-            b.insert(r26.getNumVotes(), r26);
-            b.insert(r27.getNumVotes(), r27);
-            b.insert(r28.getNumVotes(), r28);
-            b.insert(r29.getNumVotes(), r29);
-            b.insert(r30.getNumVotes(), r30);
+            //b.insert(r26.getNumVotes(), r26);
+            //b.insert(r27.getNumVotes(), r27);
+            //b.insert(r28.getNumVotes(), r28);
+            //b.insert(r29.getNumVotes(), r29);
+            //b.insert(r30.getNumVotes(), r30);
 
-            b.insert(r31.getNumVotes(), r31);
-            b.insert(r32.getNumVotes(), r32);
-            b.insert(r33.getNumVotes(), r33);
-            b.insert(r34.getNumVotes(), r34);
-            b.insert(r35.getNumVotes(), r35);
+            //b.insert(r31.getNumVotes(), r31);
+            //b.insert(r32.getNumVotes(), r32);
+            //b.insert(r33.getNumVotes(), r33);
+            //b.insert(r34.getNumVotes(), r34);
+            //b.insert(r35.getNumVotes(), r35);
 
-            b.insert(r36.getNumVotes(), r36);
-            b.insert(r37.getNumVotes(), r37);
-            b.insert(r38.getNumVotes(), r38);
-            b.insert(r39.getNumVotes(), r39);
-            b.insert(r40.getNumVotes(), r40);
+            //b.insert(r36.getNumVotes(), r36);
+            //b.insert(r37.getNumVotes(), r37);
+            //b.insert(r38.getNumVotes(), r38);
+            //b.insert(r39.getNumVotes(), r39);
+            //b.insert(r40.getNumVotes(), r40);
 
-            b.insert(r41.getNumVotes(), r41);
-            b.insert(r42.getNumVotes(), r42);
-            b.insert(r43.getNumVotes(), r43);
-            b.insert(r44.getNumVotes(), r44);
-            b.insert(r45.getNumVotes(), r45);
+            //b.insert(r41.getNumVotes(), r41);
+            //b.insert(r42.getNumVotes(), r42);
+            //b.insert(r43.getNumVotes(), r43);
+            //b.insert(r44.getNumVotes(), r44);
+            //b.insert(r45.getNumVotes(), r45);
 
-            b.insert(r46.getNumVotes(), r46);
-            b.insert(r47.getNumVotes(), r47);
-            b.insert(r48.getNumVotes(), r48);
-            b.insert(r49.getNumVotes(), r49);
-            b.insert(r50.getNumVotes(), r50);
+            //b.insert(r46.getNumVotes(), r46);
+            //b.insert(r47.getNumVotes(), r47);
+            //b.insert(r48.getNumVotes(), r48);
+            //b.insert(r49.getNumVotes(), r49);
+            //b.insert(r50.getNumVotes(), r50);
 
-            b.insert(r51.getNumVotes(), r51);
-            b.insert(r52.getNumVotes(), r52);
-            b.insert(r53.getNumVotes(), r53);
-            b.insert(r54.getNumVotes(), r54);
-            b.insert(r55.getNumVotes(), r55);
+            //b.insert(r51.getNumVotes(), r51);
+            //b.insert(r52.getNumVotes(), r52);
+            //b.insert(r53.getNumVotes(), r53);
+            //b.insert(r54.getNumVotes(), r54);
+            //b.insert(r55.getNumVotes(), r55);
             BPlusTreeNode pter = b.getRoot();
             b.printTree(pter);
-            
-            // b.search(100);
-            //b.delete(22);
-            //b.printTree(pter);
+
+            // b.searchRange(17,41);
+            b.delete(21);
+            b.printTree(pter);
         }
     }
 }

@@ -548,11 +548,16 @@ namespace Project_1.Node
             //  var itr = lower_bound
             int itr = 0;
             List<int> temp = cursor.getAllKeys();
+
             foreach (int i in temp)
             {
                 if (index <= i)
                     break;
                 //if key > current i : run another iteration
+                itr++;
+            }
+            if (index > temp[temp.Count-1])
+            {
                 itr++;
             }
         
@@ -944,6 +949,72 @@ namespace Project_1.Node
                     removeInternal(parent.getAllKeys()[rightSibling - 1], parent, rightNode);
                     Console.WriteLine("Merged with right sibling");
                 }
+            }
+        }
+
+        /*
+         * function to find range of values stored in B+ Tree
+         */
+        public void searchRange(int lowerBound, int upperBound)
+        {
+            Console.WriteLine("Searching for key: {0} ...", lowerBound);
+            if (root == null)
+            {
+                Console.WriteLine("B+ Tree is empty, insert keys first!");
+            }
+            else
+            {
+                List<Record> records = new List<Record>();
+                BPlusTreeNode cursor = root;
+                while (cursor.checkIsLeaf() == false)
+                {
+                    List<int> temp = cursor.getAllKeys();
+                    int index = findIndex(temp, lowerBound);
+                    Console.WriteLine("Next index to go to  = " + index);
+
+                    //go to child node
+                    cursor = cursor.getPointer2TreeOrData(null, null).getPointer2InternalNodes()[index];
+                    Console.WriteLine("1st key of next node = " + cursor.getAllKeys()[0]);
+                }
+                List<int> leafNodes = cursor.getAllKeys();
+                int leafNodeIndex = 0;
+                for (int i = 0; i < leafNodes.Count; i++)
+                {
+                    if (lowerBound == leafNodes[i])
+                        leafNodeIndex = i;
+                }
+
+                //key found
+                bool check = false;
+                while (cursor.getPointer2Next() != null && check == false)
+                {
+                    List <Record> found = cursor.getPointer2TreeOrData(null, null).getPointer2Records();
+                   
+                    foreach(Record r in found)
+                    {
+                        if (r.getNumVotes() > upperBound)
+                        {
+                            check = true;
+                            break;
+                        }
+                        records.Add(r);
+                        Console.Write("Record details: ");
+                        r.printRecord();
+                    }
+                    
+                    cursor = cursor.getPointer2Next();
+                }
+
+                double ave = 0;
+                int count = 0;
+                foreach(Record r in records)
+                {
+                    ave += r.getAverageRating();
+                    count++;
+                }
+
+                ave = ave / count;
+                Console.WriteLine("Average of average rating = " + ave);
             }
         }
     }
