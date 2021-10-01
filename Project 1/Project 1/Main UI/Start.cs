@@ -118,6 +118,23 @@ namespace Project_1
             Record r24 = new Record(new char[]{'a', 'b'}, 5.4, 24);
             Record r25 = new Record(new char[]{'a', 'b'}, 5.4, 22);
 
+            Record r26 = new Record(new char[] { 'a', 'b' }, 5.4, 41);
+            Record r27 = new Record(new char[] { 'a', 'b' }, 5.4, 46);
+            Record r28 = new Record(new char[] { 'a', 'b' }, 5.4, 88);
+            Record r29 = new Record(new char[] { 'a', 'b' }, 5.4, 0);
+            Record r30 = new Record(new char[] { 'a', 'b' }, 5.4, 22);
+
+            Record r31 = new Record(new char[] { 'a', 'b' }, 5.4, 141);
+            Record r32 = new Record(new char[] { 'a', 'b' }, 5.4, 146);
+            Record r33 = new Record(new char[] { 'a', 'b' }, 5.4, 188);
+            Record r34 = new Record(new char[] { 'a', 'b' }, 5.4, 10);
+            Record r35 = new Record(new char[] { 'a', 'b' }, 5.4, 122);
+
+            Record r36 = new Record(new char[] { 'a', 'b' }, 5.4, 241);
+            Record r37 = new Record(new char[] { 'a', 'b' }, 5.4, 246);
+            Record r38 = new Record(new char[] { 'a', 'b' }, 5.4, 288);
+            Record r39 = new Record(new char[] { 'a', 'b' }, 5.4, 200);
+            Record r40 = new Record(new char[] { 'a', 'b' }, 5.4, 222);
 
 
 
@@ -148,6 +165,23 @@ namespace Project_1
             b.insert(r24.getNumVotes(), r24);
             b.insert(r25.getNumVotes(), r25);
 
+            b.insert(r26.getNumVotes(), r26);
+            b.insert(r27.getNumVotes(), r27);
+            b.insert(r28.getNumVotes(), r28);
+            b.insert(r29.getNumVotes(), r29);
+            b.insert(r30.getNumVotes(), r30);
+
+            b.insert(r31.getNumVotes(), r31);
+            b.insert(r32.getNumVotes(), r32);
+           // b.insert(r33.getNumVotes(), r33);
+           // b.insert(r34.getNumVotes(), r34);
+           // b.insert(r35.getNumVotes(), r35);
+
+            //b.insert(r36.getNumVotes(), r36);
+            //b.insert(r37.getNumVotes(), r37);
+            //b.insert(r38.getNumVotes(), r38);
+            //b.insert(r39.getNumVotes(), r39);
+            //b.insert(r40.getNumVotes(), r40);
             BPlusTreeNode pter = b.getRoot();
             b.printTree(pter);
             

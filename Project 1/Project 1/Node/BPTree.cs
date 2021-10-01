@@ -287,7 +287,17 @@ namespace Project_1.Node
                     else
                     {
                         Console.WriteLine("Leaf node != Root node, putting key into Internal node...");
+                        Console.WriteLine(parent.getAllKeys()[0]);
+                       // if (parent.getAllKeys().Count == 1)
+                       // {
+                        //    continue;
+                        //}
+                        //Console.WriteLine(parent.getAllKeys()[1]);
+                        // Console.WriteLine(parent.getAllKeys()[2]);
+                        //Console.WriteLine(newLeaf.getAllKeys()[0]);
+                        //Console.WriteLine(newLeaf.getAllKeys()[1]);
                         insertInternal(newLeaf.getAllKeys()[0], parent, newLeaf);
+
                     }
                 }
             }
@@ -299,6 +309,19 @@ namespace Project_1.Node
         public void insertInternal(int key, BPlusTreeNode cursor, BPlusTreeNode child)
         {
             // if internal node has empty space
+            for (int i = 0; i < cursor.getAllKeys().Count; i++)
+            {
+                try
+                {
+                    Console.WriteLine(cursor.getAllKeys()[i]);
+                    Console.WriteLine(i);
+                }
+                catch { }
+
+
+            }
+            Console.WriteLine(cursor.getAllKeys().Count);
+
             if (cursor.getAllKeys().Count < maxChildLimit - 1)
             {
                 
