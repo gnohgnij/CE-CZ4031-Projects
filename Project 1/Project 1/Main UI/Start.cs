@@ -136,6 +136,24 @@ namespace Project_1
             Record r39 = new Record(new char[] { 'a', 'b' }, 5.4, 200);
             Record r40 = new Record(new char[] { 'a', 'b' }, 5.4, 222);
 
+            Record r41 = new Record(new char[] { 'a', 'b' }, 5.4, 341);
+            Record r42 = new Record(new char[] { 'a', 'b' }, 5.4, 346);
+            Record r43 = new Record(new char[] { 'a', 'b' }, 5.4, 388);
+            Record r44 = new Record(new char[] { 'a', 'b' }, 5.4, 30);
+            Record r45 = new Record(new char[] { 'a', 'b' }, 5.4, 322);
+
+            Record r46 = new Record(new char[] { 'a', 'b' }, 5.4, 341);
+            Record r47 = new Record(new char[] { 'a', 'b' }, 5.4, 346);
+            Record r48 = new Record(new char[] { 'a', 'b' }, 5.4, 388);
+            Record r49 = new Record(new char[] { 'a', 'b' }, 5.4, 310);
+            Record r50 = new Record(new char[] { 'a', 'b' }, 5.4, 322);
+
+            Record r51 = new Record(new char[] { 'a', 'b' }, 5.4, 541);
+            Record r52 = new Record(new char[] { 'a', 'b' }, 5.4, 546);
+            Record r53 = new Record(new char[] { 'a', 'b' }, 5.4, 588);
+            Record r54 = new Record(new char[] { 'a', 'b' }, 5.4, 500);
+            Record r55 = new Record(new char[] { 'a', 'b' }, 5.4, 522);
+
 
 
             BPTree b = new BPTree();
@@ -163,6 +181,7 @@ namespace Project_1
             b.insert(r22.getNumVotes(), r22);
             b.insert(r23.getNumVotes(), r23);
             b.insert(r24.getNumVotes(), r24);
+
             b.insert(r25.getNumVotes(), r25);
 
             b.insert(r26.getNumVotes(), r26);
@@ -173,21 +192,39 @@ namespace Project_1
 
             b.insert(r31.getNumVotes(), r31);
             b.insert(r32.getNumVotes(), r32);
-           // b.insert(r33.getNumVotes(), r33);
-           // b.insert(r34.getNumVotes(), r34);
-           // b.insert(r35.getNumVotes(), r35);
+            b.insert(r33.getNumVotes(), r33);
+            b.insert(r34.getNumVotes(), r34);
+            b.insert(r35.getNumVotes(), r35);
 
-            //b.insert(r36.getNumVotes(), r36);
-            //b.insert(r37.getNumVotes(), r37);
-            //b.insert(r38.getNumVotes(), r38);
-            //b.insert(r39.getNumVotes(), r39);
-            //b.insert(r40.getNumVotes(), r40);
+            b.insert(r36.getNumVotes(), r36);
+            b.insert(r37.getNumVotes(), r37);
+            b.insert(r38.getNumVotes(), r38);
+            b.insert(r39.getNumVotes(), r39);
+            b.insert(r40.getNumVotes(), r40);
+
+            b.insert(r41.getNumVotes(), r41);
+            b.insert(r42.getNumVotes(), r42);
+            b.insert(r43.getNumVotes(), r43);
+            b.insert(r44.getNumVotes(), r44);
+            b.insert(r45.getNumVotes(), r45);
+
+            b.insert(r46.getNumVotes(), r46);
+            b.insert(r47.getNumVotes(), r47);
+            b.insert(r48.getNumVotes(), r48);
+            b.insert(r49.getNumVotes(), r49);
+            b.insert(r50.getNumVotes(), r50);
+
+            b.insert(r51.getNumVotes(), r51);
+            b.insert(r52.getNumVotes(), r52);
+            b.insert(r53.getNumVotes(), r53);
+            b.insert(r54.getNumVotes(), r54);
+            b.insert(r55.getNumVotes(), r55);
             BPlusTreeNode pter = b.getRoot();
             b.printTree(pter);
             
             // b.search(100);
-            b.delete(22);
-            b.printTree(pter);
+            //b.delete(22);
+            //b.printTree(pter);
         }
     }
 }
