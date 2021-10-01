@@ -39,10 +39,10 @@ namespace Project_1
 
         public List<Block> getBlocks()
         {
-            foreach (var block in this.blocks)
-            {
-                Console.WriteLine("tconst = " + block.getSmallestTConst());
-            }
+            // foreach (var block in this.blocks)
+            // {
+            //     Console.WriteLine("tconst = " + block.getSmallestTConst());
+            // }
             return this.blocks;
         }
     }

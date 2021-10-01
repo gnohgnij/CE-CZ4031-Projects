@@ -118,7 +118,6 @@ namespace Project_1.Node
                 {
                     List<int> temp = cursor.getAllKeys();
                     int index = findIndex(temp, key);
-                    Console.WriteLine("Next index to go to  = " + index);
                     
                     //go to child node
                     cursor = cursor.getPointer2TreeOrData(null, null).getPointer2InternalNodes()[index];
@@ -160,12 +159,8 @@ namespace Project_1.Node
                 root = new BPlusTreeNode(new List<int>());
                 root.setIsLeaf(true);
                 root.getAllKeys().Add(key);
-                Console.WriteLine(key);
                 root.getPointer2TreeOrData(new List<BPlusTreeNode>(), new List<Record>())
                     .getPointer2Records().Add(record);
-                root.getPointer2TreeOrData(new List<BPlusTreeNode>(), new List<Record>())
-                    .printAllRecords();
-                
                 Console.WriteLine("Root node initialised, B+ Tree created");
             }
             
@@ -174,25 +169,19 @@ namespace Project_1.Node
             {
                 BPlusTreeNode cursor = root;
                 BPlusTreeNode parent = null;
-
-   
-                Console.WriteLine(cursor.checkIsLeaf());
                 //traverse to the leaf node where the key should be inserted into
                 while (cursor.checkIsLeaf() == false)
                 {
                     parent = cursor;
                     List<int> temp = cursor.getAllKeys();
-                    Console.WriteLine("Cursor Value: "+cursor.getAllKeys()[0]);
                     int index = findIndex(temp, key);
                     cursor = cursor.getPointer2TreeOrData(null, null).getPointer2InternalNodes()[index];
                 }
-                Console.WriteLine(cursor.getAllKeys().Count);
                 //if the leaf node has empty space
                 if (cursor.getAllKeys().Count < maxLeafNodeLimit)
                 {
                     List<int> temp = cursor.getAllKeys();
                     int index = findIndex(temp, key);
-                    Console.WriteLine("Index value: " + index);
                     //if key to be inserted is > all the keys inside the leaf node, add the key to the end of the leaf node
                     if (index == cursor.getAllKeys().Count)
                     {
@@ -207,11 +196,8 @@ namespace Project_1.Node
                     {
                         cursor.getAllKeys().Insert(index, key);
                         cursor.getPointer2TreeOrData(null, null).getPointer2Records().Insert(index, record);
-                        Console.WriteLine("Inserted {0} successfully", key);
-                        Console.WriteLine("Inserted at index " + index);
+                        Console.WriteLine("Inserted key {0} successfully at index {1}", key, index);
                     }
-                    cursor.getPointer2TreeOrData(new List<BPlusTreeNode>(), new List<Record>())
-                        .printAllRecords();
                 }
                 
                 //if the leaf node has no empty space
@@ -223,36 +209,18 @@ namespace Project_1.Node
                     //store all the keys and records in a temporary list each
                     for (int i = 0; i < cursor.getAllKeys().Count; i++)
                     {
-                        Console.WriteLine(cursor.getAllKeys()[i]);
                         virtualNode.Add(cursor.getAllKeys()[i]);
                         virtualDataNode.Add(cursor.getPointer2TreeOrData(null,null).getPointer2Records()[i]);
                     }
                     
                     List<int> temp = cursor.getAllKeys();
-                    for(int j = 0; j< temp.Count; j++)
-                    {
-                        Console.WriteLine(temp[j]);
-                    }
-                    for (int j = 0; j < virtualNode.Count; j++)
-                    {
-                        Console.WriteLine(virtualNode[j]);
-                    }
-                    for (int j = 0; j < virtualDataNode.Count; j++)
-                    {
-                        Console.WriteLine(virtualDataNode[j].getNumVotes());
-                    }
                     int index = findIndex(temp, key);
-                    Console.WriteLine(index);
+                    
                     //if key is > all other keys
                     if (index == virtualNode.Count)
                     {
-                        Console.WriteLine(key);
                         virtualNode.Add(key);
                         virtualDataNode.Add(record);
-                        for (int j = 0; j < virtualDataNode.Count; j++)
-                        {
-                            Console.WriteLine(virtualDataNode[j].getNumVotes());
-                        }
                     }
 
                     //if key is to be inserted in the middle of the leaf node, push back rest of keys, insert key in
@@ -267,16 +235,12 @@ namespace Project_1.Node
                     BPlusTreeNode newLeaf = new BPlusTreeNode(new List<int>());
                     newLeaf.setIsLeaf(true);
                     newLeaf.getPointer2TreeOrData(null, new List<Record>());
-                    for(int i = 0; i < newLeaf.getPointer2TreeOrData(null, new List<Record>()).getPointer2Records().Count; i++)
-                    {
-                        Console.WriteLine(newLeaf.getPointer2TreeOrData(null, new List<Record>()).getPointer2Records()[i]);
-                    }
+                    
 ;                    //swapping pointers
                     BPlusTreeNode temporary = cursor.getPointer2Next(); 
                     cursor.setPointer2Next(newLeaf); 
-                    newLeaf.setPointer2Next(temporary); 
+                    newLeaf.setPointer2Next(temporary);
 
-                    
                     //put first n/2 + 1 keys into old leaf node
                     cursor.getAllKeys().Clear();
                     cursor.getPointer2TreeOrData(null, null).getPointer2Records().Clear();
@@ -292,19 +256,9 @@ namespace Project_1.Node
                         newLeaf.getAllKeys().Add(virtualNode[i]);
                         newLeaf.getPointer2TreeOrData(null, null).getPointer2Records().Add(virtualDataNode[i]);
                     }
-                    newLeaf.getPointer2TreeOrData(null, null).printAllRecords();
 
                     //if leaf node being split is also the root node, create new root node, store 1st index of the new
                     //leaf node into the root node
-
-                    for (int i = 0; i <root.getAllKeys().Count; i++)
-                    {
-                        Console.WriteLine(root.getAllKeys()[i]);
-                    }
-                    for (int i = 0; i < cursor.getAllKeys().Count; i++)
-                    {
-                        Console.WriteLine(cursor.getAllKeys()[i]);
-                    }
                     if (cursor == root)
                     {
                         Console.WriteLine("Leaf node == Root node");
@@ -315,17 +269,13 @@ namespace Project_1.Node
                         newRoot.getPointer2TreeOrData(null, null).getPointer2InternalNodes().Add(newLeaf);
                         root = newRoot;
                         Console.WriteLine("Created new root");
-                        newLeaf.getPointer2TreeOrData(null,null).printAllRecords();
                     }
                     
                     //leaf node being split is not root node, store 1st index of new leaf node into internal node
                     else
                     {
-                        Console.WriteLine("Leaf node != Root node, putting key into Internal node...");
-                        Console.WriteLine(parent.getAllKeys()[0]);
-
+                        Console.WriteLine("Leaf node != Root node, putting key {0} into Internal node...", key);
                         insertInternal(newLeaf.getAllKeys()[0], parent, newLeaf);
-
                     }
                 }
             }
@@ -336,7 +286,6 @@ namespace Project_1.Node
          */
         public void insertInternal(int key, BPlusTreeNode cursor, BPlusTreeNode child)
         {
-            Console.WriteLine(cursor==null);
             // if internal node has empty space
             if (cursor.getAllKeys().Count < maxChildLimit - 1)
             {
@@ -360,7 +309,7 @@ namespace Project_1.Node
                     cursor.getPointer2TreeOrData(null, null).getPointer2InternalNodes().Insert(index + 1, child);
                 }
 
-                Console.WriteLine("Inserted key in the internal node successfully");
+                Console.WriteLine("Inserted key {0} in the internal node successfully", key);
             }
             
 
@@ -375,10 +324,6 @@ namespace Project_1.Node
                 foreach (int i in cursor.getAllKeys())
                 {
                     virtualKeyNode.Add(i);
-                }
-                for(int j=0; j<virtualKeyNode.Count; j++)
-                {
-                    Console.WriteLine("Virtual node content: " +virtualKeyNode[j]);
                 }
                 foreach (BPlusTreeNode i in cursor.getPointer2TreeOrData(null, null).getPointer2InternalNodes())
                 {
@@ -395,7 +340,7 @@ namespace Project_1.Node
                     virtualTreePtrNode.Add(child);
                 }
                 
-                //else if key is to be inserteed in the middle of internal node, push back all other nodes, insert key
+                //else if key is to be inserted in the middle of internal node, push back all other nodes, insert key
                 //in correct index
                 else if (index < virtualKeyNode.Count)
                 {
@@ -453,16 +398,6 @@ namespace Project_1.Node
         public BPlusTreeNode findParent(BPlusTreeNode cursor, BPlusTreeNode child)
         {
             BPlusTreeNode parent = null;
-            Console.WriteLine("Cursor: " + cursor.getKey(0));
-            //Console.WriteLine(child.getKey(0));
-            if (cursor.getKey(0) == 31)
-            {
-                for (int i = 0; i < cursor.getPointer2TreeOrData(null, null).getPointer2InternalNodes().Count; i++)
-                {
-                    Console.WriteLine(cursor.getPointer2TreeOrData(null, null).getPointer2InternalNodes()[i].getKey(0));
-
-                }
-            }
             if (cursor.checkIsLeaf() ||
                 cursor.getPointer2TreeOrData(null, null).getPointer2InternalNodes()[0].checkIsLeaf())
             {
@@ -473,9 +408,7 @@ namespace Project_1.Node
             {
                 if (cursor.getPointer2TreeOrData(null, null).getPointer2InternalNodes()[i] == child)
                 {
-                    Console.WriteLine(cursor.getPointer2TreeOrData(null, null).getPointer2InternalNodes()[i].getKey(0));
                     parent = cursor;
-                    Console.WriteLine("parent = " + parent.getKey(0));
                     break;
                 }
 
@@ -490,7 +423,6 @@ namespace Project_1.Node
                     }
                 }
             }
-            Console.WriteLine(parent == null);
             return parent;
         }
         
@@ -709,7 +641,7 @@ namespace Project_1.Node
                     BPlusTreeNode rightNode = parent.getPointer2TreeOrData(null, null).
                             getPointer2InternalNodes()[rightSibling];
                     
-                    //transfer key and rrecord to right sibling node and connect pointer2next;
+                    //transfer key and record to right sibling node and connect pointer2next;
                     for (int i = 0; i < rightNode.getAllKeys().Count; i++)
                     {
                         cursor.getAllKeys().Add(rightNode.getKey(i));

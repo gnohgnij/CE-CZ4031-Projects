@@ -11,7 +11,7 @@ namespace Project_1
         public List<Record> readAllTuples()
         {
             List<Record> temp = new List<Record>();
-            using (var reader = new StreamReader("testing.tsv"))    //change for actual tsv file
+            using (var reader = new StreamReader("C:\\Users\\jingh\\Desktop\\CE-CZ4031-Projects\\Project 1\\Project 1\\data.tsv"))    //change for actual tsv file
             {
                 bool firstLine = true;
                 while (!reader.EndOfStream)
@@ -34,7 +34,7 @@ namespace Project_1
                     }
                 }
             }
-            Console.WriteLine("Total number of records = " + temp.Count);
+            Console.WriteLine("Total number of records created = " + temp.Count);
             return temp;
         }
 
@@ -63,7 +63,7 @@ namespace Project_1
                     // Console.WriteLine("Block no." + j+1 + ", record no." + i+1);
                 }
             }
-            Console.WriteLine("Total number of blocks = " + blocks.Count);
+            Console.WriteLine("Total number of blocks created = " + blocks.Count);
             return new Disk(blocks);
         }
         
@@ -71,6 +71,8 @@ namespace Project_1
         {
             List<Record> list = readAllTuples();
             return recordsIntoDisk(list, blockSize);
-        }      
+        }
+        
+        
     }
 }

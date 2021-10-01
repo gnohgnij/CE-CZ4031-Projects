@@ -1,31 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\jeral\\OneDrive\\Desktop\\DSP_New\\Project 1\\Project 1\\Project 1.csproj": {}
+    "C:\\Users\\jingh\\Desktop\\CE-CZ4031-Projects\\Project 1\\Project 1\\Project 1.csproj": {}
   },
   "projects": {
-    "C:\\Users\\jeral\\OneDrive\\Desktop\\DSP_New\\Project 1\\Project 1\\Project 1.csproj": {
+    "C:\\Users\\jingh\\Desktop\\CE-CZ4031-Projects\\Project 1\\Project 1\\Project 1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\jeral\\OneDrive\\Desktop\\DSP_New\\Project 1\\Project 1\\Project 1.csproj",
+        "projectUniqueName": "C:\\Users\\jingh\\Desktop\\CE-CZ4031-Projects\\Project 1\\Project 1\\Project 1.csproj",
         "projectName": "Project 1",
-        "projectPath": "C:\\Users\\jeral\\OneDrive\\Desktop\\DSP_New\\Project 1\\Project 1\\Project 1.csproj",
-        "packagesPath": "C:\\Users\\jeral\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\jeral\\OneDrive\\Desktop\\DSP_New\\Project 1\\Project 1\\obj\\",
+        "projectPath": "C:\\Users\\jingh\\Desktop\\CE-CZ4031-Projects\\Project 1\\Project 1\\Project 1.csproj",
+        "packagesPath": "C:\\Users\\jingh\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\jingh\\Desktop\\CE-CZ4031-Projects\\Project 1\\Project 1\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\jeral\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\jingh\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://nuget.org/api/v2": {}
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net5.0": {
@@ -57,7 +52,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.203\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }
