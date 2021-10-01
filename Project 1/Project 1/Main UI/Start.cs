@@ -110,8 +110,8 @@ namespace Project_1
             Record r16 = new Record(new char[]{'a', 'b'}, 5.4, 3);
             Record r17 = new Record(new char[]{'a', 'b'}, 5.4, 32);
             Record r18 = new Record(new char[]{'a', 'b'}, 5.4, 33);
-            Record r19 = new Record(new char[]{'a', 'b'}, 5.4, 34);
-            Record r20 = new Record(new char[]{'a', 'b'}, 5.4, 30);
+            Record r19 = new Record(new char[]{'a', 'b'}, 5.4, 2000);
+            Record r20 = new Record(new char[]{'a', 'b'}, 5.4, 1000);
             Record r21 = new Record(new char[]{'a', 'b'}, 5.4, 29);
             Record r22 = new Record(new char[]{'a', 'b'}, 5.4, 26);
             Record r23 = new Record(new char[]{'a', 'b'}, 5.4, 27);
@@ -224,6 +224,10 @@ namespace Project_1
 
             // b.searchRange(17,41);
             b.delete(21);
+            b.printTree(pter);
+            b.delete(1000);
+            b.printTree(pter);
+            b.delete(2000);
             b.printTree(pter);
         }
     }

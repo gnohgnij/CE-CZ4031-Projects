@@ -520,6 +520,7 @@ namespace Project_1.Node
         
                     if (index < cursor.getAllKeys()[i])
                     {
+
                         cursor = cursor.getPointer2TreeOrData(null, null).getPointer2InternalNodes()[i];
                         break;
                     }
