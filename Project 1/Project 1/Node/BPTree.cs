@@ -167,7 +167,7 @@ namespace Project_1.Node
                     cursor = cursor.getPointer2TreeOrData(null, null).getPointer2InternalNodes()[index];
                     numOfNodesAccessed++;
                     height++;
-                    // Console.WriteLine("1st key of next node = " + cursor.getAllKeys()[0]);
+                    Console.WriteLine("1st key of next node = " + cursor.getAllKeys()[0]);
                 }
                 List<int> leafNodes = cursor.getAllKeys();
                 int leafNodeIndex = 0;
@@ -819,7 +819,6 @@ namespace Project_1.Node
                     //Check if LeftSibling has extra Key to transfer
                     if (leftNode.getAllKeys().Count >= (getMaxChildLimit() + 1) / 2)
                     {
-            
                         //transfer key from left sibling through parent
                         int maxIdxKey = leftNode.getAllKeys().Count - 1;
                         cursor.getAllKeys().Insert(0, parent.getKey(leftSibling));
@@ -832,19 +831,19 @@ namespace Project_1.Node
                         cursor.getPointer2TreeOrData(null, null).getPointer2InternalNodes().
                             Insert(0, leftNode.getPointer2TreeOrData(null, null).
                                 getPointer2InternalNodes()[maxIdxPtr]);
+                        Console.WriteLine("cursor" + cursor.getPointer2TreeOrData(null, null).getPointer2InternalNodes()[0]);
                         return;
                     }
                 }
         
                 // If possible to transfer to rightSibling
-                else if (rightSibling < parent.getPointer2TreeOrData(null,null).getPointer2InternalNodes().Count)
+                if (rightSibling < parent.getPointer2TreeOrData(null,null).getPointer2InternalNodes().Count)
                 {
                     BPlusTreeNode rightNode = parent.getPointer2TreeOrData(null,null).getPointer2InternalNodes()[rightSibling];
             
                     //Check if RightSibling has extra Key to transfer
                     if (rightNode.getAllKeys().Count >= (getMaxChildLimit() + 1) / 2)
                     {
-            
                         //transfer key from right sibling through parent
                         int maxIdxKey = rightNode.getAllKeys().Count - 1;
                         cursor.getAllKeys().Add(parent.getAllKeys()[pos]);
@@ -865,7 +864,7 @@ namespace Project_1.Node
                 }
 
                 //Start to Merge Now, if None of the above cases applied
-                else if (leftSibling >= 0)
+                if (leftSibling >= 0)
                 {
                     //leftNode + parent key + cursor
                     BPlusTreeNode leftNode = parent.getPointer2TreeOrData(null,null).getPointer2InternalNodes()[leftSibling];
@@ -892,7 +891,6 @@ namespace Project_1.Node
                 
                 else if (rightSibling < parent.getPointer2TreeOrData(null,null).getPointer2InternalNodes().Count)
                 {
-
                     //cursor + parentkey + rightNode
                     BPlusTreeNode rightNode = parent.getPointer2TreeOrData(null, null).getPointer2InternalNodes()[rightSibling];
                     cursor.getAllKeys().Add(parent.getAllKeys()[rightSibling - 1]);
