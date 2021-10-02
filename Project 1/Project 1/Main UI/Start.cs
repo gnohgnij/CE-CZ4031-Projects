@@ -231,34 +231,34 @@ namespace Project_1
 
             b.insert(r36.getNumVotes(), r36);
             b.insert(r37.getNumVotes(), r37);
-            //b.insert(r38.getNumVotes(), r38);
-            //b.insert(r39.getNumVotes(), r39);
-            //b.insert(r40.getNumVotes(), r40);
+            b.insert(r38.getNumVotes(), r38);
+            b.insert(r39.getNumVotes(), r39);
+            b.insert(r40.getNumVotes(), r40);
 
-            //b.insert(r41.getNumVotes(), r41);
-            //b.insert(r42.getNumVotes(), r42);
-            //b.insert(r43.getNumVotes(), r43);
-            //b.insert(r44.getNumVotes(), r44);
-            //b.insert(r45.getNumVotes(), r45);
+            b.insert(r41.getNumVotes(), r41);
+            b.insert(r42.getNumVotes(), r42);
+            b.insert(r43.getNumVotes(), r43);
+            b.insert(r44.getNumVotes(), r44);
+            b.insert(r45.getNumVotes(), r45);
 
-            //b.insert(r46.getNumVotes(), r46);
-            //b.insert(r47.getNumVotes(), r47);
-            //b.insert(r48.getNumVotes(), r48);
-            //b.insert(r49.getNumVotes(), r49);
-            //b.insert(r50.getNumVotes(), r50);
+            b.insert(r46.getNumVotes(), r46);
+            b.insert(r47.getNumVotes(), r47);
+            b.insert(r48.getNumVotes(), r48);
+            b.insert(r49.getNumVotes(), r49);
+            b.insert(r50.getNumVotes(), r50);
 
-            //b.insert(r51.getNumVotes(), r51);
-            //b.insert(r52.getNumVotes(), r52);
-            //b.insert(r53.getNumVotes(), r53);
-            //b.insert(r54.getNumVotes(), r54);
-            //b.insert(r55.getNumVotes(), r55);
+            b.insert(r51.getNumVotes(), r51);
+            b.insert(r52.getNumVotes(), r52);
+            b.insert(r53.getNumVotes(), r53);
+            b.insert(r54.getNumVotes(), r54);
+            b.insert(r55.getNumVotes(), r55);
             BPlusTreeNode pter = b.getRoot();
             b.printTree(pter);
             b.setMaxChildLimit(44);
             b.setMaxLeafNodeLimit(44);
             b.totalNodes(pter);
             // b.getRootContent();
-            // b.searchRange(21, 21);
+            b.searchRange(21, 21);
             bool lanjiao = b.search(21); 
             while(lanjiao)
             {
@@ -267,7 +267,7 @@ namespace Project_1
                 b.totalNodes(pter);
                 b.printTree(pter);
             }
-            b.totalNodes(pter);
+            // b.totalNodes(pter);
             // b.delete(21);
             // b.searchRange(17,41);
             // b.delete(21);

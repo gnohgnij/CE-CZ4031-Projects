@@ -536,10 +536,22 @@ namespace Project_1.Node
             BPlusTreeNode cursor = root;
             BPlusTreeNode parent = null;
             int leftSibling = -1, rightSibling = -1;
-        
+
+            Console.Write("Nodes Accessed: ");
+            int nodeCount = 0;
             //traversing to the leaf node that may contain the key
             while (cursor.checkIsLeaf() != true)
             {
+                if (nodeCount <= 5) 
+                {
+                    foreach (int i in cursor.getAllKeys())
+                    {
+                        Console.Write(i + " ");
+                    }
+                    Console.Write("|| ");
+                    nodeCount++;
+                }
+
                 for (int i = 0; i < cursor.getAllKeys().Count; i++)
                 {
                     parent = cursor;
@@ -957,10 +969,24 @@ namespace Project_1.Node
             {
                 List<Record> records = new List<Record>();
                 BPlusTreeNode cursor = root;
+
+                Console.Write("Nodes Accessed: |");
+                int nodeCount = 0;
+
                 while (cursor.checkIsLeaf() == false)
                 {
                     List<int> temp = cursor.getAllKeys();
                     int index = findIndex(temp, lowerBound);
+                    
+                    if (nodeCount <= 5) 
+                    {
+                        foreach (int i in cursor.getAllKeys())
+                        {
+                            Console.Write(i + " ");
+                        }
+                        Console.Write("|| ");
+                        nodeCount++;
+                    }
 
                     //go to child node
                     cursor = cursor.getPointer2TreeOrData(null, null).getPointer2InternalNodes()[index];
@@ -1013,7 +1039,7 @@ namespace Project_1.Node
 
                 ave = ave / count;
                 Console.WriteLine("Average of average rating = " + ave);
-                
+
                 Console.WriteLine("Number of index nodes accessed = {0}", numOfNodesAccessed);
             }
         }
