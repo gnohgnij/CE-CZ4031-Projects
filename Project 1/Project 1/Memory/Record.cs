@@ -45,7 +45,7 @@ namespace Project_1
 
         public int getBytes()
         {
-            return sizeof(char) * 7 + sizeof(double) + 2*sizeof(int); //2*7 + 8 + 4 + 4= 30
+            return sizeof(char) * 10 + sizeof(double) + 2*sizeof(int); //2*10 + 8 + 4 + 4= 36
         }
 
         public void printRecord()

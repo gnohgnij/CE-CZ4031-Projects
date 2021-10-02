@@ -24,7 +24,7 @@ namespace Project_1
                     else
                     {
                         string[] values = tuples.Split("\t");
-                        char[] tconstArray = new char[7];
+                        char[] tconstArray = new char[10];
                         for (int i = 0; i < tconstArray.Length; i++)
                         {
                             tconstArray[i] = values[0][i];
