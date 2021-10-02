@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Project_1.Node
 {
@@ -956,6 +957,101 @@ namespace Project_1.Node
         /*
          * function to find range of values stored in B+ Tree
          */
+        public void wait(int lowerBound, int upperBound, Disk disk)
+        {
+            lowerBound--;
+            int numOfNodesAccessed = 1;
+            if (root == null)
+            {
+                Console.WriteLine("B+ Tree is empty, insert keys first!");
+                Console.WriteLine("Number of index nodes accessed = {0}", numOfNodesAccessed-1);
+            }
+            else
+            {
+                List<Record> records = new List<Record>();
+                BPlusTreeNode cursor = root;
+
+                Console.Write("Nodes Accessed: |");
+                int nodeCount = 0;
+
+                while (cursor.checkIsLeaf() == false)
+                {
+                    List<int> temp = cursor.getAllKeys();
+                    int index = findIndex(temp, lowerBound);
+                    
+                    if (nodeCount <= 5) 
+                    {
+                        foreach (int i in cursor.getAllKeys())
+                        {
+                            Console.Write(i + " ");
+                        }
+                        Console.Write("|| ");
+                        nodeCount++;
+                    }
+
+                    //go to child node
+                    cursor = cursor.getPointer2TreeOrData(null, null).getPointer2InternalNodes()[index];
+                    numOfNodesAccessed++;
+                }
+
+                //key found
+                bool check = false;
+                Console.WriteLine();
+                Console.WriteLine("Searching in process... record details:");
+                Console.WriteLine("---------------------------------------");
+                while (cursor.getPointer2Next() != null && check == false)
+                {
+                    List <Record> found = cursor.getPointer2TreeOrData(null, null).getPointer2Records();
+                    foreach(Record r in found)
+                    {
+                        if (r.getNumVotes() > upperBound)
+                        {
+                            check = true;
+                            break;
+                        }
+                        
+                        if (r.getNumVotes() > lowerBound)
+                        {
+                            records.Add(r);
+                            r.printRecord();
+                        }
+                    }
+                    cursor = cursor.getPointer2Next();
+                    numOfNodesAccessed++;
+                }
+                Console.WriteLine("---------------------------------------");
+
+                double ave = 0;
+                int count = 0;
+                foreach(Record r in records)
+                {
+                    ave += r.getAverageRating();
+                    count++;
+                }
+                ave = ave / count;
+
+                List<int> blockIDs = new List<int>();
+                foreach (Record r in records)
+                {
+                    blockIDs.Add(r.getBlockID());
+                }
+                
+                var uniqueBlocks = blockIDs.Distinct().ToList();
+                
+                Console.WriteLine("Data blocks: ");
+                foreach (int i in uniqueBlocks)
+                {
+                    Console.Write("|");
+                    disk.printBlockContent(i);
+                    Console.Write("|");
+                }
+                
+                Console.WriteLine("Average of average rating = " + ave);
+                Console.WriteLine("Number of index nodes accessed = {0}", numOfNodesAccessed);
+                Console.WriteLine("Number of blocks accessed = {0}", uniqueBlocks.Count);
+            }
+        }   //dont touch this
+        
         public void searchRange(int lowerBound, int upperBound)
         {
             lowerBound--;
@@ -992,19 +1088,10 @@ namespace Project_1.Node
                     cursor = cursor.getPointer2TreeOrData(null, null).getPointer2InternalNodes()[index];
                     numOfNodesAccessed++;
                 }
-                List<int> leafNodes = cursor.getAllKeys();
-                int leafNodeIndex = 0;
-                for (int i = 0; i < leafNodes.Count; i++)
-                {
-                    if (lowerBound == leafNodes[i])
-                    {
-                        leafNodeIndex = i;
-                        break;
-                    }
-                }
 
                 //key found
                 bool check = false;
+                Console.WriteLine();
                 Console.WriteLine("Searching in process... record details:");
                 Console.WriteLine("---------------------------------------");
                 while (cursor.getPointer2Next() != null && check == false)
@@ -1036,10 +1123,9 @@ namespace Project_1.Node
                     ave += r.getAverageRating();
                     count++;
                 }
-
                 ave = ave / count;
-                Console.WriteLine("Average of average rating = " + ave);
 
+                Console.WriteLine("Average of average rating = " + ave);
                 Console.WriteLine("Number of index nodes accessed = {0}", numOfNodesAccessed);
             }
         }

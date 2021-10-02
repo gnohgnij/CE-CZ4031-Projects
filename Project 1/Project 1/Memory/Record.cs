@@ -8,12 +8,14 @@ namespace Project_1
         private char[] tConst;
         private double averageRating;
         private int numVotes;
+        private int blockID;
         
         public Record(char[] tConst, double averageRating, int numVotes)
         {
             this.tConst = tConst;
             this.averageRating = averageRating;
             this.numVotes = numVotes;
+            this.blockID = 0;
         }
 
         public char[] getTConst()
@@ -31,9 +33,19 @@ namespace Project_1
             return this.numVotes;
         }
 
+        public int getBlockID()
+        {
+            return this.blockID;
+        }
+
+        public void setBlockID(int blockID)
+        {
+            this.blockID = blockID;
+        }
+
         public int getBytes()
         {
-            return sizeof(char) * 7 + sizeof(double) + sizeof(int); //2*7 + 8 + 4 = 26
+            return sizeof(char) * 7 + sizeof(double) + 2*sizeof(int); //2*7 + 8 + 4 + 4= 30
         }
 
         public void printRecord()

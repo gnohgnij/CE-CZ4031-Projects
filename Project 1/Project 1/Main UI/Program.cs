@@ -42,25 +42,26 @@ namespace Project_1
         {
             List<Block> blocks = new List<Block>();
             int j = 0;
+            int blockID = 1;
             for (int i = 0; i < listOfRecords.Count; i++)
             {
                 if (blocks.Count == 0)
                 {
-                    blocks.Add(new Block(new List<Record>(), blockSize));
+                    blocks.Add(new Block(new List<Record>(), blockSize, blockID));
+                    listOfRecords[i].setBlockID(blockID);
                     blocks[j].addNewRecord(listOfRecords[i]);
-                    // Console.WriteLine("Block no." + j+1 + ", record no." + i+1);
                 }
                 else if (blocks[j].getAvailableSpace() > listOfRecords[0].getBytes())
                 {
+                    listOfRecords[i].setBlockID(blockID);
                     blocks[j].addNewRecord(listOfRecords[i]);
-                    // Console.WriteLine("Block no." + j+1 + ", record no." + i+1);
                 }
                 else if (blocks[j].getAvailableSpace() < listOfRecords[0].getBytes())
                 {
                     j++;
-                    blocks.Add(new Block(new List<Record>(), blockSize));
+                    blockID++;
+                    blocks.Add(new Block(new List<Record>(), blockSize, blockID));
                     blocks[j].addNewRecord(listOfRecords[i]);
-                    // Console.WriteLine("Block no." + j+1 + ", record no." + i+1);
                 }
             }
             Console.WriteLine("Total number of blocks created = " + blocks.Count);

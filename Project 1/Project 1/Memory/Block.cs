@@ -8,8 +8,9 @@ namespace Project_1
     {
         private List<Record> records;
         private int blockSize;
+        private int blockID;
 
-        public Block(List<Record> records, int blockSize)
+        public Block(List<Record> records, int blockSize, int blockID)
         {
             this.records = records;
 
@@ -21,6 +22,7 @@ namespace Project_1
             }
 
             this.blockSize = blockSize;
+            this.blockID = blockID;
         }
 
         public int getBlockSize()
@@ -28,6 +30,16 @@ namespace Project_1
             return this.blockSize;
         }
 
+        public int getBlockID()
+        {
+            return this.blockID;
+        }
+        
+        public void setBlockID(int blockID)
+        {
+            this.blockID = blockID;
+        }
+        
         public int getBytes()
         {
             int totalBytes = 0;
@@ -40,11 +52,15 @@ namespace Project_1
         
         public List<Record> getRecords()
         {
+            return records;
+        }
+
+        public void printRecords()
+        {
             foreach (var record in records) 
             {
-                Console.WriteLine(record.getTConst() + " " + record.getAverageRating() + " " + record.getNumVotes());
+                Console.Write(record.getTConst() + " " + record.getAverageRating() + " " + record.getNumVotes());
             }
-            return records;
         }
 
         public int getAvailableSpace()

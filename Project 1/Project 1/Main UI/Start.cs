@@ -10,45 +10,45 @@ namespace Project_1
         public static void Main(string[] args)
         {
 
-            // Disk disk;
-            // Program program;
-            //
-            // Console.WriteLine("-----Database System Principle Project 1-----");
-            // Console.WriteLine("Enter any key to start storing data");
-            // Console.WriteLine("---------------------------------------------");
-            // string input = Console.ReadLine();
-            // if(string.IsNullOrEmpty(input))
-            //     Console.WriteLine("No keys entered, please try again...");
-            // else
-            // {
-            //     Console.WriteLine("Enter size of block (100 or 500): ");
-            //     string blockSizeInput = Console.ReadLine();
-            //     Console.WriteLine("---------------------------------------------");
-            //     int blockSize = int.Parse(blockSizeInput);
-            //     if(!(blockSize == 100 || blockSize == 500))
-            //         Console.WriteLine("Invalid block size entered, please try again...");
-            //     else
-            //     {
-            //         Console.WriteLine("Block size {0} bytes entered, storing data now...", blockSize);
-            //         program = new Program();
-            //         disk = program.start(blockSize);
-            //         Console.WriteLine("Total size of database in MB = {0}", disk.getNumberOfBlocks()*blockSize/Math.Pow(10, 6));
-            //         List<Block> listOfBlocks = disk.getBlocks();
-            //         BPTree bpTree = new BPTree();
-            //         bpTree.setMaxLeafNodeLimit(blockSize);
-            //         bpTree.setMaxChildLimit(blockSize);
-            //         for (int i = 0; i < listOfBlocks.Count; i++)
-            //         {
-            //             List<Record> listOfRecords = listOfBlocks[i].getRecords();
-            //             for (int j = 0; j < listOfRecords.Count; j++)
-            //             {
-            //                 bpTree.insert(listOfRecords[j].getNumVotes(), listOfRecords[j]);
-            //             }
-            //         }
-            //         Console.WriteLine("Data storing completed!");
-            //         Console.WriteLine("---------------------------------------------");
-            //     }
-            // }
+            Disk disk;
+            Program program;
+            
+            Console.WriteLine("-----Database System Principle Project 1-----");
+            Console.WriteLine("Enter any key to start storing data");
+            Console.WriteLine("---------------------------------------------");
+            string input = Console.ReadLine();
+            if(string.IsNullOrEmpty(input))
+                Console.WriteLine("No keys entered, please try again...");
+            else
+            {
+                Console.WriteLine("Enter size of block (100 or 500): ");
+                string blockSizeInput = Console.ReadLine();
+                Console.WriteLine("---------------------------------------------");
+                int blockSize = int.Parse(blockSizeInput);
+                if(!(blockSize == 100 || blockSize == 500))
+                    Console.WriteLine("Invalid block size entered, please try again...");
+                else
+                {
+                    Console.WriteLine("Block size {0} bytes entered, storing data now...", blockSize);
+                    program = new Program();
+                    disk = program.start(blockSize);
+                    Console.WriteLine("Total size of database in MB = {0}", disk.getNumberOfBlocks()*blockSize/Math.Pow(10, 6));
+                    List<Block> listOfBlocks = disk.getBlocks();
+                    BPTree bpTree = new BPTree();
+                    bpTree.setMaxLeafNodeLimit(blockSize);
+                    bpTree.setMaxChildLimit(blockSize);
+                    for (int i = 0; i < listOfBlocks.Count; i++)
+                    {
+                        List<Record> listOfRecords = listOfBlocks[i].getRecords();
+                        for (int j = 0; j < listOfRecords.Count; j++)
+                        {
+                            bpTree.insert(listOfRecords[j].getNumVotes(), listOfRecords[j]);
+                        }
+                    }
+                    Console.WriteLine("Data storing completed!");
+                    Console.WriteLine("---------------------------------------------");
+                }
+            }
             
             //if (userInput == "1")
             //{
@@ -114,8 +114,8 @@ namespace Project_1
             //    }
 
             //  }
-            Start s = new Start();
-            s.test();
+            // Start s = new Start();
+            // s.test();
 
             // Program p = new Program();
             // Disk d = p.start(100);
@@ -185,6 +185,24 @@ namespace Project_1
             Record r54 = new Record(new char[] { 'a', 'b' }, 5.4, 500);
             Record r55 = new Record(new char[] { 'a', 'b' }, 5.4, 522);
 
+            r1.setBlockID(1);
+            r2.setBlockID(1);
+            r3.setBlockID(3);
+            r4.setBlockID(4);
+            r5.setBlockID(5);
+            r6.setBlockID(6);
+            r7.setBlockID(7);
+            r8.setBlockID(8);
+            r9.setBlockID(9);
+            r10.setBlockID(10);
+            r11.setBlockID(11);
+            r12.setBlockID(12);
+            r13.setBlockID(1);
+            r14.setBlockID(1);
+            r15.setBlockID(1);
+            r16.setBlockID(1);
+            r29.setBlockID(1);
+            
 
 
             BPTree b = new BPTree();
@@ -257,25 +275,16 @@ namespace Project_1
             b.setMaxChildLimit(44);
             b.setMaxLeafNodeLimit(44);
             b.totalNodes(pter);
-            // b.getRootContent();
-            b.searchRange(21, 21);
-            bool lanjiao = b.search(21); 
-            while(lanjiao)
-            {
-                b.delete(21);
-                lanjiao = b.search(21);
-                b.totalNodes(pter);
-                b.printTree(pter);
-            }
-            // b.totalNodes(pter);
-            // b.delete(21);
-            // b.searchRange(17,41);
-            // b.delete(21);
-            // b.printTree(pter);
-            // b.delete(1000);
-            // b.printTree(pter);
-            // b.delete(2000);
-            // b.printTree(pter);
+            // b.searchRange(21, 21);
+            // bool lanjiao = b.search(21); 
+            // while(lanjiao)
+            // {
+            //     b.delete(21);
+            //     lanjiao = b.search(21);
+            //     b.totalNodes(pter);
+            //     b.printTree(pter);
+            // }
+            // b.searchRange(1, 6, null);
         }
     }
 }
