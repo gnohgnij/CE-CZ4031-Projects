@@ -5,29 +5,41 @@ namespace Project_1.Node
 {
     public class BPTree
     {
-        private int maxChildLimit = 4;
-        private int maxLeafNodeLimit = 3;   //to change
+        private int maxChildLimit;
+        private int maxLeafNodeLimit;
         private BPlusTreeNode root;
         
         /*
          * function to get maxLeafNodeLimit
          */
-        //TODO: implement this function
+        public int getMaxLeafNodeLimit()
+        {
+            return this.maxLeafNodeLimit;
+        }
         
         /*
          * function to get maxChildLimit
          */
-        //TODO: implement this function
-        
-        /*
-         * function to set maxLeafNodeLimit
-         */
-        //TODO: implement this function
+        public int getMaxChildLimit()
+        {
+            return this.maxChildLimit;
+        }
         
         /*
          * function to set maxChildLimit
          */
-        //TODO: implement this function
+        public void setMaxChildLimit(int blocksize)
+        {
+            this.maxChildLimit = (blocksize-8)/12 + 1;
+        }
+        
+        /*
+         * function to set maxLeafNodeLimit
+         */
+        public void setMaxLeafNodeLimit(int blocksize)
+        {
+            this.maxLeafNodeLimit = (blocksize-8)/12;
+        }
         
         /*
          * function to get content of root node and its 1st child
@@ -231,7 +243,7 @@ namespace Project_1.Node
                     cursor = cursor.getPointer2TreeOrData(null, null).getPointer2InternalNodes()[index];
                 }
                 //if the leaf node has empty space
-                if (cursor.getAllKeys().Count < maxLeafNodeLimit)
+                if (cursor.getAllKeys().Count < getMaxLeafNodeLimit())
                 {
                     List<int> temp = cursor.getAllKeys();
                     int index = findIndex(temp, key);
@@ -297,14 +309,14 @@ namespace Project_1.Node
                     //put first n/2 + 1 keys into old leaf node
                     cursor.getAllKeys().Clear();
                     cursor.getPointer2TreeOrData(null, null).getPointer2Records().Clear();
-                    for (int i = 0; i < maxLeafNodeLimit / 2 + 1; i++)
+                    for (int i = 0; i < getMaxLeafNodeLimit() / 2 + 1; i++)
                     {
                         cursor.getAllKeys().Add(virtualNode[i]);
                         cursor.getPointer2TreeOrData(null, null).getPointer2Records().Add(virtualDataNode[i]);
                     }
 
                     //put remaining keys into new leaf node
-                    for (int i = maxLeafNodeLimit / 2 + 1; i < virtualNode.Count; i++)
+                    for (int i = getMaxLeafNodeLimit() / 2 + 1; i < virtualNode.Count; i++)
                     {
                         newLeaf.getAllKeys().Add(virtualNode[i]);
                         newLeaf.getPointer2TreeOrData(null, null).getPointer2Records().Add(virtualDataNode[i]);
@@ -340,7 +352,7 @@ namespace Project_1.Node
         public void insertInternal(int key, BPlusTreeNode cursor, BPlusTreeNode child)
         {
             // if internal node has empty space
-            if (cursor.getAllKeys().Count < maxChildLimit - 1)
+            if (cursor.getAllKeys().Count < getMaxChildLimit() - 1)
             {
 
                 List<int> temp = cursor.getAllKeys();
@@ -583,7 +595,7 @@ namespace Project_1.Node
             Console.WriteLine("Deleted {0} from leaf node successfully!", key);
             
             //each leaf node should have floor function of (n+1)/2 keys
-            if (cursor.getAllKeys().Count >= (maxLeafNodeLimit + 1) / 2)    
+            if (cursor.getAllKeys().Count >= (getMaxLeafNodeLimit() + 1) / 2)    
             {
                 return;
             }
@@ -596,7 +608,7 @@ namespace Project_1.Node
                 BPlusTreeNode leftNode = parent.getPointer2TreeOrData(null, null).getPointer2InternalNodes()[leftSibling];
                 
                 //if left sibling node has enough keys to lend, [(n+1)/2]+1 keys
-                if (leftNode.getAllKeys().Count >= (maxLeafNodeLimit + 1) / 2 + 1)
+                if (leftNode.getAllKeys().Count >= (getMaxLeafNodeLimit() + 1) / 2 + 1)
                 {
                     //Borrow largest key from left sibling node
                     int maxIndex = leftNode.getAllKeys().Count - 1;
@@ -618,18 +630,6 @@ namespace Project_1.Node
                     
                     Console.WriteLine("Borrowed key from left sibling node!");
                     return;
-                    
-                    //int maxIndex = leftNode.getAllKeys().Count - 1;
-                    //cursor->keys.insert(cursor->keys.begin(), leftNode->keys[maxIdx]);
-                    //cursor->ptr2TreeOrData.dataPtr
-                    //    .insert(cursor->ptr2TreeOrData.dataPtr.begin(), leftNode->ptr2TreeOrData.dataPtr[maxIdx]);
-        
-                    ////resize the left Sibling Node After Tranfer
-                    //leftNode->keys.resize(maxIdx);
-                    //leftNode->ptr2TreeOrData.dataPtr.resize(maxIdx);
-                    // parent.getAllKeys()[leftSibling] = cursor.getAllKeys()[0];
-                    // Console.WriteLine("Transferred from left sibling of leaf node");
-                    // return;
                 }       
             }
             
@@ -639,7 +639,7 @@ namespace Project_1.Node
                 BPlusTreeNode rightNode = parent.getPointer2TreeOrData(null, null).getPointer2InternalNodes()[rightSibling];
                 
                 //if right sibling node has enough keys to lend, [(n+1)/2]+1 keys
-                if (rightNode.getAllKeys().Count >= (maxLeafNodeLimit + 1) / 2 + 1)
+                if (rightNode.getAllKeys().Count >= (getMaxLeafNodeLimit() + 1) / 2 + 1)
                 {
                     //borrow the smallest key from right sibling node
                     int minIndex = 0;
@@ -773,11 +773,9 @@ namespace Project_1.Node
             //     cursor.getPointer2TreeOrData(null, null).getPointer2InternalNodes().RemoveAt(i);
             //     cursor.getPointer2TreeOrData(null, null).getPointer2InternalNodes().Insert(i, k);
             // }
-            //cursor.getPointer2TreeOrData(null,null).getPointer2InternalNodes()
-            //    .resize(cursor.getPointer2TreeOrData(null,null).getPointer2InternalNodes().Count - 1);
         
             //if no underflow
-            if (cursor.getAllKeys().Count >= (maxChildLimit + 1) / 2 - 1)
+            if (cursor.getAllKeys().Count >= (getMaxChildLimit() + 1) / 2 - 1)
             {
                 Console.WriteLine("Deleted {0} from internal node succesfully", key);
                 return;
@@ -816,7 +814,7 @@ namespace Project_1.Node
                     BPlusTreeNode leftNode = parent.getPointer2TreeOrData(null,null).getPointer2InternalNodes()[leftSibling];
             
                     //Check if LeftSibling has extra Key to transfer
-                    if (leftNode.getAllKeys().Count >= (maxChildLimit + 1) / 2)
+                    if (leftNode.getAllKeys().Count >= (getMaxChildLimit() + 1) / 2)
                     {
             
                         //transfer key from left sibling through parent
@@ -841,7 +839,7 @@ namespace Project_1.Node
                     BPlusTreeNode rightNode = parent.getPointer2TreeOrData(null,null).getPointer2InternalNodes()[rightSibling];
             
                     //Check if RightSibling has extra Key to transfer
-                    if (rightNode.getAllKeys().Count >= (maxChildLimit + 1) / 2)
+                    if (rightNode.getAllKeys().Count >= (getMaxChildLimit() + 1) / 2)
                     {
             
                         //transfer key from right sibling through parent

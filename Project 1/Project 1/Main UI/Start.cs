@@ -9,52 +9,48 @@ namespace Project_1
     {
         public static void Main(string[] args)
         {
-            /*
-             * For testing.tsv,
-             * if block size = 100B, each block can hold 3 records, total number of blocks = 499/3 = 167
-             * if block size = 500B, each block can hold 19 records, total number of blocks = 499/19 = 27
-             */
 
-            // Disk disk;
-            // Program program;
-            //
-            // Console.WriteLine("-----Database System Principle Project 1-----");
-            // Console.WriteLine("Enter any key to start storing data");
-            // Console.WriteLine("---------------------------------------------");
-            // string input = Console.ReadLine();
-            // if(string.IsNullOrEmpty(input))
-            //     Console.WriteLine("No keys entered, please try again...");
-            // else
-            // {
-            //     Console.WriteLine("Enter size of block (100 or 500): ");
-            //     string blockSizeInput = Console.ReadLine();
-            //     Console.WriteLine("---------------------------------------------");
-            //     int blockSize = int.Parse(blockSizeInput);
-            //     if(!(blockSize == 100 || blockSize == 500))
-            //         Console.WriteLine("Invalid block size entered, please try again...");
-            //     else
-            //     {
-            //         Console.WriteLine("Block size {0} bytes entered, storing data now...", blockSize);
-            //         program = new Program();
-            //         disk = program.start(blockSize);
-            //         Console.WriteLine("Total size of database in MB = {0}", disk.getNumberOfBlocks()*blockSize/Math.Pow(10, 6));
-            //         List<Block> listOfBlocks = disk.getBlocks();
-            //         BPTree bpTree = new BPTree();
-            //         
-            //         for (int i = 0; i < listOfBlocks.Count; i++)
-            //         {
-            //             List<Record> listOfRecords = listOfBlocks[i].getRecords();
-            //             for (int j = 0; j < listOfRecords.Count; j++)
-            //             {
-            //                 bpTree.insert(listOfRecords[j].getNumVotes(), listOfRecords[j]);
-            //             }
-            //         }
-            //         Console.WriteLine("Data storing completed!");
-            //         Console.WriteLine("---------------------------------------------");
-            //         bpTree.printTree(bpTree.getRoot());
-            //         bpTree.searchRange(5, 7);
-            //     }
-            //}
+            Disk disk;
+            Program program;
+            
+            Console.WriteLine("-----Database System Principle Project 1-----");
+            Console.WriteLine("Enter any key to start storing data");
+            Console.WriteLine("---------------------------------------------");
+            string input = Console.ReadLine();
+            if(string.IsNullOrEmpty(input))
+                Console.WriteLine("No keys entered, please try again...");
+            else
+            {
+                Console.WriteLine("Enter size of block (100 or 500): ");
+                string blockSizeInput = Console.ReadLine();
+                Console.WriteLine("---------------------------------------------");
+                int blockSize = int.Parse(blockSizeInput);
+                if(!(blockSize == 100 || blockSize == 500))
+                    Console.WriteLine("Invalid block size entered, please try again...");
+                else
+                {
+                    Console.WriteLine("Block size {0} bytes entered, storing data now...", blockSize);
+                    program = new Program();
+                    disk = program.start(blockSize);
+                    Console.WriteLine("Total size of database in MB = {0}", disk.getNumberOfBlocks()*blockSize/Math.Pow(10, 6));
+                    List<Block> listOfBlocks = disk.getBlocks();
+                    BPTree bpTree = new BPTree();
+                    bpTree.setMaxLeafNodeLimit(blockSize);
+                    bpTree.setMaxChildLimit(blockSize);
+                    for (int i = 0; i < listOfBlocks.Count; i++)
+                    {
+                        List<Record> listOfRecords = listOfBlocks[i].getRecords();
+                        for (int j = 0; j < listOfRecords.Count; j++)
+                        {
+                            bpTree.insert(listOfRecords[j].getNumVotes(), listOfRecords[j]);
+                        }
+                    }
+                    Console.WriteLine("Data storing completed!");
+                    Console.WriteLine("---------------------------------------------");
+                    bpTree.printTree(bpTree.getRoot());
+                    bpTree.searchRange(5, 7);
+                }
+            }
             
             //if (userInput == "1")
             //{
@@ -123,8 +119,8 @@ namespace Project_1
             Start s = new Start();
             s.test();
 
-                // Program p = new Program();
-                // Disk d = p.start(100);
+            // Program p = new Program();
+            // Disk d = p.start(100);
         }
 
         public void test()
