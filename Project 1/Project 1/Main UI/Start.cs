@@ -38,21 +38,23 @@ namespace Project_1
             //         program = new Program();
             //         disk = program.start(blockSize);
             //         Console.WriteLine("Total size of database in MB = {0}", disk.getNumberOfBlocks()*blockSize/Math.Pow(10, 6));
-                    // List<Block> listOfBlocks = disk.getBlocks();
-                    // BPTree bpTree = new BPTree();
-                    //
-                    // for (int i = 0; i < listOfBlocks.Count; i++)
-                    // {
-                    //     List<Record> listOfRecords = listOfBlocks[i].getRecords();
-                    //     for (int j = 0; j < listOfRecords.Count; j++)
-                    //     {
-                    //         bpTree.insert(listOfRecords[j].getNumVotes(), listOfRecords[j]);
-                    //     }
-                    // }
-                    // Console.WriteLine("Data storing completed!");
-                    // Console.WriteLine("---------------------------------------------");
+            //         List<Block> listOfBlocks = disk.getBlocks();
+            //         BPTree bpTree = new BPTree();
+            //         
+            //         for (int i = 0; i < listOfBlocks.Count; i++)
+            //         {
+            //             List<Record> listOfRecords = listOfBlocks[i].getRecords();
+            //             for (int j = 0; j < listOfRecords.Count; j++)
+            //             {
+            //                 bpTree.insert(listOfRecords[j].getNumVotes(), listOfRecords[j]);
+            //             }
+            //         }
+            //         Console.WriteLine("Data storing completed!");
+            //         Console.WriteLine("---------------------------------------------");
+            //         bpTree.printTree(bpTree.getRoot());
+            //         bpTree.searchRange(5, 7);
             //     }
-            // }
+            //}
             
             //if (userInput == "1")
             //{
@@ -205,14 +207,14 @@ namespace Project_1
             b.insert(r10.getNumVotes(), r10);
             b.insert(r11.getNumVotes(), r11);
             b.insert(r12.getNumVotes(), r12);
-            // b.insert(r13.getNumVotes(), r13);
-            // b.insert(r14.getNumVotes(), r14);
-            // b.insert(r15.getNumVotes(), r15);
-            // b.insert(r16.getNumVotes(), r16);
-            // b.insert(r17.getNumVotes(), r17);
-            // b.insert(r18.getNumVotes(), r18);
-            // b.insert(r19.getNumVotes(), r19);
-            // b.insert(r20.getNumVotes(), r20);
+            b.insert(r13.getNumVotes(), r13);
+            b.insert(r14.getNumVotes(), r14);
+            b.insert(r15.getNumVotes(), r15);
+            b.insert(r16.getNumVotes(), r16);
+            b.insert(r17.getNumVotes(), r17);
+            b.insert(r18.getNumVotes(), r18);
+            b.insert(r19.getNumVotes(), r19);
+            b.insert(r20.getNumVotes(), r20);
             //b.insert(r21.getNumVotes(), r21);
             //b.insert(r22.getNumVotes(), r22);
             //b.insert(r23.getNumVotes(), r23);
@@ -257,7 +259,8 @@ namespace Project_1
             //b.insert(r55.getNumVotes(), r55);
             BPlusTreeNode pter = b.getRoot();
             b.printTree(pter);
-            b.search(21);
+            // b.getRootContent();
+            b.searchRange(21, 21);
             // b.delete(21);
             // b.searchRange(17,41);
             // b.delete(21);

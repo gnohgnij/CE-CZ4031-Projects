@@ -11,7 +11,7 @@ namespace Project_1
         public List<Record> readAllTuples()
         {
             List<Record> temp = new List<Record>();
-            using (var reader = new StreamReader("C:\\Users\\jingh\\Desktop\\CE-CZ4031-Projects\\Project 1\\Project 1\\data.tsv"))    //change for actual tsv file
+            using (var reader = new StreamReader("C:\\Users\\jingh\\Desktop\\CE-CZ4031-Projects\\Project 1\\Project 1\\testing.tsv"))    //change for actual tsv file
             {
                 bool firstLine = true;
                 while (!reader.EndOfStream)
