@@ -123,7 +123,6 @@ namespace Project_1
 
         public void test()
         {
-            List<LeafNode> l1 = new List<LeafNode>();
             Record r1 = new Record(new char[]{'a', 'b'}, 5.4, 4);
             Record r2 = new Record(new char[]{'a', 'b'}, 5.4, 1);
             Record r3 = new Record(new char[]{'a', 'b'}, 5.4, 7);
@@ -211,27 +210,27 @@ namespace Project_1
             b.insert(r18.getNumVotes(), r18);
             b.insert(r19.getNumVotes(), r19);
             b.insert(r20.getNumVotes(), r20);
-            //b.insert(r21.getNumVotes(), r21);
-            //b.insert(r22.getNumVotes(), r22);
-            //b.insert(r23.getNumVotes(), r23);
-            //b.insert(r24.getNumVotes(), r24);
+            b.insert(r21.getNumVotes(), r21);
+            b.insert(r22.getNumVotes(), r22);
+            b.insert(r23.getNumVotes(), r23);
+            b.insert(r24.getNumVotes(), r24);
 
-            //b.insert(r25.getNumVotes(), r25);
+            b.insert(r25.getNumVotes(), r25);
 
-            //b.insert(r26.getNumVotes(), r26);
-            //b.insert(r27.getNumVotes(), r27);
-            //b.insert(r28.getNumVotes(), r28);
-            //b.insert(r29.getNumVotes(), r29);
-            //b.insert(r30.getNumVotes(), r30);
+            b.insert(r26.getNumVotes(), r26);
+            b.insert(r27.getNumVotes(), r27);
+            b.insert(r28.getNumVotes(), r28);
+            b.insert(r29.getNumVotes(), r29);
+            b.insert(r30.getNumVotes(), r30);
 
-            //b.insert(r31.getNumVotes(), r31);
-            //b.insert(r32.getNumVotes(), r32);
-            //b.insert(r33.getNumVotes(), r33);
-            //b.insert(r34.getNumVotes(), r34);
-            //b.insert(r35.getNumVotes(), r35);
+            b.insert(r31.getNumVotes(), r31);
+            b.insert(r32.getNumVotes(), r32);
+            b.insert(r33.getNumVotes(), r33);
+            b.insert(r34.getNumVotes(), r34);
+            b.insert(r35.getNumVotes(), r35);
 
-            //b.insert(r36.getNumVotes(), r36);
-            //b.insert(r37.getNumVotes(), r37);
+            b.insert(r36.getNumVotes(), r36);
+            b.insert(r37.getNumVotes(), r37);
             //b.insert(r38.getNumVotes(), r38);
             //b.insert(r39.getNumVotes(), r39);
             //b.insert(r40.getNumVotes(), r40);
@@ -257,6 +256,7 @@ namespace Project_1
             b.printTree(pter);
             b.setMaxChildLimit(44);
             b.setMaxLeafNodeLimit(44);
+            b.totalNodes(pter);
             // b.getRootContent();
             // b.searchRange(21, 21);
             bool lanjiao = b.search(21); 
@@ -264,8 +264,10 @@ namespace Project_1
             {
                 b.delete(21);
                 lanjiao = b.search(21);
+                b.totalNodes(pter);
                 b.printTree(pter);
             }
+            b.totalNodes(pter);
             // b.delete(21);
             // b.searchRange(17,41);
             // b.delete(21);

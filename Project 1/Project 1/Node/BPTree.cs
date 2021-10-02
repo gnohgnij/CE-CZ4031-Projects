@@ -140,22 +140,49 @@ namespace Project_1.Node
             }
         }
 
+        public void totalNodes(BPlusTreeNode cursor)
+        {
+            int height = 0;
+            int total = 0;
+            if (cursor == null) return;
+            Queue<BPlusTreeNode> q = new Queue<BPlusTreeNode>();
+            q.Enqueue(cursor);
+
+            while (q.Count > 0)
+            {
+                height++;
+                int size = q.Count;
+                for (int i = 0; i<size; i++)
+                {
+                    BPlusTreeNode u = q.Peek();
+                    q.Dequeue();
+                    total++;
+                    if (u.checkIsLeaf() == false)
+                    {
+                        foreach (BPlusTreeNode v in u.getPointer2TreeOrData(null, null).getPointer2InternalNodes())
+                        {
+                            q.Enqueue(v);
+                        }
+                    }
+                }
+            }
+            Console.WriteLine("Total nodes created: " + total);
+            Console.WriteLine("Height of B+ Tree: " + height);
+        }
+
         /*
          * function to search for a key in the B+ Tree
          */
         public bool search(int key)
         {
-            int height = 0;
-            Console.WriteLine("Searching for key {0}...", key);
+            // Console.WriteLine("Searching for key {0}...", key);
             if (root == null)
             {
-                Console.WriteLine("B+ Tree is empty, insert keys first!");
-                Console.WriteLine("Height of tree = {0}", height);
+                // Console.WriteLine("B+ Tree is empty, insert keys first!");
                 return false;
             }
             else
             {
-                height++;
                 int numOfNodesAccessed = 0;
                 BPlusTreeNode cursor = root;
                 while (cursor.checkIsLeaf() == false)
@@ -166,8 +193,7 @@ namespace Project_1.Node
                     //go to child node
                     cursor = cursor.getPointer2TreeOrData(null, null).getPointer2InternalNodes()[index];
                     numOfNodesAccessed++;
-                    height++;
-                    Console.WriteLine("1st key of next node = " + cursor.getAllKeys()[0]);
+                    // Console.WriteLine("1st key of next node = " + cursor.getAllKeys()[0]);
                 }
                 List<int> leafNodes = cursor.getAllKeys();
                 int leafNodeIndex = 0;
@@ -183,16 +209,16 @@ namespace Project_1.Node
                 //key not found
                 if (leafNodes[leafNodeIndex] != key)
                 {
-                    Console.WriteLine("Key not found");
+                    // Console.WriteLine("Key not found");
                     return false;
                 }
                 
                 //key found
                 else
                 {
-                    Console.WriteLine("Key found!");
-                    Console.WriteLine("Record details:");
-                    Console.WriteLine("-------------------------------------------");
+                    // Console.WriteLine("Key found!");
+                    // Console.WriteLine("Record details:");
+                    // Console.WriteLine("-------------------------------------------");
                     int recordKey = leafNodes[leafNodeIndex];
                     while (key == recordKey)
                     {
@@ -208,9 +234,8 @@ namespace Project_1.Node
                         recordKey = cursor.getPointer2TreeOrData(null, null).getPointer2Records()[leafNodeIndex]
                             .getNumVotes();
                     }
-                    Console.WriteLine("-------------------------------------------");
-                    Console.WriteLine("Total number of index nodes accessed = {0}", numOfNodesAccessed);
-                    Console.WriteLine("Total height of the B+ tree = {0}", height);
+                    // Console.WriteLine("-------------------------------------------");
+                    // Console.WriteLine("Total number of index nodes accessed = {0}", numOfNodesAccessed);
                     return true;
                 }
             }
