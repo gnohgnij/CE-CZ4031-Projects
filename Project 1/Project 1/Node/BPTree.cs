@@ -1037,15 +1037,7 @@ namespace Project_1.Node
                 }
                 
                 var uniqueBlocks = blockIDs.Distinct().ToList();
-                
-                Console.WriteLine("Data blocks: ");
-                foreach (int i in uniqueBlocks)
-                {
-                    Console.Write("|");
-                    disk.printBlockContent(i);
-                    Console.Write("|");
-                }
-                
+
                 Console.WriteLine("Average of average rating = " + ave);
                 Console.WriteLine("Number of index nodes accessed = {0}", numOfNodesAccessed);
                 Console.WriteLine("Number of blocks accessed = {0}", uniqueBlocks.Count);

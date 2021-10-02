@@ -33,23 +33,24 @@ namespace Project_1
                     program = new Program();
                     disk = program.start(blockSize);
                     Console.WriteLine("Total size of database in MB = {0}", disk.getNumberOfBlocks()*blockSize/Math.Pow(10, 6));
-                    List<Block> listOfBlocks = disk.getBlocks();
-                    BPTree bpTree = new BPTree();
-                    bpTree.setMaxLeafNodeLimit(blockSize);
-                    bpTree.setMaxChildLimit(blockSize);
-                    for (int i = 0; i < listOfBlocks.Count; i++)
-                    {
-                        List<Record> listOfRecords = listOfBlocks[i].getRecords();
-                        for (int j = 0; j < listOfRecords.Count; j++)
-                        {
-                            bpTree.insert(listOfRecords[j].getNumVotes(), listOfRecords[j]);
-                        }
-                    }
-                    Console.WriteLine("Data storing completed!");
-                    Console.WriteLine("---------------------------------------------");
+                    // List<Block> listOfBlocks = disk.getBlocks();
+                    // BPTree bpTree = new BPTree();
+                    // bpTree.setMaxLeafNodeLimit(blockSize);
+                    // bpTree.setMaxChildLimit(blockSize);
+                    // for (int i = 0; i < listOfBlocks.Count; i++)
+                    // {
+                    //     List<Record> listOfRecords = listOfBlocks[i].getRecords();
+                    //     for (int j = 0; j < listOfRecords.Count; j++)
+                    //     {
+                    //         bpTree.insert(listOfRecords[j].getNumVotes(), listOfRecords[j]);
+                    //     }
+                    // }
+                    // Console.WriteLine("Data storing completed!");
+                    // Console.WriteLine("---------------------------------------------");
+                    // bpTree.wait(15, 15, disk);
                 }
             }
-            
+
             //if (userInput == "1")
             //{
             //    Program program = new Program();

@@ -25,7 +25,7 @@ namespace Project_1
                     {
                         string[] values = tuples.Split("\t");
                         char[] tconstArray = new char[10];
-                        for (int i = 0; i < tconstArray.Length; i++)
+                        for (int i = 0; i < values[0].Length; i++)
                         {
                             tconstArray[i] = values[0][i];
                         }
@@ -50,18 +50,22 @@ namespace Project_1
                     blocks.Add(new Block(new List<Record>(), blockSize, blockID));
                     listOfRecords[i].setBlockID(blockID);
                     blocks[j].addNewRecord(listOfRecords[i]);
+                    Console.WriteLine(listOfRecords[i].getBlockID());
                 }
                 else if (blocks[j].getAvailableSpace() > listOfRecords[0].getBytes())
                 {
                     listOfRecords[i].setBlockID(blockID);
                     blocks[j].addNewRecord(listOfRecords[i]);
+                    Console.WriteLine(listOfRecords[i].getBlockID());
                 }
                 else if (blocks[j].getAvailableSpace() < listOfRecords[0].getBytes())
                 {
                     j++;
                     blockID++;
                     blocks.Add(new Block(new List<Record>(), blockSize, blockID));
+                    listOfRecords[i].setBlockID(blockID);
                     blocks[j].addNewRecord(listOfRecords[i]);
+                    Console.WriteLine(listOfRecords[i].getBlockID());
                 }
             }
             Console.WriteLine("Total number of blocks created = " + blocks.Count);
