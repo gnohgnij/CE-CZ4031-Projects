@@ -5,8 +5,8 @@ namespace Project_1.Node
 {
     public class BPTree
     {
-        private static int maxChildLimit = 4;
-        private static int maxLeafNodeLimit = 3;   //to change
+        private int maxChildLimit = 4;
+        private int maxLeafNodeLimit = 3;   //to change
         private BPlusTreeNode root;
         
         /*
@@ -106,13 +106,14 @@ namespace Project_1.Node
          */
         public void search(int key)
         {
-            Console.WriteLine("Searching for key: {0} ...", key);
+            Console.WriteLine("Searching for key {0}...", key);
             if (root == null)
             {
                 Console.WriteLine("B+ Tree is empty, insert keys first!");
             }
             else
             {
+                int numOfNodesAccessed = 0;
                 BPlusTreeNode cursor = root;
                 while (cursor.checkIsLeaf() == false)
                 {
@@ -121,6 +122,7 @@ namespace Project_1.Node
                     
                     //go to child node
                     cursor = cursor.getPointer2TreeOrData(null, null).getPointer2InternalNodes()[index];
+                    numOfNodesAccessed++;
                     Console.WriteLine("1st key of next node = " + cursor.getAllKeys()[0]);
                 }
                 List<int> leafNodes = cursor.getAllKeys();
@@ -128,7 +130,10 @@ namespace Project_1.Node
                 for (int i = 0; i < leafNodes.Count; i++)
                 {
                     if (key == leafNodes[i])
+                    {
                         leafNodeIndex = i;
+                        break;
+                    }
                 }
                 
                 //key not found
@@ -141,9 +146,25 @@ namespace Project_1.Node
                 else
                 {
                     Console.WriteLine("Key found!");
-                    Record found = cursor.getPointer2TreeOrData(null, null).getPointer2Records()[leafNodeIndex];
-                    Console.Write("Record details: ");
-                    found.printRecord();
+                    Console.WriteLine("Record details:");
+                    Console.WriteLine("-------------------------------------------");
+                    int recordKey = leafNodes[leafNodeIndex];
+                    while (key == recordKey)
+                    {
+                        Record found = cursor.getPointer2TreeOrData(null, null).getPointer2Records()[leafNodeIndex];
+                        found.printRecord();
+                        leafNodeIndex++;
+                        if (leafNodeIndex == cursor.getPointer2TreeOrData(null, null).getPointer2Records().Count)
+                        {
+                            cursor = cursor.getPointer2Next();
+                            leafNodeIndex = 0;
+                            numOfNodesAccessed++;
+                        }
+                        recordKey = cursor.getPointer2TreeOrData(null, null).getPointer2Records()[leafNodeIndex]
+                            .getNumVotes();
+                    }
+                    Console.WriteLine("-------------------------------------------");
+                    Console.WriteLine("Total number of index nodes accessed = {0}", numOfNodesAccessed);
                 }
             }
         }
@@ -471,9 +492,6 @@ namespace Project_1.Node
                     }
                 }
             }
-            
-            Console.WriteLine("Left sibling: " + leftSibling);
-            Console.WriteLine("Right sibling: " + rightSibling);
         
             // Check if the value exists in this leaf node
             int pos = 0;
@@ -515,7 +533,7 @@ namespace Project_1.Node
             //     Console.WriteLine("Key not found!");
             //     return;
             // }
-        
+
             // Delete the respective key and record
             cursor.getAllKeys().RemoveAt(pos);    //remove key
             cursor.getPointer2TreeOrData(null, null).getPointer2Records().RemoveAt(pos);
