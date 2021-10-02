@@ -143,7 +143,7 @@ namespace Project_1.Node
         /*
          * function to search for a key in the B+ Tree
          */
-        public void search(int key)
+        public bool search(int key)
         {
             int height = 0;
             Console.WriteLine("Searching for key {0}...", key);
@@ -151,6 +151,7 @@ namespace Project_1.Node
             {
                 Console.WriteLine("B+ Tree is empty, insert keys first!");
                 Console.WriteLine("Height of tree = {0}", height);
+                return false;
             }
             else
             {
@@ -166,7 +167,7 @@ namespace Project_1.Node
                     cursor = cursor.getPointer2TreeOrData(null, null).getPointer2InternalNodes()[index];
                     numOfNodesAccessed++;
                     height++;
-                    Console.WriteLine("1st key of next node = " + cursor.getAllKeys()[0]);
+                    // Console.WriteLine("1st key of next node = " + cursor.getAllKeys()[0]);
                 }
                 List<int> leafNodes = cursor.getAllKeys();
                 int leafNodeIndex = 0;
@@ -183,6 +184,7 @@ namespace Project_1.Node
                 if (leafNodes[leafNodeIndex] != key)
                 {
                     Console.WriteLine("Key not found");
+                    return false;
                 }
                 
                 //key found
@@ -209,6 +211,7 @@ namespace Project_1.Node
                     Console.WriteLine("-------------------------------------------");
                     Console.WriteLine("Total number of index nodes accessed = {0}", numOfNodesAccessed);
                     Console.WriteLine("Total height of the B+ tree = {0}", height);
+                    return true;
                 }
             }
         }

@@ -255,8 +255,23 @@ namespace Project_1
             //b.insert(r55.getNumVotes(), r55);
             BPlusTreeNode pter = b.getRoot();
             b.printTree(pter);
+            b.setMaxChildLimit(44);
+            b.setMaxLeafNodeLimit(44);
             // b.getRootContent();
-            b.searchRange(21, 21);
+            // b.searchRange(21, 21);
+            // bool lanjiao = b.search(21); 
+            // while(lanjiao)
+            // {
+            //     b.delete(21);
+            //     lanjiao = b.search(21);
+            //     b.printTree(pter);
+            // }
+            b.delete(21);
+            b.printTree(pter);
+            b.delete(21);
+            b.printTree(pter);
+            b.delete(21);
+            b.printTree(pter);
             // b.delete(21);
             // b.searchRange(17,41);
             // b.delete(21);
