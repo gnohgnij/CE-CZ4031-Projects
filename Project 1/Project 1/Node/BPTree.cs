@@ -236,7 +236,7 @@ namespace Project_1.Node
                     newLeaf.setIsLeaf(true);
                     newLeaf.getPointer2TreeOrData(null, new List<Record>());
                     
-;                    //swapping pointers
+                    ;                    //swapping pointers
                     BPlusTreeNode temporary = cursor.getPointer2Next(); 
                     cursor.setPointer2Next(newLeaf); 
                     newLeaf.setPointer2Next(temporary);
@@ -387,7 +387,7 @@ namespace Project_1.Node
                 }
                 else
                 {
-                     insertInternal(partitionKey, findParent(root, cursor), newInternalNode);
+                    insertInternal(partitionKey, findParent(root, cursor), newInternalNode);
                 }
             }
         }
@@ -429,9 +429,11 @@ namespace Project_1.Node
         /*
          * function to delete a key from the B+ Tree
          */
-        public void delete(int index)
+        public void delete(int key)
         {
             BPlusTreeNode root = getRoot();
+            
+            //if root is empty, cannot delete anything
             if (root == null)
             {
                 Console.WriteLine("B+ Tree is empty.");
@@ -442,6 +444,7 @@ namespace Project_1.Node
             BPlusTreeNode parent = null;
             int leftSibling = -1, rightSibling = -1;
         
+            //traversing to the leaf node that may contain the key
             while (cursor.checkIsLeaf() != true)
             {
                 for (int i = 0; i < cursor.getAllKeys().Count; i++)
@@ -449,13 +452,16 @@ namespace Project_1.Node
                     parent = cursor;
                     leftSibling = i - 1;
                     rightSibling = i + 1;
-        
-                    if (index < cursor.getAllKeys()[i])
+                    
+                    //if key < element in node, go to first child node
+                    if (key < cursor.getAllKeys()[i])
                     {
 
                         cursor = cursor.getPointer2TreeOrData(null, null).getPointer2InternalNodes()[i];
                         break;
                     }
+                    
+                    //if key >= all elements in node, go to last child node
                     if (i == cursor.getAllKeys().Count - 1)
                     {
                         leftSibling = i;
@@ -465,68 +471,69 @@ namespace Project_1.Node
                     }
                 }
             }
+            
+            Console.WriteLine("Left sibling: " + leftSibling);
+            Console.WriteLine("Right sibling: " + rightSibling);
         
             // Check if the value exists in this leaf node
             int pos = 0;
             bool found = false;
             for (pos = 0; pos < cursor.getAllKeys().Count; pos++)
             {
-                if (cursor.getAllKeys()[pos] == index)
+                if (cursor.getAllKeys()[pos] == key)
                 {
-                    found = false;   //kiv
+                    found = true;
+                    Console.WriteLine("Key {0} found, deleting...", key);
                     break;
                 }
             }
-        
-            //  var itr = lower_bound
-            int itr = 0;
-            List<int> temp = cursor.getAllKeys();
 
-            foreach (int i in temp)
+            if (!found)
             {
-                if (index <= i)
-                    break;
-                //if key > current i : run another iteration
-                itr++;
-            }
-            if (index > temp[temp.Count-1])
-            {
-                itr++;
-            }
-        
-            if (itr == cursor.getAllKeys().Count)
-            {
-                Console.WriteLine("Key not found!");
+                Console.WriteLine("Key {0} not found", key);
                 return;
             }
         
-            // Delete the respective key and record
-            cursor.getAllKeys().RemoveAt(itr);    //remove key
-            cursor.getPointer2TreeOrData(null, null).getPointer2Records().RemoveAt(itr);
-            
-            //shifting keys and records
-            // for (int i = pos; i < cursor.getAllKeys().Count - 1; i++)
+            //  var itr = lower_bound
+            // int itr = 0;
+            // List<int> temp = cursor.getAllKeys();
+            //
+            // foreach (int i in temp)
             // {
-            //     cursor.getAllKeys()[i] = cursor.getAllKeys()[i + 1];
-            //     cursor.getPointer2TreeOrData(null, null).getPointer2Records()[i] = cursor.getPointer2TreeOrData(null, null).getPointer2Records()[i + 1];
+            //     if (key <= i)
+            //         break;
+            //     //if key > current i : run another iteration
+            //     itr++;
             // }
-            
-            //int prev_size = cursor.getAllKeys().Count;
-            //cursor->keys.resize(prev_size - 1);
-            //cursor->ptr2TreeOrData.dataPtr.resize(prev_size - 1);
-            
+            // if (key > temp[temp.Count-1])
+            // {
+            //     itr++;
+            // }
+            //
+            // if (itr == cursor.getAllKeys().Count)
+            // {
+            //     Console.WriteLine("Key not found!");
+            //     return;
+            // }
+        
+            // Delete the respective key and record
+            cursor.getAllKeys().RemoveAt(pos);    //remove key
+            cursor.getPointer2TreeOrData(null, null).getPointer2Records().RemoveAt(pos);
+
             //if leaf node is root node
             if (cursor == root)
             {
+                //if no more keys in root node
                 if (cursor.getAllKeys().Count == 0)
                 {
                     setRoot(null);
                     Console.Write("B+ Tree is now empty...");
                 }
             }
-        
-            Console.WriteLine("Deleted {0} from leaf node successfully!", index);
-            if (cursor.getAllKeys().Count >= (maxLeafNodeLimit + 1) / 2)    //was +1
+            Console.WriteLine("Deleted {0} from leaf node successfully!", key);
+            
+            //each leaf node should have floor function of (n+1)/2 keys
+            if (cursor.getAllKeys().Count >= (maxLeafNodeLimit + 1) / 2)    
             {
                 return;
             }
@@ -538,7 +545,7 @@ namespace Project_1.Node
             {
                 BPlusTreeNode leftNode = parent.getPointer2TreeOrData(null, null).getPointer2InternalNodes()[leftSibling];
                 
-                //if left sibling node has enough keys to lend
+                //if left sibling node has enough keys to lend, [(n+1)/2]+1 keys
                 if (leftNode.getAllKeys().Count >= (maxLeafNodeLimit + 1) / 2 + 1)
                 {
                     //Borrow largest key from left sibling node
@@ -581,7 +588,7 @@ namespace Project_1.Node
             {
                 BPlusTreeNode rightNode = parent.getPointer2TreeOrData(null, null).getPointer2InternalNodes()[rightSibling];
                 
-                //if right sibling node has enough keys to lend
+                //if right sibling node has enough keys to lend, [(n+1)/2]+1 keys
                 if (rightNode.getAllKeys().Count >= (maxLeafNodeLimit + 1) / 2 + 1)
                 {
                     //borrow the smallest key from right sibling node
@@ -616,41 +623,49 @@ namespace Project_1.Node
             }
 
             //if can borrow from neither sibling nodes, merge with sibling node and delete
-            else
+            if (leftSibling >= 0)
             {
-                if (leftSibling >= 0)
-                {
-                    BPlusTreeNode leftNode = parent.getPointer2TreeOrData(null, null).
-                        getPointer2InternalNodes()[leftSibling];
+                Console.WriteLine("Unable to borrow keys from sibling nodes, merging with left sibling...");
+                BPlusTreeNode leftNode = parent.getPointer2TreeOrData(null, null).
+                    getPointer2InternalNodes()[leftSibling];
         
-                    for (int i = 0; i < cursor.getAllKeys().Count; i++)
-                    {
-                        //transfer key and records to left sibling node and connect pointer2next
-                        leftNode.getAllKeys().Add(cursor.getAllKeys()[i]);
-                        leftNode.getPointer2TreeOrData(null, null).getPointer2Records().
-                            Add(cursor.getPointer2TreeOrData(null, null).getPointer2Records()[i]);
-                    }
-        
-                    leftNode.setPointer2Next(cursor.getPointer2Next());
-                    Console.WriteLine("Merging two leaf nodes");
-                    removeInternal(parent.getKey(leftSibling), parent, cursor);
-                }
-                
-                else if (rightSibling <= parent.getAllKeys().Count)
+                for (int i = 0; i < cursor.getAllKeys().Count; i++)
                 {
-                    BPlusTreeNode rightNode = parent.getPointer2TreeOrData(null, null).
-                            getPointer2InternalNodes()[rightSibling];
-                    
-                    //transfer key and record to right sibling node and connect pointer2next;
-                    for (int i = 0; i < rightNode.getAllKeys().Count; i++)
-                    {
-                        cursor.getAllKeys().Add(rightNode.getKey(i));
-                        Console.WriteLine("Merging two leaf nodes");
-                        removeInternal(parent.getKey(rightSibling-1), parent, rightNode);
-                    }
+                    //transfer key and records to left sibling node and connect pointer2next
+                    leftNode.getAllKeys().Add(cursor.getAllKeys()[i]);
+                    leftNode.getPointer2TreeOrData(null, null).getPointer2Records().
+                        Add(cursor.getPointer2TreeOrData(null, null).getPointer2Records()[i]);
                 }
+        
+                leftNode.setPointer2Next(cursor.getPointer2Next());
+                Console.WriteLine("Merging with left sibling successful");
+                removeInternal(parent.getKey(leftSibling), parent, cursor);
             }
-            
+                
+            else if (rightSibling <= parent.getAllKeys().Count)
+            { 
+                Console.WriteLine("Unable to borrow keys from sibling nodes, merging with right sibling...");
+                BPlusTreeNode rightNode = parent.getPointer2TreeOrData(null, null).
+                    getPointer2InternalNodes()[rightSibling];
+                    
+                //transfer key and record to right sibling node and connect pointer2next;
+                for (int i = 0; i < rightNode.getAllKeys().Count; i++)
+                {
+                    cursor.getAllKeys().Add(rightNode.getKey(i));
+                    cursor.getPointer2TreeOrData(null, null).getPointer2Records().
+                        Add(rightNode.getPointer2TreeOrData(null, null).getPointer2Records()[i]);
+                }
+                cursor.setPointer2Next(rightNode.getPointer2Next());
+                Console.WriteLine("index 0 = " +
+                                  parent.getPointer2TreeOrData(null, null).getPointer2InternalNodes()[0].getKey(0));
+                Console.WriteLine("index 1 = " +
+                    parent.getPointer2TreeOrData(null, null).getPointer2InternalNodes()[1].getKey(0));
+                Console.WriteLine("index 2 = " +
+                    parent.getPointer2TreeOrData(null, null).getPointer2InternalNodes()[2].getKey(0));
+                Console.WriteLine("Merging with right sibling successful");
+                removeInternal(parent.getKey(rightSibling-1), parent, rightNode); 
+            }
+
         }
         
         /*
@@ -680,7 +695,7 @@ namespace Project_1.Node
                     }
                 }
             }
-        
+            
             // Deleting key from the parent
             int pos;
             for (pos = 0; pos < cursor.getAllKeys().Count; pos++)
@@ -690,16 +705,15 @@ namespace Project_1.Node
                     break;
                 }
             }
-            for (int i = pos; i < cursor.getAllKeys().Count - 1; i++)
-            {
-                // cursor.getAllKeys()[i] = cursor.getAllKeys()[i + 1];
-                int k = cursor.getKey(i + 1);
-                cursor.getAllKeys().RemoveAt(i);
-                cursor.getAllKeys().Insert(i, k);
-            }
-            // cursor.getAllKeys().resize(cursor.getAllKeys().Count - 1);
+            cursor.getAllKeys().RemoveAt(pos);
+            // for (int i = pos; i < cursor.getAllKeys().Count - 1; i++)
+            // {
+            //     int k = cursor.getKey(i + 1);
+            //     cursor.getAllKeys().RemoveAt(i);
+            //     cursor.getAllKeys().Insert(i, k);
+            // }
         
-            // Now deleting the pointer2tree
+            //Deleting the pointer2tree
             for (pos = 0; pos < cursor.getPointer2TreeOrData(null,null).getPointer2InternalNodes().Count; pos++)
             {
                 if (cursor.getPointer2TreeOrData(null,null).getPointer2InternalNodes()[pos] == child)
@@ -707,22 +721,21 @@ namespace Project_1.Node
                     break;
                 }
             }
-        
-            for (int i = pos; i < cursor.getPointer2TreeOrData(null,null).
-                getPointer2InternalNodes().Count - 1; i++)
-            {
-                // cursor.getPointer2TreeOrData(null,null).getPointer2InternalNodes()[i] = cursor.getPointer2TreeOrData(null,null).getPointer2InternalNodes()[i + 1];
-                BPlusTreeNode k = cursor.getPointer2TreeOrData(null, null).getPointer2InternalNodes()[i + 1];
-                cursor.getPointer2TreeOrData(null, null).getPointer2InternalNodes().RemoveAt(i);
-                cursor.getPointer2TreeOrData(null, null).getPointer2InternalNodes().Insert(i, k);
-            }
+            cursor.getPointer2TreeOrData(null, null).getPointer2InternalNodes().RemoveAt(pos);
+            // for (int i = pos; i < cursor.getPointer2TreeOrData(null,null).
+            //     getPointer2InternalNodes().Count - 1; i++)
+            // {
+            //     BPlusTreeNode k = cursor.getPointer2TreeOrData(null, null).getPointer2InternalNodes()[i + 1];
+            //     cursor.getPointer2TreeOrData(null, null).getPointer2InternalNodes().RemoveAt(i);
+            //     cursor.getPointer2TreeOrData(null, null).getPointer2InternalNodes().Insert(i, k);
+            // }
             //cursor.getPointer2TreeOrData(null,null).getPointer2InternalNodes()
             //    .resize(cursor.getPointer2TreeOrData(null,null).getPointer2InternalNodes().Count - 1);
         
             //if no underflow
             if (cursor.getAllKeys().Count >= (maxChildLimit + 1) / 2 - 1)
             {
-                Console.WriteLine("Deleted " + key + "from internal node succesfully");
+                Console.WriteLine("Deleted {0} from internal node succesfully", key);
                 return;
             }
         
@@ -753,7 +766,7 @@ namespace Project_1.Node
                     }
                 }
         
-                // If possible transfer to leftSibling
+                // If possible to transfer to leftSibling
                 if (leftSibling >= 0)
                 {
                     BPlusTreeNode leftNode = parent.getPointer2TreeOrData(null,null).getPointer2InternalNodes()[leftSibling];
@@ -768,31 +781,22 @@ namespace Project_1.Node
                         int temp = leftNode.getKey(maxIdxKey);
                         parent.getAllKeys().RemoveAt(leftSibling);
                         parent.getAllKeys().Insert(leftSibling, temp);
-                        // cursor->keys.insert(cursor->keys.begin(), parent->keys[leftSibling]);
-                        // parent.getAllKeys()[leftSibling] = leftNode.getAllKeys()[maxIdxKey];
             
                         int maxIdxPtr = leftNode.getPointer2TreeOrData(null,null).
                             getPointer2InternalNodes().Count - 1;
                         cursor.getPointer2TreeOrData(null, null).getPointer2InternalNodes().
                             Insert(0, leftNode.getPointer2TreeOrData(null, null).
                                 getPointer2InternalNodes()[maxIdxPtr]);
-                        //cursor.getPointer2TreeOrData(null, null).getPointer2InternalNodes()
-                        //    .insert(cursor->ptr2TreeOrData.ptr2Tree.begin(), leftNode->ptr2TreeOrData.ptr2Tree[maxIdxPtr]);
-            
-                        //resize the left Sibling Node After Tranfer
-                        //leftNode->keys.resize(maxIdxKey);
-                        //leftNode->ptr2TreeOrData.dataPtr.resize(maxIdxPtr);
-            
                         return;
                     }
                 }
         
-                // If possible transfer to rightSibling
+                // If possible to transfer to rightSibling
                 else if (rightSibling < parent.getPointer2TreeOrData(null,null).getPointer2InternalNodes().Count)
                 {
                     BPlusTreeNode rightNode = parent.getPointer2TreeOrData(null,null).getPointer2InternalNodes()[rightSibling];
             
-                    //Check if LeftSibling has extra Key to transfer
+                    //Check if RightSibling has extra Key to transfer
                     if (rightNode.getAllKeys().Count >= (maxChildLimit + 1) / 2)
                     {
             
@@ -812,19 +816,9 @@ namespace Project_1.Node
                             RemoveAt(0);
 
                         return;
-                        // parent.getAllKeys()[pos] = rightNode.getAllKeys()[0];
-                        //rightNode.getAllKeys().erase(rightNode.getAllKeys().begin());
-            
-                        ////transfer the pointer from rightSibling to cursor
-                        //cursor.getPointer2TreeOrData(null,null).getPointer2InternalNodes()
-                        //    .Add(rightNode.getPointer2TreeOrData(null,null).getPointer2InternalNodes()[0]);
-                        //cursor.getPointer2TreeOrData(null,null).getPointer2InternalNodes()
-                        //    .erase(cursor.getPointer2TreeOrData(null,null).getPointer2InternalNodes().begin());
-            
-                        // return;
                     }
                 }
-        
+
                 //Start to Merge Now, if None of the above cases applied
                 else if (leftSibling >= 0)
                 {
@@ -844,9 +838,6 @@ namespace Project_1.Node
                         cursor.getPointer2TreeOrData(null, null).getPointer2InternalNodes().RemoveAt(i);
                         cursor.getPointer2TreeOrData(null, null).getPointer2InternalNodes().Insert(i, null);
                     }
-            
-                    //cursor->ptr2TreeOrData.ptr2Tree.resize(0);
-                    //cursor->keys.resize(0);
                     cursor.getAllKeys().Clear();
                     cursor.getPointer2TreeOrData(null, null).getPointer2InternalNodes().Clear();
             
@@ -856,7 +847,8 @@ namespace Project_1.Node
                 
                 else if (rightSibling < parent.getPointer2TreeOrData(null,null).getPointer2InternalNodes().Count)
                 {
-                    //cursor + parentkey +rightNode
+
+                    //cursor + parentkey + rightNode
                     BPlusTreeNode rightNode = parent.getPointer2TreeOrData(null, null).getPointer2InternalNodes()[rightSibling];
                     cursor.getAllKeys().Add(parent.getAllKeys()[rightSibling - 1]);
             
@@ -869,13 +861,9 @@ namespace Project_1.Node
                     {
                         cursor.getPointer2TreeOrData(null, null).getPointer2InternalNodes()
                             .Add(rightNode.getPointer2TreeOrData(null, null).getPointer2InternalNodes()[i]);
-                        // rightNode.getPointer2TreeOrData(null, null).getPointer2InternalNodes()[i] = null;
                         rightNode.getPointer2TreeOrData(null, null).getPointer2InternalNodes().RemoveAt(i);
                         rightNode.getPointer2TreeOrData(null, null).getPointer2InternalNodes().Insert(i, null);
                     }
-            
-                    //rightNode->ptr2TreeOrData.ptr2Tree.resize(0);
-                    //rightNode->keys.resize(0);
                     rightNode.getAllKeys().Clear();
                     rightNode.getPointer2TreeOrData(null, null).getPointer2InternalNodes().Clear();
             
@@ -952,4 +940,3 @@ namespace Project_1.Node
         }
     }
 }
-    

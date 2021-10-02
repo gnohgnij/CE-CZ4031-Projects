@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Project_1;
 using Project_1.Node;
 
 namespace Project_1
@@ -14,29 +15,29 @@ namespace Project_1
              * if block size = 500B, each block can hold 19 records, total number of blocks = 499/19 = 27
              */
 
-            Disk disk;
-            Program program;
-            
-            Console.WriteLine("-----Database System Principle Project 1-----");
-            Console.WriteLine("Enter any key to start storing data");
-            Console.WriteLine("---------------------------------------------");
-            string input = Console.ReadLine();
-            if(string.IsNullOrEmpty(input))
-                Console.WriteLine("No keys entered, please try again...");
-            else
-            {
-                Console.WriteLine("Enter size of block (100 or 500): ");
-                string blockSizeInput = Console.ReadLine();
-                Console.WriteLine("---------------------------------------------");
-                int blockSize = int.Parse(blockSizeInput);
-                if(!(blockSize == 100 || blockSize == 500))
-                    Console.WriteLine("Invalid block size entered, please try again...");
-                else
-                {
-                    Console.WriteLine("Block size {0} bytes entered, storing data now...", blockSize);
-                    program = new Program();
-                    disk = program.start(blockSize);
-                    Console.WriteLine("Total size of database in MB = {0}", disk.getNumberOfBlocks()*blockSize/Math.Pow(10, 6));
+            // Disk disk;
+            // Program program;
+            //
+            // Console.WriteLine("-----Database System Principle Project 1-----");
+            // Console.WriteLine("Enter any key to start storing data");
+            // Console.WriteLine("---------------------------------------------");
+            // string input = Console.ReadLine();
+            // if(string.IsNullOrEmpty(input))
+            //     Console.WriteLine("No keys entered, please try again...");
+            // else
+            // {
+            //     Console.WriteLine("Enter size of block (100 or 500): ");
+            //     string blockSizeInput = Console.ReadLine();
+            //     Console.WriteLine("---------------------------------------------");
+            //     int blockSize = int.Parse(blockSizeInput);
+            //     if(!(blockSize == 100 || blockSize == 500))
+            //         Console.WriteLine("Invalid block size entered, please try again...");
+            //     else
+            //     {
+            //         Console.WriteLine("Block size {0} bytes entered, storing data now...", blockSize);
+            //         program = new Program();
+            //         disk = program.start(blockSize);
+            //         Console.WriteLine("Total size of database in MB = {0}", disk.getNumberOfBlocks()*blockSize/Math.Pow(10, 6));
                     // List<Block> listOfBlocks = disk.getBlocks();
                     // BPTree bpTree = new BPTree();
                     //
@@ -50,8 +51,8 @@ namespace Project_1
                     // }
                     // Console.WriteLine("Data storing completed!");
                     // Console.WriteLine("---------------------------------------------");
-                }
-            }
+            //     }
+            // }
             
             //if (userInput == "1")
             //{
@@ -117,8 +118,8 @@ namespace Project_1
             //    }
 
             //  }
-                // Start s = new Start();
-                // s.test();
+            Start s = new Start();
+            s.test();
 
                 // Program p = new Program();
                 // Disk d = p.start(100);
@@ -145,8 +146,8 @@ namespace Project_1
             Record r16 = new Record(new char[]{'a', 'b'}, 5.4, 3);
             Record r17 = new Record(new char[]{'a', 'b'}, 5.4, 32);
             Record r18 = new Record(new char[]{'a', 'b'}, 5.4, 33);
-            Record r19 = new Record(new char[]{'a', 'b'}, 5.4, 2000);
-            Record r20 = new Record(new char[]{'a', 'b'}, 5.4, 1000);
+            Record r19 = new Record(new char[]{'a', 'b'}, 5.4, 21);
+            Record r20 = new Record(new char[]{'a', 'b'}, 5.4, 21);
             Record r21 = new Record(new char[]{'a', 'b'}, 5.4, 29);
             Record r22 = new Record(new char[]{'a', 'b'}, 5.4, 26);
             Record r23 = new Record(new char[]{'a', 'b'}, 5.4, 27);
@@ -256,14 +257,15 @@ namespace Project_1
             //b.insert(r55.getNumVotes(), r55);
             BPlusTreeNode pter = b.getRoot();
             b.printTree(pter);
-
-            // b.searchRange(17,41);
             b.delete(21);
             b.printTree(pter);
-            b.delete(1000);
-            b.printTree(pter);
-            b.delete(2000);
-            b.printTree(pter);
+            // b.searchRange(17,41);
+            // b.delete(21);
+            // b.printTree(pter);
+            // b.delete(1000);
+            // b.printTree(pter);
+            // b.delete(2000);
+            // b.printTree(pter);
         }
     }
 }
