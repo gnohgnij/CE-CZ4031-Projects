@@ -656,12 +656,6 @@ namespace Project_1.Node
                         Add(rightNode.getPointer2TreeOrData(null, null).getPointer2Records()[i]);
                 }
                 cursor.setPointer2Next(rightNode.getPointer2Next());
-                Console.WriteLine("index 0 = " +
-                                  parent.getPointer2TreeOrData(null, null).getPointer2InternalNodes()[0].getKey(0));
-                Console.WriteLine("index 1 = " +
-                    parent.getPointer2TreeOrData(null, null).getPointer2InternalNodes()[1].getKey(0));
-                Console.WriteLine("index 2 = " +
-                    parent.getPointer2TreeOrData(null, null).getPointer2InternalNodes()[2].getKey(0));
                 Console.WriteLine("Merging with right sibling successful");
                 removeInternal(parent.getKey(rightSibling-1), parent, rightNode); 
             }

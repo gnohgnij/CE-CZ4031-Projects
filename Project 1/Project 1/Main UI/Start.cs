@@ -259,6 +259,12 @@ namespace Project_1
             b.printTree(pter);
             b.delete(21);
             b.printTree(pter);
+            b.delete(21);
+            b.printTree(pter);
+            b.delete(21);
+            b.printTree(pter);
+            b.delete(21);
+            b.printTree(pter);
             // b.searchRange(17,41);
             // b.delete(21);
             // b.printTree(pter);
