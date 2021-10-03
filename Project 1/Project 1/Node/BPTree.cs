@@ -290,7 +290,7 @@ namespace Project_1.Node
                     {
                         cursor.getAllKeys().Insert(index, key);
                         cursor.getPointer2TreeOrData(null, null).getPointer2Records().Insert(index, record);
-                        Console.WriteLine("Inserted key {0} successfully at index {1}", key, index);
+                      //  Console.WriteLine("Inserted key {0} successfully at index {1}", key, index);
                     }
                 }
                 
@@ -355,20 +355,20 @@ namespace Project_1.Node
                     //leaf node into the root node
                     if (cursor == root)
                     {
-                        Console.WriteLine("Leaf node == Root node");
+                      //  Console.WriteLine("Leaf node == Root node");
                         BPlusTreeNode newRoot = new BPlusTreeNode(new List<int>());
                         newRoot.getAllKeys().Add(newLeaf.getAllKeys()[0]);
                         newRoot.getPointer2TreeOrData(new List<BPlusTreeNode>(), null).getPointer2InternalNodes()
                             .Add(cursor);
                         newRoot.getPointer2TreeOrData(null, null).getPointer2InternalNodes().Add(newLeaf);
                         root = newRoot;
-                        Console.WriteLine("Created new root");
+                       // Console.WriteLine("Created new root");
                     }
                     
                     //leaf node being split is not root node, store 1st index of new leaf node into internal node
                     else
                     {
-                        Console.WriteLine("Leaf node != Root node, putting key {0} into Internal node...", key);
+                       // Console.WriteLine("Leaf node != Root node, putting key {0} into Internal node...", key);
                         insertInternal(newLeaf.getAllKeys()[0], parent, newLeaf);
                     }
                 }
@@ -403,14 +403,14 @@ namespace Project_1.Node
                     cursor.getPointer2TreeOrData(null, null).getPointer2InternalNodes().Insert(index + 1, child);
                 }
 
-                Console.WriteLine("Inserted key {0} in the internal node successfully", key);
+               // Console.WriteLine("Inserted key {0} in the internal node successfully", key);
             }
             
 
             //if internal node has no empty space
             else
             {
-                Console.WriteLine("Overflow in internal, splitting internal nodes");
+               // Console.WriteLine("Overflow in internal, splitting internal nodes");
                 
                 //hold all keys and records in a temporary list each
                 List<int> virtualKeyNode = new List<int>();
@@ -477,7 +477,7 @@ namespace Project_1.Node
                     newRoot.getPointer2TreeOrData(new List<BPlusTreeNode>(), null).getPointer2InternalNodes().Add(cursor);
                     newRoot.getPointer2TreeOrData(null,null).getPointer2InternalNodes().Add(newInternalNode);
                     root = newRoot;
-                    Console.WriteLine("Created New Root");
+                 //   Console.WriteLine("Created New Root");
                 }
                 else
                 {

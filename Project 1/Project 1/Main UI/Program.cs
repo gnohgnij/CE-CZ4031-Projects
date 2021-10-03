@@ -8,10 +8,13 @@ namespace Project_1
 {
     class Program
     {
-        public List<Record> readAllTuples()
+        public Disk readAllTuples(int blockSize)
         {
+            List<Block> blocks = new List<Block>();
+            int j = 0;
+            int blockID = 1;
             List<Record> temp = new List<Record>();
-            using (var reader = new StreamReader("C:\\Users\\jingh\\Desktop\\CE-CZ4031-Projects\\Project 1\\Project 1\\testing.tsv"))
+            using (var reader = new StreamReader("C:\\Users\\jeral\\OneDrive\\Desktop\\DSP_New_2\\Project 1\\Project 1\\data.tsv"))
             {
                 bool firstLine = true;
                 while (!reader.EndOfStream)
@@ -30,19 +33,47 @@ namespace Project_1
                             tconstArray[i] = values[0][i];
                         }
                         Record r = new Record(tconstArray, Double.Parse(values[1]), int.Parse(values[2]));
-                        temp.Add(r);
+                        if (blocks.Count == 0)
+                        {
+                            blocks.Add(new Block(new List<Record>(), blockSize, blockID));
+                            r.setBlockID(blockID);
+                            blocks[j].addNewRecord(r);
+
+                            //r.printRecord();
+                            //Console.WriteLine(r.getBlockID());
+                        }
+                        else if (blocks[j].getAvailableSpace() > r.getBytes())
+                        {
+                            r.setBlockID(blockID);
+                            blocks[j].addNewRecord(r);
+                            //r.printRecord();
+                            //Console.WriteLine(r.getBlockID());
+                        }
+                        else if (blocks[j].getAvailableSpace() < r.getBytes())
+                        {
+                            j++;
+                            blockID++;
+                            blocks.Add(new Block(new List<Record>(), blockSize, blockID));
+
+                            blocks[j].printRecords();
+                            r.setBlockID(blockID);
+                            blocks[j].addNewRecord(r);
+                            //r.printRecord();
+                            //Console.WriteLine(r.getBlockID());
+                        }      
                     }
                 }
             }
-            Console.WriteLine("Total number of records created = " + temp.Count);
-            return temp;
+            Console.WriteLine("Total number of blocks created = " + blocks.Count);
+            return new Disk(blocks);
         }
 
         public Disk recordsIntoDisk(List<Record> listOfRecords, int blockSize)
         {
+            
             List<Block> blocks = new List<Block>();
             int j = 0;
-            int blockID = 1;
+            int blockID = 10;
             for (int i = 0; i < listOfRecords.Count; i++)
             {
                 if (blocks.Count == 0)
@@ -50,12 +81,15 @@ namespace Project_1
                     blocks.Add(new Block(new List<Record>(), blockSize, blockID));
                     listOfRecords[i].setBlockID(blockID);
                     blocks[j].addNewRecord(listOfRecords[i]);
+
+                    listOfRecords[i].printRecord();
                     Console.WriteLine(listOfRecords[i].getBlockID());
                 }
                 else if (blocks[j].getAvailableSpace() > listOfRecords[0].getBytes())
                 {
                     listOfRecords[i].setBlockID(blockID);
                     blocks[j].addNewRecord(listOfRecords[i]);
+                    listOfRecords[i].printRecord();
                     Console.WriteLine(listOfRecords[i].getBlockID());
                 }
                 else if (blocks[j].getAvailableSpace() < listOfRecords[0].getBytes())
@@ -63,8 +97,11 @@ namespace Project_1
                     j++;
                     blockID++;
                     blocks.Add(new Block(new List<Record>(), blockSize, blockID));
+                    
+                    blocks[j].printRecords();
                     listOfRecords[i].setBlockID(blockID);
                     blocks[j].addNewRecord(listOfRecords[i]);
+                    listOfRecords[i].printRecord();
                     Console.WriteLine(listOfRecords[i].getBlockID());
                 }
             }
@@ -74,8 +111,7 @@ namespace Project_1
         
         public Disk start(int blockSize)
         {
-            List<Record> list = readAllTuples();
-            return recordsIntoDisk(list, blockSize);
+          return readAllTuples(blockSize);
         }
         
         

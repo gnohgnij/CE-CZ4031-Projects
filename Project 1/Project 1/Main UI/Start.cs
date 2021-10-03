@@ -9,9 +9,10 @@ namespace Project_1
     {
         public static void Main(string[] args)
         {
-
+            Start start = new Start();
             Disk disk;
             Program program;
+            BPTree bpTree;
             
             Console.WriteLine("-----Database System Principle Project 1-----");
             Console.WriteLine("Enter any key to start storing data");
@@ -33,93 +34,17 @@ namespace Project_1
                     program = new Program();
                     disk = program.start(blockSize);
                     Console.WriteLine("Total size of database in MB = {0}", disk.getNumberOfBlocks()*blockSize/Math.Pow(10, 6));
-                    // List<Block> listOfBlocks = disk.getBlocks();
-                    // BPTree bpTree = new BPTree();
-                    // bpTree.setMaxLeafNodeLimit(blockSize);
-                    // bpTree.setMaxChildLimit(blockSize);
-                    // for (int i = 0; i < listOfBlocks.Count; i++)
-                    // {
-                    //     List<Record> listOfRecords = listOfBlocks[i].getRecords();
-                    //     for (int j = 0; j < listOfRecords.Count; j++)
-                    //     {
-                    //         bpTree.insert(listOfRecords[j].getNumVotes(), listOfRecords[j]);
-                    //     }
-                    // }
-                    // Console.WriteLine("Data storing completed!");
-                    // Console.WriteLine("---------------------------------------------");
-                    // bpTree.wait(15, 15, disk);
+                    bpTree = start.Experiment2(blockSize, disk);
+                    start.Experiment3(bpTree);
                 }
             }
 
-            //if (userInput == "1")
-            //{
-            //    Program program = new Program();
-
-            //    Console.WriteLine("---------------------------------------------");
-            //    Console.WriteLine("Enter size of block:");
-            //    Console.WriteLine("---------------------------------------------");
-            //    string blockSizeInput = Console.ReadLine();
-            //    Disk disk = program.start(int.Parse(blockSizeInput));
-
-            //}
-            //else if (userInput == "2")
-            //{
-            //    while (true)
-            //    {
-            //        Console.WriteLine("Enter which experiment to run: ");
-            //        Console.WriteLine("Experiment 1: Storing data on the disk");
-            //        Console.WriteLine("Experiment 2: Build a BPlus Tree based on 'numVotes'");
-            //        Console.WriteLine("Experiment 3: Retrieve movies with 'numVotes' equal to 500");
-            //        Console.WriteLine("Experiement 4: Delete movies of 'numVotes' equal to 1000");
-            //        Console.WriteLine("5: Reset Program");
-            //        string Input = Console.ReadLine();
-            //        if (Input == "1")
-            //        {
-            //            //Exp 1: Report number of blocks and size of DB
-            //            Console.WriteLine("Number of blocks: " + blocks);
-            //            Console.WriteLine("Size of DB: " + size);
-            //        }
-            //        if (Input == "2")
-            //        {
-            //            //Exp 2: Sequential insertion and report n value, number of nodes height of the B+ tree and content of root & 1st child node
-            //            Console.WriteLine("n value: ");
-            //            Console.WriteLine("Number of nodes height: ");
-            //            Console.WriteLine("Content of Root Node: ");
-            //            Console.WriteLine("Content of 1st Child Node: ");
-            //        }
-            //        if (Input == "3")
-            //        {
-            //            //Exp 3: Report number and content of index nodes, number and content of data blocks the program accesses and avergae rating of records that are returned
-            //            Console.WriteLine("Number of index nodes: ");
-            //            Console.WriteLine("Content of index nodes: ");
-            //            Console.WriteLine("Content of data blocks: ");
-            //            Console.WriteLine("Average rating of of records: ");
-            //        }
-            //        if (Input == "4")
-            //        {
-            //            //Exp 4: Update the B + tree accordingly
-            //            //Report the number of times that a node is deleted or two nodes are merged during the process of the updating the B + tree
-            //            //Report the number nodes of the updated B + tree, " +
-            //            //Report the height of the updated B + tree," +
-            //            //Report the content of the root node and its 1st child node of the updated B + tree"
-            //            Console.WriteLine("Number of node deletion: ");
-            //            Console.WriteLine("Number of node mergers: ");
-            //            Console.WriteLine("Height of updated B+ Tree: ");
-            //            Console.WriteLine("Content of the Root Node: ");
-            //            Console.WriteLine("Content of the 1st Child Node: ");
-            //        }
-            //        if (Input == "5")
-            //        {
-            //            continue;
-            //        }
-            //    }
-
-            //  }
-            // Start s = new Start();
             // s.test();
 
             // Program p = new Program();
             // Disk d = p.start(100);
+            Record r1 = new Record(new char[] { 'a', 'b' }, 5.4, 4);
+            r1.setBlockID(1);
         }
 
         public void test()
@@ -286,6 +211,48 @@ namespace Project_1
             //     b.printTree(pter);
             // }
             // b.searchRange(1, 6, null);
+        }
+
+
+        public BPTree Experiment2(int blockSize, Disk disk)
+        {
+            BPTree bpTree = new BPTree();
+            BPlusTreeNode pointer = new BPlusTreeNode(new List<int>());
+            List<Block> listOfBlocks = disk.getBlocks();
+            //Exp 2: Sequential insertion and report n value, number of nodes height of the B+ tree and content of root & 1st child node
+            Console.WriteLine("Creating B+ Tree...");
+            bpTree.setMaxLeafNodeLimit(blockSize);
+            bpTree.setMaxChildLimit(blockSize);
+            for (int i = 0; i < listOfBlocks.Count; i++)
+            {
+                List<Record> listOfRecords = listOfBlocks[i].getRecords();
+                for (int j = 0; j < listOfRecords.Count; j++)
+                {
+                    bpTree.insert(listOfRecords[j].getNumVotes(), listOfRecords[j]);
+                }
+            }
+
+         
+            Console.WriteLine("---------------------------------------------");
+            Console.WriteLine("n value: " + bpTree.getMaxLeafNodeLimit());
+            pointer = bpTree.getRoot();
+            bpTree.totalNodes(pointer);
+            bpTree.getRootContent();
+            Console.WriteLine("---------------------------------------------");
+
+            return bpTree;
+        }
+        public void Experiment3(BPTree bpTree)
+        {
+            bpTree.searchRange(500,500);
+        }
+        public void Experiment4()
+        {
+
+        }
+        public void Experiment5()
+        {
+
         }
     }
 }

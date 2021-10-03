@@ -52,7 +52,8 @@ namespace Project_1
         {
             string str = new string(getTConst());
             Console.WriteLine("tconst = " + str + ", averageRating = " + getAverageRating()
-            + ", numVotes = " + getNumVotes());
+            + ", numVotes = " + getNumVotes() + " blockID = " + blockID);
+            
         }
     }
 }
