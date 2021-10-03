@@ -94,15 +94,18 @@ namespace Project_1
             Console.WriteLine("---------------------------------------------");
             Console.WriteLine("Experiment 5 starting...");
             Console.WriteLine("---------------------------------------------");
+            
             BPlusTreeNode pointer = new BPlusTreeNode(new List<int>());
             pointer = bpTree.getRoot();
             int deleteKey = 15;
+            bpTree.setDeleteNode();
+            
             while (bpTree.search(deleteKey))
             {
                 bpTree.delete(deleteKey);
                 bpTree.search(deleteKey);
             }
-            
+            Console.WriteLine("Nodes deleted is: " + bpTree.getDeleteNode());
             //bpTree.printTree(pointer);
         }
     }

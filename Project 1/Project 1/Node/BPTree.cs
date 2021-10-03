@@ -9,10 +9,21 @@ namespace Project_1.Node
         private int maxChildLimit;
         private int maxLeafNodeLimit;
         private BPlusTreeNode root;
+        private int deleteNode;
         
         /*
          * function to get maxLeafNodeLimit
          */
+        public void setDeleteNode()
+        {
+            this.deleteNode = 0;
+        }
+
+        public int getDeleteNode()
+        {
+            return this.deleteNode;
+        }
+        
         public int getMaxLeafNodeLimit()
         {
             return this.maxLeafNodeLimit;
@@ -526,7 +537,7 @@ namespace Project_1.Node
         public void delete(int key)
         {
             BPlusTreeNode root = getRoot();
-            int deleteCount = 0;
+            // int deleteCount = 0;
             
             //if root is empty, cannot delete anything
             if (root == null)
@@ -695,7 +706,7 @@ namespace Project_1.Node
             //if can borrow from neither sibling nodes, merge with sibling node and delete
             if (leftSibling >= 0)
             {
-                deleteCount++;
+                deleteNode++;
                 //Console.WriteLine("Unable to borrow keys from sibling nodes, merging with left sibling...");
                 BPlusTreeNode leftNode = parent.getPointer2TreeOrData(null, null).
                     getPointer2InternalNodes()[leftSibling];
@@ -715,7 +726,7 @@ namespace Project_1.Node
                 
             else if (rightSibling <= parent.getAllKeys().Count)
             {
-                deleteCount++;
+                deleteNode++;
                 //Console.WriteLine("Unable to borrow keys from sibling nodes, merging with right sibling...");
                 BPlusTreeNode rightNode = parent.getPointer2TreeOrData(null, null).
                     getPointer2InternalNodes()[rightSibling];
@@ -732,7 +743,7 @@ namespace Project_1.Node
                 removeInternal(parent.getKey(rightSibling-1), parent, rightNode); 
             }
 
-            Console.WriteLine("Number of nodes deleted = {0}", deleteCount);
+            // Console.WriteLine("Number of nodes deleted = {0}", deleteCount);
         }
         
         /*
@@ -741,7 +752,7 @@ namespace Project_1.Node
         public void removeInternal(int key, BPlusTreeNode cursor, BPlusTreeNode child)
         {
             BPlusTreeNode root = getRoot();
-            int deleteCount = 0;
+            // int deleteCount = 0;
         
             //check if key from root is to be deleted
             if(cursor == root)
@@ -835,7 +846,6 @@ namespace Project_1.Node
                 // If possible to transfer to leftSibling
                 if (leftSibling >= 0)
                 {
-                    deleteCount++;
                     BPlusTreeNode leftNode = parent.getPointer2TreeOrData(null,null).getPointer2InternalNodes()[leftSibling];
             
                     //Check if LeftSibling has extra Key to transfer
@@ -861,7 +871,6 @@ namespace Project_1.Node
                 // If possible to transfer to rightSibling
                 if (rightSibling < parent.getPointer2TreeOrData(null,null).getPointer2InternalNodes().Count)
                 {
-                    deleteCount++;
                     BPlusTreeNode rightNode = parent.getPointer2TreeOrData(null,null).getPointer2InternalNodes()[rightSibling];
             
                     //Check if RightSibling has extra Key to transfer
@@ -889,6 +898,7 @@ namespace Project_1.Node
                 //Start to Merge Now, if None of the above cases applied
                 if (leftSibling >= 0)
                 {
+                    deleteNode++;
                     //leftNode + parent key + cursor
                     BPlusTreeNode leftNode = parent.getPointer2TreeOrData(null,null).getPointer2InternalNodes()[leftSibling];
                     leftNode.getAllKeys().Add(parent.getAllKeys()[leftSibling]);
@@ -914,6 +924,7 @@ namespace Project_1.Node
                 
                 else if (rightSibling < parent.getPointer2TreeOrData(null,null).getPointer2InternalNodes().Count)
                 {
+                    deleteNode++;
                     //cursor + parentkey + rightNode
                     BPlusTreeNode rightNode = parent.getPointer2TreeOrData(null, null).getPointer2InternalNodes()[rightSibling];
                     cursor.getAllKeys().Add(parent.getAllKeys()[rightSibling - 1]);
@@ -937,7 +948,7 @@ namespace Project_1.Node
                     //Console.WriteLine("Merged with right sibling");
                 }
             }
-            Console.WriteLine("Number of internal nodes deleted = {0}", deleteCount);
+            // Console.WriteLine("Number of internal nodes deleted = {0}", deleteCount);
         }
 
         /*
