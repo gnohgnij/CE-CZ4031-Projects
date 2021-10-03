@@ -102,11 +102,11 @@ namespace Project_1
             pointer = bpTree.getRoot();
             int deleteKey = 1000;
             bpTree.setDeleteNode();
-            
-            while (bpTree.search(deleteKey))
+
+            bool search = bpTree.delete(deleteKey);
+            while (search)
             {
-                bpTree.delete(deleteKey);
-                bpTree.search(deleteKey);
+                search = bpTree.delete(deleteKey);
             }
             Console.WriteLine("Nodes deleted is: " + bpTree.getDeleteNode());
             bpTree.totalNodes(pointer);

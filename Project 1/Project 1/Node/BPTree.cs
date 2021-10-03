@@ -42,7 +42,7 @@ namespace Project_1.Node
          */
         public void setMaxChildLimit(int blocksize)
         {
-            this.maxChildLimit = (blocksize-8)/12 + 1;
+            this.maxChildLimit = (blocksize)/8 + 1;
         }
         
         /*
@@ -50,7 +50,7 @@ namespace Project_1.Node
          */
         public void setMaxLeafNodeLimit(int blocksize)
         {
-            this.maxLeafNodeLimit = (blocksize-8)/12;
+            this.maxLeafNodeLimit = (blocksize)/8;
         }
         
         /*
@@ -534,7 +534,7 @@ namespace Project_1.Node
         /*
          * function to delete a key from the B+ Tree
          */
-        public void delete(int key)
+        public bool delete(int key)
         {
             BPlusTreeNode root = getRoot();
             // int deleteCount = 0;
@@ -543,7 +543,7 @@ namespace Project_1.Node
             if (root == null)
             {
                 Console.WriteLine("B+ Tree is empty.");
-                return;
+                return false;
             }
         
             BPlusTreeNode cursor = root;
@@ -606,7 +606,7 @@ namespace Project_1.Node
             if (!found)
             {
                 //Console.WriteLine("Key {0} not found", key);
-                return;
+                return false;
             }
 
             // Delete the respective key and record
@@ -628,7 +628,7 @@ namespace Project_1.Node
             //each leaf node should have floor function of (n+1)/2 keys
             if (cursor.getAllKeys().Count >= (getMaxLeafNodeLimit() + 1) / 2)    
             {
-                return;
+                return true;
             }
             //Console.WriteLine("Underflow in the leaf node happened");
             //Console.WriteLine("Starting redistribution...");
@@ -660,7 +660,7 @@ namespace Project_1.Node
                     parent.getAllKeys().Insert(leftSibling, cursor.getAllKeys()[0]);
                     
                     //Console.WriteLine("Borrowed key from left sibling node!");
-                    return;
+                    return true;
                 }       
             }
             
@@ -689,7 +689,7 @@ namespace Project_1.Node
                     //update parent node
                     parent.getAllKeys().RemoveAt(rightSibling-1);
                     parent.getAllKeys().Insert(rightSibling-1, rightNode.getAllKeys()[0]);
-                    return;
+                    return true;
 
                     //resize the right Sibling Node After Tranfer
                     //rightNode->keys.erase(rightNode->keys.begin());
@@ -742,6 +742,8 @@ namespace Project_1.Node
                 //Console.WriteLine("Merging with right sibling successful");
                 removeInternal(parent.getKey(rightSibling-1), parent, rightNode); 
             }
+
+            return true;
 
             // Console.WriteLine("Number of nodes deleted = {0}", deleteCount);
         }
