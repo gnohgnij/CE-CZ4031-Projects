@@ -82,7 +82,7 @@ namespace Project_1
             Console.WriteLine("---------------------------------------------");
             Console.WriteLine("Experiment 3 starting...");
             Console.WriteLine("---------------------------------------------");
-            bpTree.searchRange(15, 15, disk);
+            bpTree.searchRange(500, 500, disk);
 
         }
         public void Experiment4(BPTree bpTree, Disk disk)
@@ -100,7 +100,7 @@ namespace Project_1
             
             BPlusTreeNode pointer = new BPlusTreeNode(new List<int>());
             pointer = bpTree.getRoot();
-            int deleteKey = 15;
+            int deleteKey = 1000;
             bpTree.setDeleteNode();
             
             while (bpTree.search(deleteKey))

@@ -1021,7 +1021,6 @@ namespace Project_1.Node
 
                 double ave = 0;
                 int count = 0;
-                Console.WriteLine(records.Count);
                 foreach(Record r in records)
                 {
                     ave += r.getAverageRating();
@@ -1033,7 +1032,7 @@ namespace Project_1.Node
                 List<int> blockIDs = new List<int>();
                 foreach (Record r in records)
                 {
-                    r.printRecord();
+                    // r.printRecord();
                     blockIDs.Add(r.getBlockID());
                 }
 
