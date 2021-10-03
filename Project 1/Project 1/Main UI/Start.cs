@@ -30,14 +30,17 @@ namespace Project_1
                     Console.WriteLine("Invalid block size entered, please try again...");
                 else
                 {
+                    Console.WriteLine("---------------------------------------------");
+                    Console.WriteLine("Experiment 1 starting...");
+                    Console.WriteLine("---------------------------------------------");
                     Console.WriteLine("Block size {0} bytes entered, storing data now...", blockSize);
                     program = new Program();
                     disk = program.start(blockSize);
                     Console.WriteLine("Total size of database in MB = {0}", disk.getNumberOfBlocks()*blockSize/Math.Pow(10, 6));
                     bpTree = start.Experiment2(blockSize, disk);
                     start.Experiment3(bpTree, disk);
-                    //start.Experiment4(bpTree, disk);
-                    //start.Experiment5(bpTree);
+                    start.Experiment4(bpTree, disk);
+                    start.Experiment5(bpTree);
                 }
             }
         }
@@ -106,6 +109,8 @@ namespace Project_1
                 bpTree.search(deleteKey);
             }
             Console.WriteLine("Nodes deleted is: " + bpTree.getDeleteNode());
+            bpTree.totalNodes(pointer);
+            bpTree.getRootContent();
             //bpTree.printTree(pointer);
         }
     }
