@@ -1051,7 +1051,7 @@ namespace Project_1.Node
             if (root == null)
             {
                 Console.WriteLine("B+ Tree is empty, insert keys first!");
-                Console.WriteLine("Number of index nodes accessed = {0}", numOfNodesAccessed-1);
+             //   Console.WriteLine("Number of index nodes accessed = {0}", numOfNodesAccessed-1);
             }
             else
             {
@@ -1059,7 +1059,7 @@ namespace Project_1.Node
                 BPlusTreeNode cursor = root;
 
                 Console.Write("Nodes Accessed: |");
-                int nodeCount = 0;
+                int nodeCount = 1;
 
                 while (cursor.checkIsLeaf() == false)
                 {
@@ -1084,8 +1084,8 @@ namespace Project_1.Node
                 //key found
                 bool check = false;
                 Console.WriteLine();
-                Console.WriteLine("Searching in process... record details:");
-                Console.WriteLine("---------------------------------------");
+               // Console.WriteLine("Searching in process... record details:");
+              //  Console.WriteLine("---------------------------------------");
                 while (cursor.getPointer2Next() != null && check == false)
                 {
                     List <Record> found = cursor.getPointer2TreeOrData(null, null).getPointer2Records();
@@ -1100,13 +1100,13 @@ namespace Project_1.Node
                         if (r.getNumVotes() > lowerBound)
                         {
                             records.Add(r);
-                            r.printRecord();
+                            //r.printRecord();
                         }
                     }
                     cursor = cursor.getPointer2Next();
                     numOfNodesAccessed++;
                 }
-                Console.WriteLine("---------------------------------------");
+               // Console.WriteLine("---------------------------------------");
 
                 double ave = 0;
                 int count = 0;
