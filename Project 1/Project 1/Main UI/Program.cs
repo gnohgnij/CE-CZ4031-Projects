@@ -14,7 +14,7 @@ namespace Project_1
             int j = 0;
             int blockID = 1;
             List<Record> temp = new List<Record>();
-            using (var reader = new StreamReader("C:\\Users\\jeral\\OneDrive\\Desktop\\DSP_New_2\\Project 1\\Project 1\\data.tsv"))
+            using (var reader = new StreamReader("C:\\Users\\jeral\\OneDrive\\Desktop\\DSP_New_2\\Project 1\\Project 1\\testing.tsv"))
             {
                 bool firstLine = true;
                 while (!reader.EndOfStream)

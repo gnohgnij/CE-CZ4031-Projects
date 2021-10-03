@@ -35,7 +35,9 @@ namespace Project_1
                     disk = program.start(blockSize);
                     Console.WriteLine("Total size of database in MB = {0}", disk.getNumberOfBlocks()*blockSize/Math.Pow(10, 6));
                     bpTree = start.Experiment2(blockSize, disk);
-                    start.Experiment3(bpTree);
+                    start.Experiment3(bpTree, disk);
+                    start.Experiment4(bpTree, disk);
+                    start.Experiment5(bpTree);
                 }
             }
 
@@ -201,21 +203,14 @@ namespace Project_1
             b.setMaxChildLimit(44);
             b.setMaxLeafNodeLimit(44);
             b.totalNodes(pter);
-            // b.searchRange(21, 21);
-            // bool lanjiao = b.search(21); 
-            // while(lanjiao)
-            // {
-            //     b.delete(21);
-            //     lanjiao = b.search(21);
-            //     b.totalNodes(pter);
-            //     b.printTree(pter);
-            // }
-            // b.searchRange(1, 6, null);
         }
 
 
         public BPTree Experiment2(int blockSize, Disk disk)
         {
+            Console.WriteLine("---------------------------------------------");
+            Console.WriteLine("Experiment 2 starting...");
+            Console.WriteLine("---------------------------------------------");
             BPTree bpTree = new BPTree();
             BPlusTreeNode pointer = new BPlusTreeNode(new List<int>());
             List<Block> listOfBlocks = disk.getBlocks();
@@ -242,17 +237,36 @@ namespace Project_1
 
             return bpTree;
         }
-        public void Experiment3(BPTree bpTree)
+        public void Experiment3(BPTree bpTree, Disk disk)
         {
-            bpTree.searchRange(500,500);
-        }
-        public void Experiment4()
-        {
+            Console.WriteLine("---------------------------------------------");
+            Console.WriteLine("Experiment 3 starting...");
+            Console.WriteLine("---------------------------------------------");
+            bpTree.searchRange(500, 500, disk);
 
         }
-        public void Experiment5()
+        public void Experiment4(BPTree bpTree, Disk disk)
         {
-
+            Console.WriteLine("---------------------------------------------");
+            Console.WriteLine("Experiment 4 starting...");
+            Console.WriteLine("---------------------------------------------");
+            bpTree.searchRange(30000, 40000, disk);
+        }
+        public void Experiment5(BPTree bpTree)
+        {
+            Console.WriteLine("---------------------------------------------");
+            Console.WriteLine("Experiment 5 starting...");
+            Console.WriteLine("---------------------------------------------");
+            BPlusTreeNode pointer = new BPlusTreeNode(new List<int>());
+            pointer = bpTree.getRoot();
+            int deleteKey = 15;
+            while (bpTree.search(deleteKey))
+            {
+                bpTree.delete(deleteKey);
+                bpTree.search(deleteKey);
+            }
+            
+            //bpTree.printTree(pointer);
         }
     }
 }

@@ -59,7 +59,7 @@ namespace Project_1
         {
             foreach (var record in records) 
             {
-                Console.Write(record.getTConst() + " " + record.getAverageRating() + " " + record.getNumVotes());
+                Console.WriteLine(new string(record.getTConst()) + "\t" + record.getAverageRating() + "\t" + record.getNumVotes() + "\t\t" + record.getBlockID());
             }
         }
 

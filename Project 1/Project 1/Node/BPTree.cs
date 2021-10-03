@@ -224,7 +224,7 @@ namespace Project_1.Node
                     while (key == recordKey)
                     {
                         Record found = cursor.getPointer2TreeOrData(null, null).getPointer2Records()[leafNodeIndex];
-                        found.printRecord();
+                        //found.printRecord();
                         leafNodeIndex++;
                         if (leafNodeIndex == cursor.getPointer2TreeOrData(null, null).getPointer2Records().Count)
                         {
@@ -526,6 +526,7 @@ namespace Project_1.Node
         public void delete(int key)
         {
             BPlusTreeNode root = getRoot();
+            int deleteCount = 0;
             
             //if root is empty, cannot delete anything
             if (root == null)
@@ -538,20 +539,20 @@ namespace Project_1.Node
             BPlusTreeNode parent = null;
             int leftSibling = -1, rightSibling = -1;
 
-            Console.Write("Nodes Accessed: ");
-            int nodeCount = 0;
+            //Console.Write("Nodes Accessed: ");
+            //int nodeCount = 0;
             //traversing to the leaf node that may contain the key
             while (cursor.checkIsLeaf() != true)
             {
-                if (nodeCount <= 5) 
-                {
-                    foreach (int i in cursor.getAllKeys())
-                    {
-                        Console.Write(i + " ");
-                    }
-                    Console.Write("|| ");
-                    nodeCount++;
-                }
+                //if (nodeCount <= 5) 
+                //{
+                //    foreach (int i in cursor.getAllKeys())
+                //    {
+                //        Console.Write(i + " ");
+                //    }
+                //    Console.Write("|| ");
+                //    nodeCount++;
+                //}
 
                 for (int i = 0; i < cursor.getAllKeys().Count; i++)
                 {
@@ -586,38 +587,16 @@ namespace Project_1.Node
                 if (cursor.getAllKeys()[pos] == key)
                 {
                     found = true;
-                    Console.WriteLine("Key {0} found, deleting...", key);
+                    //Console.WriteLine("Key {0} found, deleting...", key);
                     break;
                 }
             }
 
             if (!found)
             {
-                Console.WriteLine("Key {0} not found", key);
+                //Console.WriteLine("Key {0} not found", key);
                 return;
             }
-        
-            //  var itr = lower_bound
-            // int itr = 0;
-            // List<int> temp = cursor.getAllKeys();
-            //
-            // foreach (int i in temp)
-            // {
-            //     if (key <= i)
-            //         break;
-            //     //if key > current i : run another iteration
-            //     itr++;
-            // }
-            // if (key > temp[temp.Count-1])
-            // {
-            //     itr++;
-            // }
-            //
-            // if (itr == cursor.getAllKeys().Count)
-            // {
-            //     Console.WriteLine("Key not found!");
-            //     return;
-            // }
 
             // Delete the respective key and record
             cursor.getAllKeys().RemoveAt(pos);    //remove key
@@ -630,18 +609,18 @@ namespace Project_1.Node
                 if (cursor.getAllKeys().Count == 0)
                 {
                     setRoot(null);
-                    Console.Write("B+ Tree is now empty...");
+                    //Console.Write("B+ Tree is now empty...");
                 }
             }
-            Console.WriteLine("Deleted {0} from leaf node successfully!", key);
+            //Console.WriteLine("Deleted {0} from leaf node successfully!", key);
             
             //each leaf node should have floor function of (n+1)/2 keys
             if (cursor.getAllKeys().Count >= (getMaxLeafNodeLimit() + 1) / 2)    
             {
                 return;
             }
-            Console.WriteLine("Underflow in the leaf node happened");
-            Console.WriteLine("Starting redistribution...");
+            //Console.WriteLine("Underflow in the leaf node happened");
+            //Console.WriteLine("Starting redistribution...");
             
             //try borrowing key from left sibling node
             if (leftSibling >= 0)
@@ -669,7 +648,7 @@ namespace Project_1.Node
                     parent.getAllKeys().RemoveAt(leftSibling);
                     parent.getAllKeys().Insert(leftSibling, cursor.getAllKeys()[0]);
                     
-                    Console.WriteLine("Borrowed key from left sibling node!");
+                    //Console.WriteLine("Borrowed key from left sibling node!");
                     return;
                 }       
             }
@@ -716,7 +695,8 @@ namespace Project_1.Node
             //if can borrow from neither sibling nodes, merge with sibling node and delete
             if (leftSibling >= 0)
             {
-                Console.WriteLine("Unable to borrow keys from sibling nodes, merging with left sibling...");
+                deleteCount++;
+                //Console.WriteLine("Unable to borrow keys from sibling nodes, merging with left sibling...");
                 BPlusTreeNode leftNode = parent.getPointer2TreeOrData(null, null).
                     getPointer2InternalNodes()[leftSibling];
         
@@ -729,13 +709,14 @@ namespace Project_1.Node
                 }
         
                 leftNode.setPointer2Next(cursor.getPointer2Next());
-                Console.WriteLine("Merging with left sibling successful");
+                //Console.WriteLine("Merging with left sibling successful");
                 removeInternal(parent.getKey(leftSibling), parent, cursor);
             }
                 
             else if (rightSibling <= parent.getAllKeys().Count)
-            { 
-                Console.WriteLine("Unable to borrow keys from sibling nodes, merging with right sibling...");
+            {
+                deleteCount++;
+                //Console.WriteLine("Unable to borrow keys from sibling nodes, merging with right sibling...");
                 BPlusTreeNode rightNode = parent.getPointer2TreeOrData(null, null).
                     getPointer2InternalNodes()[rightSibling];
                     
@@ -747,10 +728,11 @@ namespace Project_1.Node
                         Add(rightNode.getPointer2TreeOrData(null, null).getPointer2Records()[i]);
                 }
                 cursor.setPointer2Next(rightNode.getPointer2Next());
-                Console.WriteLine("Merging with right sibling successful");
+                //Console.WriteLine("Merging with right sibling successful");
                 removeInternal(parent.getKey(rightSibling-1), parent, rightNode); 
             }
 
+            Console.WriteLine("Number of nodes deleted = {0}", deleteCount);
         }
         
         /*
@@ -759,6 +741,7 @@ namespace Project_1.Node
         public void removeInternal(int key, BPlusTreeNode cursor, BPlusTreeNode child)
         {
             BPlusTreeNode root = getRoot();
+            int deleteCount = 0;
         
             //check if key from root is to be deleted
             if(cursor == root)
@@ -769,13 +752,13 @@ namespace Project_1.Node
                     {
                         //if only 1 key is left and matches with one of the child nodes
                         setRoot(cursor.getPointer2TreeOrData(null, null).getPointer2InternalNodes()[0]);
-                        Console.WriteLine("Root node is changed");
+                        //Console.WriteLine("Root node is changed");
                         return;
                     }
                     else if(cursor.getPointer2TreeOrData(null,null).getPointer2InternalNodes()[0] == child)
                     {
                         setRoot(cursor.getPointer2TreeOrData(null, null).getPointer2InternalNodes()[1]);
-                        Console.WriteLine("Root node is changed");
+                        //Console.WriteLine("Root node is changed");
                         return;
                     }
                 }
@@ -818,13 +801,13 @@ namespace Project_1.Node
             //if no underflow
             if (cursor.getAllKeys().Count >= (getMaxChildLimit() + 1) / 2 - 1)
             {
-                Console.WriteLine("Deleted {0} from internal node succesfully", key);
+                //Console.WriteLine("Deleted {0} from internal node succesfully", key);
                 return;
             }
         
             else
             {
-                Console.WriteLine("UnderFlow in internal node");
+                //Console.WriteLine("UnderFlow in internal node");
                 
                 if (cursor == root)
                 {
@@ -852,6 +835,7 @@ namespace Project_1.Node
                 // If possible to transfer to leftSibling
                 if (leftSibling >= 0)
                 {
+                    deleteCount++;
                     BPlusTreeNode leftNode = parent.getPointer2TreeOrData(null,null).getPointer2InternalNodes()[leftSibling];
             
                     //Check if LeftSibling has extra Key to transfer
@@ -869,7 +853,7 @@ namespace Project_1.Node
                         cursor.getPointer2TreeOrData(null, null).getPointer2InternalNodes().
                             Insert(0, leftNode.getPointer2TreeOrData(null, null).
                                 getPointer2InternalNodes()[maxIdxPtr]);
-                        Console.WriteLine("cursor" + cursor.getPointer2TreeOrData(null, null).getPointer2InternalNodes()[0]);
+                        //Console.WriteLine("cursor" + cursor.getPointer2TreeOrData(null, null).getPointer2InternalNodes()[0]);
                         return;
                     }
                 }
@@ -877,6 +861,7 @@ namespace Project_1.Node
                 // If possible to transfer to rightSibling
                 if (rightSibling < parent.getPointer2TreeOrData(null,null).getPointer2InternalNodes().Count)
                 {
+                    deleteCount++;
                     BPlusTreeNode rightNode = parent.getPointer2TreeOrData(null,null).getPointer2InternalNodes()[rightSibling];
             
                     //Check if RightSibling has extra Key to transfer
@@ -924,7 +909,7 @@ namespace Project_1.Node
                     cursor.getPointer2TreeOrData(null, null).getPointer2InternalNodes().Clear();
             
                     removeInternal(parent.getKey(leftSibling), parent, cursor);
-                    Console.WriteLine("Merged with left sibling");
+                    //Console.WriteLine("Merged with left sibling");
                 }
                 
                 else if (rightSibling < parent.getPointer2TreeOrData(null,null).getPointer2InternalNodes().Count)
@@ -949,102 +934,17 @@ namespace Project_1.Node
                     rightNode.getPointer2TreeOrData(null, null).getPointer2InternalNodes().Clear();
             
                     removeInternal(parent.getAllKeys()[rightSibling - 1], parent, rightNode);
-                    Console.WriteLine("Merged with right sibling");
+                    //Console.WriteLine("Merged with right sibling");
                 }
             }
+            Console.WriteLine("Number of internal nodes deleted = {0}", deleteCount);
         }
 
         /*
          * function to find range of values stored in B+ Tree
          */
-        public void wait(int lowerBound, int upperBound, Disk disk)
-        {
-            lowerBound--;
-            int numOfNodesAccessed = 1;
-            if (root == null)
-            {
-                Console.WriteLine("B+ Tree is empty, insert keys first!");
-                Console.WriteLine("Number of index nodes accessed = {0}", numOfNodesAccessed-1);
-            }
-            else
-            {
-                List<Record> records = new List<Record>();
-                BPlusTreeNode cursor = root;
-
-                Console.Write("Nodes Accessed: |");
-                int nodeCount = 0;
-
-                while (cursor.checkIsLeaf() == false)
-                {
-                    List<int> temp = cursor.getAllKeys();
-                    int index = findIndex(temp, lowerBound);
-                    
-                    if (nodeCount <= 5) 
-                    {
-                        foreach (int i in cursor.getAllKeys())
-                        {
-                            Console.Write(i + " ");
-                        }
-                        Console.Write("|| ");
-                        nodeCount++;
-                    }
-
-                    //go to child node
-                    cursor = cursor.getPointer2TreeOrData(null, null).getPointer2InternalNodes()[index];
-                    numOfNodesAccessed++;
-                }
-
-                //key found
-                bool check = false;
-                Console.WriteLine();
-                Console.WriteLine("Searching in process... record details:");
-                Console.WriteLine("---------------------------------------");
-                while (cursor.getPointer2Next() != null && check == false)
-                {
-                    List <Record> found = cursor.getPointer2TreeOrData(null, null).getPointer2Records();
-                    foreach(Record r in found)
-                    {
-                        if (r.getNumVotes() > upperBound)
-                        {
-                            check = true;
-                            break;
-                        }
-                        
-                        if (r.getNumVotes() > lowerBound)
-                        {
-                            records.Add(r);
-                            r.printRecord();
-                        }
-                    }
-                    cursor = cursor.getPointer2Next();
-                    numOfNodesAccessed++;
-                }
-                Console.WriteLine("---------------------------------------");
-
-                double ave = 0;
-                int count = 0;
-                foreach(Record r in records)
-                {
-                    ave += r.getAverageRating();
-                    count++;
-                }
-                ave = ave / count;
-
-                List<int> blockIDs = new List<int>();
-                foreach (Record r in records)
-                {
-                    blockIDs.Add(r.getBlockID());
-                }
-                
-                var uniqueBlocks = blockIDs.Distinct().ToList();
-
-                Console.WriteLine("Average of average rating = " + ave);
-                Console.WriteLine("Number of index nodes accessed = {0}", numOfNodesAccessed);
-                Console.WriteLine("Number of blocks accessed = {0}", uniqueBlocks.Count);
-            }
-        }   //dont touch this
         
-        public void searchRange(int lowerBound, int upperBound)
+        public void searchRange(int lowerBound, int upperBound, Disk disk)
         {
             lowerBound--;
             int numOfNodesAccessed = 1;
@@ -1110,15 +1010,37 @@ namespace Project_1.Node
 
                 double ave = 0;
                 int count = 0;
+                Console.WriteLine(records.Count);
                 foreach(Record r in records)
                 {
                     ave += r.getAverageRating();
+                    //Console.WriteLine(ave);
                     count++;
                 }
                 ave = ave / count;
 
+                List<int> blockIDs = new List<int>();
+                foreach (Record r in records)
+                {
+                    blockIDs.Add(r.getBlockID());
+                }
+
+                var uniqueBlocks = blockIDs.Distinct().ToList();
+
                 Console.WriteLine("Average of average rating = " + ave);
                 Console.WriteLine("Number of index nodes accessed = {0}", numOfNodesAccessed);
+                Console.WriteLine("Number of data block accessed = {0}", uniqueBlocks.Count);
+                Console.WriteLine("tConst\tAverageRating\tNumVotes\tBlockID");
+
+                int blockCount = 1;
+                foreach (var i in uniqueBlocks)
+                {
+                    if (blockCount <= 5)
+                    {
+                        disk.getBlocks()[i].printRecords();
+                        blockCount++;
+                    }
+                }
             }
         }
     }
