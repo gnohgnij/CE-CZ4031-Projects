@@ -1022,6 +1022,7 @@ namespace Project_1.Node
                 List<int> blockIDs = new List<int>();
                 foreach (Record r in records)
                 {
+                    r.printRecord();
                     blockIDs.Add(r.getBlockID());
                 }
 
@@ -1037,7 +1038,7 @@ namespace Project_1.Node
                 {
                     if (blockCount <= 5)
                     {
-                        disk.getBlocks()[i].printRecords();
+                        disk.getBlocks()[i-1].printRecords();
                         blockCount++;
                     }
                 }
