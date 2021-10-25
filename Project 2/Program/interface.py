@@ -69,7 +69,6 @@ class GUI():
 
         return conn
 
-
 def main():
     app = GUI()
 
