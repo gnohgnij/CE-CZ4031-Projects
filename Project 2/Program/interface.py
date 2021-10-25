@@ -3,12 +3,12 @@ contains code for GUI
 """
 
 import PySimpleGUI as sg
-import psycopg2
+from preprocessing import *
 
 class GUI():
 
     def __init__(self):
-        self.initialise_GUI()
+        return
 
     def initialise_GUI(self):
 
@@ -25,11 +25,11 @@ class GUI():
         ]
 
         col2 = [
-            [sg.Input(key='host')],
-            [sg.Input(key='port')],
-            [sg.Input(key='database')],
-            [sg.Input(key='username')],
-            [sg.InputText('', key='password', password_char='*')],
+            [sg.Input(key='host', font=(font, 12))],
+            [sg.Input(key='port', font=(font, 12))],
+            [sg.Input(key='database', font=(font, 12))],
+            [sg.Input(key='username', font=(font, 12))],
+            [sg.InputText('', key='password', password_char='*', font=(font, 12))],
         ]
 
         layout = [  
@@ -45,32 +45,52 @@ class GUI():
         while True:
             event, values = window.read()
             if event == 'Submit':   # when user clicks submit button
-                host = values['host']   #localhost
+                host = values['host'].lower()   #localhost
                 port = values['port']   #5432
                 database = values['database']   #whatever ur database name is
-                username = values['username']   #postgres
+                username = values['username'].lower()   #postgres
                 password = values['password']   #whatever ur password is
 
-                conn = self.connect_to_database(host, port, database, username, password)
+                connect = ConnectAndQuery(host, port, database, username, password)
+
+                if(connect != None):
+                    col1 = [
+                        [sg.Text('Enter Query:', font=(font, 12), justification='left')]
+                    ]
+
+                    col2 = [
+                        [sg.Multiline(
+                            size=(25, 15),
+                            key="query", 
+                            font=(font, 12), 
+                            autoscroll=True
+                        )]
+                    ]
+
+                    layout = [
+                        [sg.Text("Query Execution Plan Annotator", font=(font, 20))],
+                        [sg.Frame(layout=col1, title=''), sg.Frame(layout=col2, title='')],
+                        [sg.Button("Submit")]
+                    ]
+
+                    query_window = sg.Window('CX4031 Project 2 GUI', layout, element_justification='c').Finalize()
+                    window.close()
+                    window = query_window
+                    window.Maximize()
+
+                    while True:
+                        event, values = window.read()
+                        if event == "Submit":
+                            query = values["query"]
 
             if event == sg.WIN_CLOSED: # if user closes window
                 break
 
         window.close()
-    
-    def connect_to_database(self, host, port, database, username, password):
-        conn = psycopg2.connect(
-            host = host,
-            port = port,
-            database = database,
-            user = username,
-            password = password
-        )
-
-        return conn
 
 def main():
     app = GUI()
+    app.initialise_GUI()
 
 if __name__ == "__main__":
     main()

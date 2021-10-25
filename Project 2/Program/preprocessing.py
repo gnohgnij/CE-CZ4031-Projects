@@ -6,9 +6,9 @@ import json
 
 class ConnectAndQuery():
 
-    def __init__(self, host, database, user, password):
+    def __init__(self, host, port, database, username, password):
 
-        self.connect = psycopg2.connect(host=host, database=database, user=user, password=password)
+        self.connect = psycopg2.connect(host=host, port=port, database=database, user=username, password=password)
         self.cur = self.connect.cursor()
 
     def getQueryPlan(self, query=None):
