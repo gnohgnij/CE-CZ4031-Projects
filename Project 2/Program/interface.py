@@ -21,7 +21,7 @@ class GUI():
             [sg.Text('Port:', font=(font, 12), justification='left')],
             [sg.Text('Database:', font=(font, 12), justification='left')],
             [sg.Text('Username:', font=(font, 12), justification='left')],
-            [sg.Text('Password:', font=(font, 12), justification='left')]
+            [sg.Text('Password:', font=(font, 12), justification='left')],
         ]
 
         col2 = [
@@ -32,9 +32,19 @@ class GUI():
             [sg.InputText('', key='password', password_char='*', font=(font, 12))],
         ]
 
+        row = [
+            [[sg.Text('Enter Query:', font=(font, 12), justification='left')], [sg.Multiline(
+                            size=(45, 15),
+                            key="query", 
+                            font=(font, 12), 
+                            autoscroll=True
+                        )]]
+        ]
+
         layout = [  
             [sg.Text('Query Execution Plan Annotator', key='-text-', font=(font, 20))],
             [sg.Frame(layout=col1, title=''), sg.Frame(layout=col2, title='')],
+            row,
             [sg.Button('Submit')]
         ]
 
@@ -45,43 +55,20 @@ class GUI():
         while True:
             event, values = window.read()
             if event == 'Submit':   # when user clicks submit button
+
+                # get all inputs
                 host = values['host'].lower()   #localhost
                 port = values['port']   #5432
                 database = values['database']   #whatever ur database name is
                 username = values['username'].lower()   #postgres
                 password = values['password']   #whatever ur password is
-
+                query = values['query'] #get query
+                
+                #connect to database
                 connect = ConnectAndQuery(host, port, database, username, password)
 
-                if(connect != None):
-                    col1 = [
-                        [sg.Text('Enter Query:', font=(font, 12), justification='left')]
-                    ]
-
-                    col2 = [
-                        [sg.Multiline(
-                            size=(25, 15),
-                            key="query", 
-                            font=(font, 12), 
-                            autoscroll=True
-                        )]
-                    ]
-
-                    layout = [
-                        [sg.Text("Query Execution Plan Annotator", font=(font, 20))],
-                        [sg.Frame(layout=col1, title=''), sg.Frame(layout=col2, title='')],
-                        [sg.Button("Submit")]
-                    ]
-
-                    query_window = sg.Window('CX4031 Project 2 GUI', layout, element_justification='c').Finalize()
-                    window.close()
-                    window = query_window
-                    window.Maximize()
-
-                    while True:
-                        event, values = window.read()
-                        if event == "Submit":
-                            query = values["query"]
+                # process query
+                connect.getQueryPlan(query)
 
             if event == sg.WIN_CLOSED: # if user closes window
                 break
