@@ -34,13 +34,14 @@ class ConnectAndQuery():
         with open('query_plan.json', 'w', encoding='utf-8') as f:
             json.dump(self.query_plan, f, ensure_ascii=False, indent=4)
         
-        parse_query_plan(json.dumps(self.query_plan, sort_keys=False, indent=4))
+        # parse_query_plan(json.dumps(self.query_plan, sort_keys=False, indent=4))
         # return json.dumps(self.query_plan, sort_keys=False, indent=4)
+        return self.query_plan
 
 if __name__ == '__main__':
 
-    sample = 'SELECT * FROM customer WHERE c_custkey > 4 and c_custkey < 10'
-    query = ConnectAndQuery('localhost', '5432', 'Project 2', 'postgres', '4031')
-    sample = query.getQueryPlan("SELECT sum(l_extendedprice * l_discount) as revenu FROM lineitem WHERE l_shipdate >= date '1994-01-01' AND l_shipdate < date '1994-01-01' + interval '1' year AND l_discount between 0.06 - 0.01 AND 0.06 + 0.01 AND l_quantity < 24;")
+    query = "SELECT sum(l_extendedprice * l_discount) as revenu FROM lineitem WHERE l_shipdate >= date '1994-01-01' AND l_shipdate < date '1994-01-01' + interval '1' year AND l_discount between 0.06 - 0.01 AND 0.06 + 0.01 AND l_quantity < 24;"
+    connect = ConnectAndQuery('localhost', '5432', 'test', 'postgres', 'admin123')
+    sample = connect.getQueryPlan(query)
     print(sample)
 
