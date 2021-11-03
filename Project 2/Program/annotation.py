@@ -73,7 +73,7 @@ def get_current_operator_info(operator):
     
     elif node_type == 'Aggregate':
         info = node_type + ' operator'
-        if data['Strategy'] == 'Plain':
+        if data['Strategy'] == 'Plain' or data['Strategy'] == 'Sorted': #Strategy types: Plain, Sorted, Hashed
             info += "\n" + str(data['Actual Total Time'] - data['Actual Startup Time'])
     
     elif node_type == 'Gather':
@@ -85,6 +85,32 @@ def get_current_operator_info(operator):
         info += data['Relation Name'] + '\n'
         info += 'Filter on ' + data['Filter'] + '\n'
         info += 'Duration: ' + str(data['Actual Total Time'] - data['Actual Startup Time'])
+    
+    elif node_type == 'Gather Merge':
+        info = node_type + ' operator'
+        info += 'Duration: ' + str(data['Actual Total Time'] - data['Actual Startup Time'])
+    
+    elif node_type == 'Sort':
+        info = node_type + ' operator'
+        info += 'Duration: ' + str(data['Actual Total Time'] - data['Actual Startup Time'])
+
+    elif node_type == 'Limit':
+        info = node_type + ' operator'
+        info += 'Duration: ' + str(data['Actual Total Time'] - data['Actual Startup Time'])
+
+    elif node_type == 'Nested Loop':
+        info = node_type + ' operator'
+        info += 'Duration: ' + str(data['Actual Total Time'] - data['Actual Startup Time'])
+
+    elif node_type == 'Hash Join':
+        info = node_type + ' operator'
+    
+    elif node_type == 'Hash':
+        info = node_type + ' operator'
+
+    elif node_type == 'Index Scan':
+        info = node_type + ' operator on'
+        info += data['Index Name']
 
     return info
 
