@@ -116,8 +116,15 @@ def get_current_operator_info(operator):
 
 def draw(query_plan, query): 
 
-    for text in query:
-        print(text)
+    #make text look nice
+    prettyText = ''
+    for text in query.lower().split(' '):
+        if text == 'from' or  text == "where":
+            prettyText += '\n' + text + " "
+        elif text == 'and' or  text == "or":
+            prettyText += '\n\t' + text + " "
+        else:
+            prettyText += text + " "
 
     data = json.loads(query_plan)
     all_operators.clear()
@@ -129,24 +136,43 @@ def draw(query_plan, query):
     root = Tk()
     root.state("zoomed")
     root.title("Query execution plan")
-    frame=Frame(root, width = 1500, height = 1000)
+    frame=Frame(root, width = 1500, height = 900)
     frame.pack()
-    canvas = Canvas(frame, bg='red', width = 1000, height = 1000, scrollregion=(0,0,1000,1500))
 
+    canvas = Canvas(frame, bg='red', width = 1000, height = 900, scrollregion=(0,0,1000,1500))
     vbar = Scrollbar(frame, orient=VERTICAL)
     vbar.pack(side=RIGHT, fill=Y)
     vbar.config(command=canvas.yview)
-
     canvas.config(yscrollcommand=vbar.set)
+    
+
+    #query text
+    canvas1 = Canvas(canvas, bg = 'blue', width = 500, height = 200, scrollregion=(0, 0, 500, 1000))
+    vbar1 = Scrollbar(canvas1, orient=VERTICAL)
+    vbar1.pack(side=RIGHT, fill=Y)
+    vbar1.config(command=canvas1.yview)
+    canvas1.config(yscrollcommand=vbar1.set)
+    canvas1.pack()
+    canvas1.place(x=0,y=500)
+    canvas1.create_text(250, 70, text=prettyText)
+
+    #query json
+    canvas2 = Canvas(canvas, bg = 'blue', width = 500, height = 200, scrollregion=(0, 0, 500, 1000))
+    vbar2 = Scrollbar(canvas2, orient=VERTICAL)
+    vbar2.pack(side=RIGHT, fill=Y)
+    vbar2.config(command=canvas2.yview)
+    canvas2.config(yscrollcommand=vbar2.set)
+    canvas2.pack()
+    canvas2.place(x=500,y=500)
+    canvas2.create_text(250, 70, text=query_plan)
+    
     canvas.pack()
 
-    canvas1 = Canvas(canvas, bg = 'blue', width = 500, height = 100)
-    canvas1.pack()
-    canvas1.place(x=250,y=700)
-    canvas1.create_text(250,50,fill="darkblue",text=query)
-    
     Misc.lift(canvas1)
     Misc.lift(vbar)
+    Misc.lift(canvas2)
+    Misc.lift(vbar1)
+    Misc.lift(vbar2)
 
     # 3 different for loops are needed for logical binding of rectangles in the node_list
     for element in all_operators:

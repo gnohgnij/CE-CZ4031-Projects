@@ -57,12 +57,18 @@ class GUI():
             if event == 'Submit':   # when user clicks submit button
 
                 # get all inputs
-                host = values['host'].lower()   #localhost
-                port = values['port']   #5432
-                database = values['database']   #whatever ur database name is
-                username = values['username'].lower()   #postgres
-                password = values['password']   #whatever ur password is
+                # host = values['host'].lower()   #localhost
+                # port = values['port']   #5432
+                # database = values['database']   #whatever ur database name is
+                # username = values['username'].lower()   #postgres
+                # password = values['password']   #whatever ur password is
                 query = values['query'] #get query
+
+                host = "localhost"
+                port = "5432"
+                database = "Project 2"
+                username = "postgres"
+                password = "4031"
 
                 return host, port, database, username, password, query
                 
