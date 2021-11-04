@@ -11,8 +11,8 @@ from tkinter import *
 # Drawing Query Plan Starts Here
 #
 
-RECT_WIDTH = 90
-RECT_HEIGHT = 65
+RECT_WIDTH = 200
+RECT_HEIGHT = 60
 CANVAS_WIDTH = 1000
 CANVAS_HEIGHT = 1000
 
@@ -81,9 +81,9 @@ def get_current_operator_info(operator):
         info += str(data['Actual Total Time'] - data['Actual Startup Time'])
 
     elif node_type == 'Seq Scan':
-        info = node_type + ' operator on '
-        info += data['Relation Name'] + '\n'
-        info += 'Filter on ' + data['Filter'] + '\n'
+        info = node_type + ' operator\n'
+        # info += data['Relation Name'] + '\n'
+        # info += 'Filter on ' + data['Filter'] + '\n'
         info += 'Duration: ' + str(data['Actual Total Time'] - data['Actual Startup Time'])
     
     elif node_type == 'Gather Merge':
@@ -114,54 +114,59 @@ def get_current_operator_info(operator):
 
     return info
 
-def draw(query_plan):        
+def draw(query_plan, query): 
 
-    with open(query_plan) as json_file:
-        data = json.load(json_file)
-        all_operators.clear()
+    for text in query:
+        print(text)
 
-        root_op = Operator(0, CANVAS_WIDTH,10, RECT_HEIGHT, "", "")
-        build_plan(root_op, data)
+    data = json.loads(query_plan)
+    all_operators.clear()
 
-        # actual drawing
-        root = Tk()
-        root.geometry("1000x1000")
-        root.title("Query execution plan")
-        frame=Frame(root,width=1000,height=1000)
-        frame.pack()
-        canvas = Canvas(frame, width=CANVAS_WIDTH, height=CANVAS_HEIGHT,scrollregion=(0,0,1000,1500))
-        vbar = Scrollbar(frame, orient=VERTICAL)
-        vbar.pack(side=RIGHT, fill=Y)
-        vbar.config(command=canvas.yview)
-        canvas.config(yscrollcommand=vbar.set)
-        canvas.pack()
-        canvas2 = Canvas(frame, width=400, height=100)
-        canvas2.pack()
-        canvas2.place(x=600,y=0)
-        Misc.lift(canvas2)
-        Misc.lift(vbar)
+    root_op = Operator(0, CANVAS_WIDTH,10, RECT_HEIGHT, "", "")
+    build_plan(root_op, data)
 
-        # 3 different for loops are needed for logical binding of rectangles in the node_list
-        for element in all_operators:
-            x = element.center[0]
-            y = element.center[1]
-            rect = canvas.create_rectangle(x - RECT_WIDTH / 2, y + RECT_HEIGHT / 2, x + RECT_WIDTH / 2, y - RECT_HEIGHT / 2,
-                                        fill='grey', tags="hover")
-            visual_to_node[rect] = element
+    # actual drawing
+    root = Tk()
+    root.state("zoomed")
+    root.title("Query execution plan")
+    frame=Frame(root, width = 1500, height = 1000)
+    frame.pack()
+    canvas = Canvas(frame, bg='red', width = 1000, height = 1000, scrollregion=(0,0,1000,1500))
 
-        for element in all_operators:
-            gui_text = canvas.create_text((element.center[0], element.center[1]), text=element.information, tags="clicked")
-            visual_to_node[gui_text] = element
+    vbar = Scrollbar(frame, orient=VERTICAL)
+    vbar.pack(side=RIGHT, fill=Y)
+    vbar.config(command=canvas.yview)
 
-        for element in all_operators:
-            for child in element.children:
-                canvas.create_line(child.center[0], child.center[1] - RECT_HEIGHT / 2, element.center[0],
-                                element.center[1] + RECT_HEIGHT / 2, arrow=LAST)
+    canvas.config(yscrollcommand=vbar.set)
+    canvas.pack()
 
-        # canvas.tag_bind("clicked", "<Button-1>", lambda event: clicked(event, canvas=canvas2))
-        canvas.tag_bind("hover","<Enter>",lambda event:enter(event,canvas=canvas2))
-        canvas.tag_bind("hover", "<Leave>", lambda event: leave(event,canvas=canvas2))
-        root.mainloop()
+    canvas1 = Canvas(canvas, bg = 'blue', width = 500, height = 100)
+    canvas1.pack()
+    canvas1.place(x=250,y=700)
+    canvas1.create_text(250,50,fill="darkblue",text=query)
+    
+    Misc.lift(canvas1)
+    Misc.lift(vbar)
+
+    # 3 different for loops are needed for logical binding of rectangles in the node_list
+    for element in all_operators:
+        print(element.operation)
+        x = element.center[0]
+        y = element.center[1]
+        rect = canvas.create_rectangle(x - RECT_WIDTH / 2, y + RECT_HEIGHT / 2, x + RECT_WIDTH / 2, y - RECT_HEIGHT / 2,
+                                    fill='grey', tags="hover")
+        visual_to_node[rect] = element
+
+    for element in all_operators:
+        gui_text = canvas.create_text((element.center[0], element.center[1]), text=element.information, tags="clicked")
+        visual_to_node[gui_text] = element
+
+    for element in all_operators:
+        for child in element.children:
+            canvas.create_line(child.center[0], child.center[1] - RECT_HEIGHT / 2, element.center[0],
+                            element.center[1] + RECT_HEIGHT / 2, arrow=LAST)
+
+    root.mainloop()
 
 def enter(event,canvas):
     node = visual_to_node[event.widget.find_withtag("current")[0]]

@@ -63,12 +63,14 @@ class GUI():
                 username = values['username'].lower()   #postgres
                 password = values['password']   #whatever ur password is
                 query = values['query'] #get query
+
+                return host, port, database, username, password, query
                 
-                #connect to database
-                connect = ConnectAndQuery(host, port, database, username, password)
+                # connect to database
+                # connect = ConnectAndQuery(host, port, database, username, password)
 
                 # process query
-                connect.getQueryPlan(query)
+                # connect.getQueryPlan(query)
 
             if event == sg.WIN_CLOSED: # if user closes window
                 break

@@ -34,9 +34,9 @@ class ConnectAndQuery():
         with open('query_plan.json', 'w', encoding='utf-8') as f:
             json.dump(self.query_plan, f, ensure_ascii=False, indent=4)
         
-        # parse_query_plan(json.dumps(self.query_plan, sort_keys=False, indent=4))
+        parse_query_plan = (json.dumps(self.query_plan, sort_keys=False, indent=4))
         # return json.dumps(self.query_plan, sort_keys=False, indent=4)
-        return self.query_plan
+        return parse_query_plan
 
 if __name__ == '__main__':
 
@@ -51,5 +51,14 @@ if __name__ == '__main__':
     #19 query = "SELECT sum(l_extendedprice* (1 - l_discount)) as revenue FROM lineitem, part WHERE ( p_partkey = l_partkey AND p_brand = 'Brand#12' AND p_container in ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 1 AND l_quantity <= 1 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON' ) OR ( p_partkey = l_partkey AND p_brand = 'Brand#23' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND l_quantity >= 10 AND l_quantity <= 10 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON' ) OR ( p_partkey = l_partkey AND p_brand = 'Brand#34' AND p_container in ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 20 AND l_quantity <= 20 + 10 AND p_size between 1 AND 15 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON' ); "
     connect = ConnectAndQuery('localhost', '5432', 'test', 'postgres', 'admin123')
     sample = connect.getQueryPlan(query)
-    print(sample)
+    # print(sample)
+
+    prettyText = ''
+    for text in query.split(' '):
+        prettyText = prettyText + ' ' + text
+        if text == 'FROM':
+            prettyText = prettyText + '\n' + text
+    print(prettyText)
+
+
 
