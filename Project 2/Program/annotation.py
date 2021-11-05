@@ -4,7 +4,7 @@ contains code for generating the annotations
 import json
 import PySimpleGUI as sg
 import preprocessing
-from tkinter import *
+import tkinter as tk
 
 #
 # GLOBAL VARIABLES
@@ -116,15 +116,15 @@ def get_current_operator_info(operator):
 
 def draw(query_plan, query): 
 
-    #make text look nice
-    prettyText = ''
+    #make query text look nice
+    pretty_query_text = ''
     for text in query.lower().split(' '):
         if text == 'from' or  text == "where":
-            prettyText += '\n' + text + " "
+            pretty_query_text += '\n' + text + " "
         elif text == 'and' or  text == "or":
-            prettyText += '\n\t' + text + " "
+            pretty_query_text += '\n\t' + text + " "
         else:
-            prettyText += text + " "
+            pretty_query_text += text + " "
 
     data = json.loads(query_plan)
     all_operators.clear()
@@ -132,47 +132,50 @@ def draw(query_plan, query):
     root_op = Operator(0, CANVAS_WIDTH,10, RECT_HEIGHT, "", "")
     build_plan(root_op, data)
 
-    # actual drawing
-    root = Tk()
+    root = tk.Tk()
     root.state("zoomed")
     root.title("Query execution plan")
-    frame=Frame(root, width = 1500, height = 900)
-    frame.pack()
+    frame = tk.Frame(root, width = 1000, height = 1200, bg="yellow")
+    frame.pack(expand=True, fill="both")
 
-    canvas = Canvas(frame, bg='red', width = 1000, height = 900, scrollregion=(0,0,1000,1500))
-    vbar = Scrollbar(frame, orient=VERTICAL)
-    vbar.pack(side=RIGHT, fill=Y)
-    vbar.config(command=canvas.yview)
-    canvas.config(yscrollcommand=vbar.set)
+    #query plan canvas
+    canvas = tk.Canvas(frame, bg='red', scrollregion=(0, 0, 1000, 600))
+    scrollbar = tk.Scrollbar(frame, orient = tk.VERTICAL)
+    scrollbar.place(relx=0.99, rely=0, relheight=0.5, relwidth=0.01)
+    scrollbar.config(command=canvas.yview)
+    canvas.config(yscrollcommand=scrollbar.set)
+    canvas.place(relx=0, rely=0, relheight=0.5, relwidth=1)
     
-
     #query text
-    canvas1 = Canvas(canvas, bg = 'blue', width = 500, height = 200, scrollregion=(0, 0, 500, 1000))
-    vbar1 = Scrollbar(canvas1, orient=VERTICAL)
-    vbar1.pack(side=RIGHT, fill=Y)
-    vbar1.config(command=canvas1.yview)
-    canvas1.config(yscrollcommand=vbar1.set)
-    canvas1.pack()
-    canvas1.place(x=0,y=500)
-    canvas1.create_text(250, 70, text=prettyText)
+    query_text_canvas = tk.Canvas(frame, bg = 'blue', scrollregion=(0, 0, 500, 600))
+    query_text_scrollbar = tk.Scrollbar(frame, orient = tk.VERTICAL)
+    query_text_scrollbar.place(relx=0.49, rely=0.5, relwidth=0.01, relheight=0.5)
+    query_text_scrollbar.config(command=query_text_canvas.yview)
+    query_text_canvas.config(yscrollcommand = query_text_scrollbar.set)
+    query_text_canvas.place(relx=0, rely=0.5, relheight=0.5, relwidth=0.49)
+    query_text_canvas.create_text(250, 70, text=pretty_query_text)
 
     #query json
-    canvas2 = Canvas(canvas, bg = 'blue', width = 500, height = 200, scrollregion=(0, 0, 500, 1000))
-    vbar2 = Scrollbar(canvas2, orient=VERTICAL)
-    vbar2.pack(side=RIGHT, fill=Y)
-    vbar2.config(command=canvas2.yview)
-    canvas2.config(yscrollcommand=vbar2.set)
-    canvas2.pack()
-    canvas2.place(x=500,y=500)
-    canvas2.create_text(250, 70, text=query_plan)
-    
-    canvas.pack()
+    query_json_canvas = tk.Canvas(frame, bg = 'blue', scrollregion=(0, 0, 500, 600))
+    query_json_scrollbar_v = tk.Scrollbar(frame, orient = tk.VERTICAL)
+    query_json_scrollbar_v.place(relx=0.99, rely=0.5, relwidth=0.01, relheight=0.5)
+    query_json_scrollbar_v.config(command=query_json_canvas.yview)
 
-    Misc.lift(canvas1)
-    Misc.lift(vbar)
-    Misc.lift(canvas2)
-    Misc.lift(vbar1)
-    Misc.lift(vbar2)
+    query_json_scrollbar_h = tk.Scrollbar(frame, orient = 'horizontal')
+    query_json_scrollbar_h.place(relx=0.5, rely=0.98, relwidth=0.5, relheight=0.02)
+    query_json_scrollbar_h.config(command=query_json_canvas.xview)
+
+    query_json_canvas.config(xscrollcommand=query_json_scrollbar_h.set, yscrollcommand=query_json_scrollbar_v)
+    query_json_canvas.place(relx=0.5, rely=0.5, relheight=0.48, relwidth=0.49)
+    query_json_canvas.create_text(250, 70, text = query_plan)
+    
+    
+
+    # tk.Misc.lift(query_text_canvas)
+    # tk.Misc.lift(scrollbar)
+    # tk.Misc.lift(query_json_canvas)
+    # tk.Misc.lift(query_text_scrollbar)
+    # tk.Misc.lift(query_json_scrollbar)
 
     # 3 different for loops are needed for logical binding of rectangles in the node_list
     for element in all_operators:
@@ -190,7 +193,7 @@ def draw(query_plan, query):
     for element in all_operators:
         for child in element.children:
             canvas.create_line(child.center[0], child.center[1] - RECT_HEIGHT / 2, element.center[0],
-                            element.center[1] + RECT_HEIGHT / 2, arrow=LAST)
+                            element.center[1] + RECT_HEIGHT / 2, arrow = tk.LAST)
 
     root.mainloop()
 
