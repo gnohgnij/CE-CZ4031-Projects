@@ -176,6 +176,8 @@ def draw(query_plan, query):
     # tk.Misc.lift(query_json_canvas)
     # tk.Misc.lift(query_text_scrollbar)
     # tk.Misc.lift(query_json_scrollbar)
+    number = 1
+    test = query_plan.replace('"Plans": [', '').split("{")
 
     # 3 different for loops are needed for logical binding of rectangles in the node_list
     for element in all_operators:
@@ -185,8 +187,10 @@ def draw(query_plan, query):
         rect = canvas.create_rectangle(x - RECT_WIDTH / 2, y + RECT_HEIGHT / 2, x + RECT_WIDTH / 2, y - RECT_HEIGHT / 2,
                                     fill='grey')
         balloon = Pmw.Balloon()
-        balloon.tagbind(canvas, rect, "first tooltip")
+        print(test[number])
+        balloon.tagbind(canvas, rect, test[number].replace('  ', '').replace('}\n]','').replace('}',''))
         visual_to_node[rect] = element
+        number+=1
 
     for element in all_operators:
         gui_text = canvas.create_text((element.center[0], element.center[1]), text=element.information, tags="clicked")
