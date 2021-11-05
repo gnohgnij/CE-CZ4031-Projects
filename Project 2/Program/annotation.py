@@ -2,9 +2,11 @@
 contains code for generating the annotations
 """
 import json
+from tkinter.constants import BOTTOM, E, SUNKEN, X
 import PySimpleGUI as sg
 import preprocessing
 import tkinter as tk
+import Pmw
 
 #
 # GLOBAL VARIABLES
@@ -168,8 +170,6 @@ def draw(query_plan, query):
     query_json_canvas.config(xscrollcommand=query_json_scrollbar_h.set, yscrollcommand=query_json_scrollbar_v)
     query_json_canvas.place(relx=0.5, rely=0.5, relheight=0.48, relwidth=0.49)
     query_json_canvas.create_text(250, 70, text = query_plan)
-    
-    
 
     # tk.Misc.lift(query_text_canvas)
     # tk.Misc.lift(scrollbar)
@@ -183,7 +183,9 @@ def draw(query_plan, query):
         x = element.center[0]
         y = element.center[1]
         rect = canvas.create_rectangle(x - RECT_WIDTH / 2, y + RECT_HEIGHT / 2, x + RECT_WIDTH / 2, y - RECT_HEIGHT / 2,
-                                    fill='grey', tags="hover")
+                                    fill='grey')
+        balloon = Pmw.Balloon()
+        balloon.tagbind(canvas, rect, "first tooltip")
         visual_to_node[rect] = element
 
     for element in all_operators:
@@ -193,18 +195,17 @@ def draw(query_plan, query):
     for element in all_operators:
         for child in element.children:
             canvas.create_line(child.center[0], child.center[1] - RECT_HEIGHT / 2, element.center[0],
-                            element.center[1] + RECT_HEIGHT / 2, arrow = tk.LAST)
-
+                            element.center[1] + RECT_HEIGHT / 2, arrow = tk.LAST) 
     root.mainloop()
 
 def enter(event,canvas):
     node = visual_to_node[event.widget.find_withtag("current")[0]]
     global instance
     if node.duration == MAX_DURATION:
-        instance = canvas.create_text(200, 50, text=node.plan_info,
+        instance = canvas.create_text(200, 50, text=node.information,
                                       fill="red", width=350)
     else:
-        instance = canvas.create_text(200, 50, text=node.plan_info,
+        instance = canvas.create_text(200, 50, text=node.information,
                                       fill="blue", width=350)
 
 def leave(event,canvas):
