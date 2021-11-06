@@ -76,11 +76,11 @@ def get_current_operator_info(operator):
     elif node_type == 'Aggregate':
         info = node_type + ' operator'
         if data['Strategy'] == 'Plain' or data['Strategy'] == 'Sorted': #Strategy types: Plain, Sorted, Hashed
-            info += "\n" + str(data['Actual Total Time'] - data['Actual Startup Time'])
+            info += "\n Duration: " + str(data['Actual Total Time'] - data['Actual Startup Time'])
     
     elif node_type == 'Gather':
         info = node_type + ' operator\n'
-        info += str(data['Actual Total Time'] - data['Actual Startup Time'])
+        info += "Duration: " + str(data['Actual Total Time'] - data['Actual Startup Time'])
 
     elif node_type == 'Seq Scan':
         info = node_type + ' operator\n'
@@ -136,7 +136,7 @@ def draw(query_plan, query):
 
     root = tk.Tk()
     root.state("zoomed")
-    root.title("Query execution plan")
+    root.title("CX4031 Project 2 GUI")
     frame = tk.Frame(root, width = 1000, height = 1200, bg="yellow")
     frame.pack(expand=True, fill="both")
 
@@ -150,11 +150,17 @@ def draw(query_plan, query):
     
     #query text
     query_text_canvas = tk.Canvas(frame, bg = 'blue', scrollregion=(0, 0, 500, 600))
-    query_text_scrollbar = tk.Scrollbar(frame, orient = tk.VERTICAL)
-    query_text_scrollbar.place(relx=0.49, rely=0.5, relwidth=0.01, relheight=0.5)
-    query_text_scrollbar.config(command=query_text_canvas.yview)
-    query_text_canvas.config(yscrollcommand = query_text_scrollbar.set)
-    query_text_canvas.place(relx=0, rely=0.5, relheight=0.5, relwidth=0.49)
+
+    query_text_scrollbar_v = tk.Scrollbar(frame, orient = tk.VERTICAL)
+    query_text_scrollbar_v.place(relx=0.49, rely=0.5, relwidth=0.01, relheight=0.5)
+    query_text_scrollbar_v.config(command=query_text_canvas.yview)
+
+    query_text_scrollbar_h = tk.Scrollbar(frame, orient = tk.HORIZONTAL)
+    query_text_scrollbar_h.place(relx=0, rely=0.98, relwidth=0.5, relheight=0.02)
+    query_text_scrollbar_h.config(command=query_text_canvas.xview)
+
+    query_text_canvas.config(yscrollcommand = query_text_scrollbar_v.set, xscrollcommand = query_text_scrollbar_h.set)
+    query_text_canvas.place(relx=0, rely=0.5, relheight=0.48, relwidth=0.49)
     query_text_canvas.create_text(250, 70, text=pretty_query_text)
 
     #query json
@@ -163,31 +169,24 @@ def draw(query_plan, query):
     query_json_scrollbar_v.place(relx=0.99, rely=0.5, relwidth=0.01, relheight=0.5)
     query_json_scrollbar_v.config(command=query_json_canvas.yview)
 
-    query_json_scrollbar_h = tk.Scrollbar(frame, orient = 'horizontal')
+    query_json_scrollbar_h = tk.Scrollbar(frame, orient = tk.HORIZONTAL)
     query_json_scrollbar_h.place(relx=0.5, rely=0.98, relwidth=0.5, relheight=0.02)
     query_json_scrollbar_h.config(command=query_json_canvas.xview)
 
-    query_json_canvas.config(xscrollcommand=query_json_scrollbar_h.set, yscrollcommand=query_json_scrollbar_v)
+    query_json_canvas.config(xscrollcommand=query_json_scrollbar_h.set, yscrollcommand=query_json_scrollbar_v.set)
     query_json_canvas.place(relx=0.5, rely=0.5, relheight=0.48, relwidth=0.49)
     query_json_canvas.create_text(250, 70, text = query_plan)
 
-    # tk.Misc.lift(query_text_canvas)
-    # tk.Misc.lift(scrollbar)
-    # tk.Misc.lift(query_json_canvas)
-    # tk.Misc.lift(query_text_scrollbar)
-    # tk.Misc.lift(query_json_scrollbar)
     number = 1
     test = query_plan.replace('"Plans": [', '').split("{")
 
     # 3 different for loops are needed for logical binding of rectangles in the node_list
     for element in all_operators:
-        print(element.operation)
         x = element.center[0]
         y = element.center[1]
         rect = canvas.create_rectangle(x - RECT_WIDTH / 2, y + RECT_HEIGHT / 2, x + RECT_WIDTH / 2, y - RECT_HEIGHT / 2,
                                     fill='grey')
         balloon = Pmw.Balloon()
-        print(test[number])
         balloon.tagbind(canvas, rect, test[number].replace('  ', '').replace('}\n]','').replace('}',''))
         visual_to_node[rect] = element
         number+=1

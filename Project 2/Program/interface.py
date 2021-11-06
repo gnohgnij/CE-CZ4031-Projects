@@ -66,17 +66,11 @@ class GUI():
 
                 host = "localhost"
                 port = "5432"
-                database = "test"
+                database = "Project 2"
                 username = "postgres"
-                password = "admin123"
+                password = "4031"
 
-                return host, port, database, username, password, query
-                
-                # connect to database
-                # connect = ConnectAndQuery(host, port, database, username, password)
-
-                # process query
-                # connect.getQueryPlan(query)
+                return host, port, database, username, password, query, window
 
             if event == sg.WIN_CLOSED: # if user closes window
                 break

@@ -8,9 +8,9 @@ import annotation
 
 if __name__ == '__main__':
 
-    host, port, database, username, password, query = interface.GUI().initialise_GUI()
+    host, port, database, username, password, query, window = interface.GUI().initialise_GUI()
     connect = ConnectAndQuery(host, port, database, username, password)
     results = connect.getQueryPlan(query)
-    
+    window.close()
     annotation.draw(results, query)
     
