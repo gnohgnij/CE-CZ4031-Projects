@@ -140,6 +140,12 @@ def draw(query_plan, query):
     frame = tk.Frame(root, width = 1000, height = 1200, bg="yellow")
     frame.pack(expand=True, fill="both")
 
+    def close():
+        root.quit()
+
+    button = tk.Button(frame, text = 'Close the window', command = close)
+    button.place(relx=0, rely=0)
+
     #query plan canvas
     canvas = tk.Canvas(frame, bg='red', scrollregion=(0, 0, 1000, 600))
     scrollbar = tk.Scrollbar(frame, orient = tk.VERTICAL)
@@ -177,6 +183,8 @@ def draw(query_plan, query):
     query_json_canvas.place(relx=0.5, rely=0.5, relheight=0.48, relwidth=0.49)
     query_json_canvas.create_text(250, 70, text = query_plan)
 
+    tk.Misc.lift(button)
+
     number = 1
     test = query_plan.replace('"Plans": [', '').split("{")
 
@@ -199,6 +207,7 @@ def draw(query_plan, query):
         for child in element.children:
             canvas.create_line(child.center[0], child.center[1] - RECT_HEIGHT / 2, element.center[0],
                             element.center[1] + RECT_HEIGHT / 2, arrow = tk.LAST) 
+    
     root.mainloop()
 
 def enter(event,canvas):
@@ -213,6 +222,8 @@ def enter(event,canvas):
 
 def leave(event,canvas):
     canvas.delete(instance)
+
+
 
 if __name__ == '__main__':
 
