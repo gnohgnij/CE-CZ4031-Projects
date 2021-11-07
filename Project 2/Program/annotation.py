@@ -64,6 +64,7 @@ def get_current_operator_info(operator):
 
     data = operator
     node_type = data['Node Type']
+    duration = "\nDuration: " + str(data['Actual Total Time'] - data['Actual Startup Time']) + " ms"
     
     if node_type == 'Bitmap Heap Scan':
         info = node_type + ' operator on '
@@ -73,46 +74,135 @@ def get_current_operator_info(operator):
         info = node_type +' operator on '
         info += data['Index Name']
     
+    elif node_type == 'BitmapAnd':
+        info = node_type + ' operator'
+        info += duration
+    
+    elif node_type == 'BitmapOr':
+        info = node_type + ' operator'
+        info += duration
+    
     elif node_type == 'Aggregate':
         info = node_type + ' operator'
-        if data['Strategy'] == 'Plain' or data['Strategy'] == 'Sorted': #Strategy types: Plain, Sorted, Hashed
-            info += "\n Duration: " + str(data['Actual Total Time'] - data['Actual Startup Time'])
+        info += duration
     
     elif node_type == 'Gather':
-        info = node_type + ' operator\n'
-        info += "Duration: " + str(data['Actual Total Time'] - data['Actual Startup Time'])
+        info = node_type + ' operator'
+        info += duration
 
     elif node_type == 'Seq Scan':
-        info = node_type + ' operator\n'
+        info = node_type + ' operator'
         # info += data['Relation Name'] + '\n'
         # info += 'Filter on ' + data['Filter'] + '\n'
-        info += 'Duration: ' + str(data['Actual Total Time'] - data['Actual Startup Time'])
+        info += duration
     
     elif node_type == 'Gather Merge':
         info = node_type + ' operator'
-        info += 'Duration: ' + str(data['Actual Total Time'] - data['Actual Startup Time'])
+        info += duration
     
     elif node_type == 'Sort':
         info = node_type + ' operator'
-        info += 'Duration: ' + str(data['Actual Total Time'] - data['Actual Startup Time'])
+        info += duration
 
     elif node_type == 'Limit':
         info = node_type + ' operator'
-        info += 'Duration: ' + str(data['Actual Total Time'] - data['Actual Startup Time'])
+        info += duration
 
     elif node_type == 'Nested Loop':
         info = node_type + ' operator'
-        info += 'Duration: ' + str(data['Actual Total Time'] - data['Actual Startup Time'])
+        info += duration
 
     elif node_type == 'Hash Join':
         info = node_type + ' operator'
+        info += duration
     
+    elif node_type == 'Merge Join':
+        info = node_type + ' operator'
+        info += duration
+
+    elif node_type == 'Merge Append':
+        info = node_type + ' operator'
+        info += duration
+
     elif node_type == 'Hash':
         info = node_type + ' operator'
+        info += duration
+    
+    elif node_type == 'HashAggregate':
+        info = node_type + ' operator'
+        info += duration
+    
+    elif node_type == 'HashSetOp':
+        info = node_type + ' operator'
+        info += duration
 
     elif node_type == 'Index Scan':
         info = node_type + ' operator on'
         info += data['Index Name']
+    
+    elif node_type == 'Append':
+        info = node_type + ' operator'
+        info += duration
+    
+    elif node_type == 'CTE Scan':
+        info = node_type + ' operator'
+        info += duration
+    
+    elif node_type == 'Function Scan':
+        info = node_type + ' operator'
+        info += duration
+    
+    elif node_type == 'Group':
+        info = node_type + ' operator'
+        info += duration
+    
+    elif node_type == 'GroupAggregate':
+        info = node_type + ' operator'
+        info += duration
+    
+    elif node_type == 'Incremental Sort':
+        info = node_type + ' operator'
+        info += duration
+    
+    elif node_type == 'Materialize':
+        info = node_type + ' operator'
+        info += duration
+
+    elif node_type == 'ModifyTable':
+        info = node_type + ' operator'
+        info += duration
+    
+    elif node_type == 'Recursive Union':
+        info = node_type + ' operator'
+        info += duration
+
+    elif node_type == 'Result':
+        info = node_type + ' operator'
+        info += duration
+
+    elif node_type == 'SetOp':
+        info = node_type + ' operator'
+        info += duration
+    
+    elif node_type == 'Subquery Scan':
+        info = node_type + ' operator'
+        info += duration
+
+    elif node_type == 'TID Scan':
+        info = node_type + ' operator'
+        info += duration
+    
+    elif node_type == 'Unique':
+        info = node_type + ' operator'
+        info += duration
+    
+    elif node_type == 'Values Scan':
+        info = node_type + ' operator'
+        info += duration
+    
+    elif node_type == 'WorkTable Scan':
+        info = node_type + ' operator'
+        info += duration
 
     return info
 
