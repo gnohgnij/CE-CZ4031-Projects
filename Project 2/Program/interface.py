@@ -66,9 +66,9 @@ class GUI():
 
                 host = "localhost"
                 port = "5432"
-                database = "test"
+                database = "Project 2"
                 username = "postgres"
-                password = "password"
+                password = "4031"
 
                 return host, port, database, username, password, query, window
 
