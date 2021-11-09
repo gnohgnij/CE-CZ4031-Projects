@@ -237,7 +237,7 @@ def draw(query_plan, query):
     button.place(relx=0, rely=0)
 
     #query plan canvas
-    canvas = tk.Canvas(frame, bg='red', scrollregion=(0, 0, 1000, 600))
+    canvas = tk.Canvas(frame, bg='white', scrollregion=(0, -500, 1000, 1200))
     scrollbar = tk.Scrollbar(frame, orient = tk.VERTICAL)
     scrollbar.place(relx=0.99, rely=0, relheight=0.5, relwidth=0.01)
     scrollbar.config(command=canvas.yview)
@@ -245,7 +245,7 @@ def draw(query_plan, query):
     canvas.place(relx=0, rely=0, relheight=0.5, relwidth=1)
     
     #query text
-    query_text_canvas = tk.Canvas(frame, bg = 'blue', scrollregion=(0, 0, 500, 600))
+    query_text_canvas = tk.Canvas(frame, bg = 'white', scrollregion=(-800, 0, 1500, 600))
 
     query_text_scrollbar_v = tk.Scrollbar(frame, orient = tk.VERTICAL)
     query_text_scrollbar_v.place(relx=0.49, rely=0.5, relwidth=0.01, relheight=0.5)
@@ -260,7 +260,7 @@ def draw(query_plan, query):
     query_text_canvas.create_text(250, 70, text=pretty_query_text)
 
     #query json
-    query_json_canvas = tk.Canvas(frame, bg = 'blue', scrollregion=(0, 0, 500, 600))
+    query_json_canvas = tk.Canvas(frame, bg = 'white', scrollregion=(0, -2000, 1000, 1500))
     query_json_scrollbar_v = tk.Scrollbar(frame, orient = tk.VERTICAL)
     query_json_scrollbar_v.place(relx=0.99, rely=0.5, relwidth=0.01, relheight=0.5)
     query_json_scrollbar_v.config(command=query_json_canvas.yview)
