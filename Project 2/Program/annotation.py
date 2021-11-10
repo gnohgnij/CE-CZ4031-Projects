@@ -3,8 +3,6 @@ contains code for generating the annotations
 """
 import json
 from tkinter.constants import BOTTOM, E, SUNKEN, X
-import PySimpleGUI as sg
-import preprocessing
 import tkinter as tk
 import Pmw
 
@@ -45,20 +43,40 @@ def build_plan(curr_op, json_plan):
     curr_op.operation = plan["Node Type"]
     curr_op.information = get_current_operator_info(plan)
 
+    print("operator, centre, info:", curr_op.operation, curr_op.center, curr_op.information)
+
     all_operators.append(curr_op)
+
+    #   (x1, y1) ======================== (x2, y1)
+    #            |                      |
+    #            |                      |
+    #            |                      |
+    #   (x1, y2) ======================== (x2, y2)
 
     #check if they are child plans
     if "Plans" in plan:
         children_num = len(plan["Plans"])
-        for i in range(children_num):
-            x1 = (i) * ((curr_op.x2 - curr_op.x1) / children_num)
-            x2 = (i + 1) * ((curr_op.x2 - curr_op.x1) / children_num)
-            y1 = curr_op.y2 + RECT_WIDTH
-            y2 = curr_op.y2 + 2 * RECT_HEIGHT
+        if(children_num == 1):
+            for i in range(children_num):
+                x1 = curr_op.x1
+                x2 = curr_op.x2
+                y1 = curr_op.y2 + RECT_HEIGHT/2
+                y2 = y1 + RECT_HEIGHT
 
-            child_op = Operator(x1, x2, y1, y2, "", "")
-            curr_op.add_child(child_op)
-            build_plan(child_op, plan["Plans"][i])
+                child_op = Operator(x1, x2, y1, y2, "", "")
+                curr_op.add_child(child_op)
+                build_plan(child_op, plan["Plans"][i])
+
+        elif (children_num == 2):
+            for i in range(children_num):
+                x2 = curr_op.x1 - RECT_WIDTH/2 + (2 * i * RECT_WIDTH)
+                x1 = x2 - RECT_WIDTH
+                y1 = curr_op.y2 + RECT_HEIGHT/2
+                y2 = y1 + RECT_HEIGHT
+
+                child_op = Operator(x1, x2, y1, y2, "", "")
+                curr_op.add_child(child_op)
+                build_plan(child_op, plan["Plans"][i])
 
 def get_current_operator_info(operator):
 
@@ -221,7 +239,7 @@ def draw(query_plan, query):
     data = json.loads(query_plan)
     all_operators.clear()
 
-    root_op = Operator(0, CANVAS_WIDTH,10, RECT_HEIGHT, "", "")
+    root_op = Operator(0, 0+RECT_WIDTH, 10, 10+RECT_HEIGHT, "", "")    #CANVAS_WIDTH = 1000, RECT_HEIGHT = 60, CENTER = (500, 35)
     build_plan(root_op, data)
 
     root = tk.Tk()
@@ -289,10 +307,18 @@ def draw(query_plan, query):
 
     # 3 different for loops are needed for logical binding of rectangles in the node_list
     for element in all_operators:
-        x = element.center[0]
-        y = element.center[1]
-        rect = canvas.create_rectangle(x - RECT_WIDTH / 2, y + RECT_HEIGHT / 2, x + RECT_WIDTH / 2, y - RECT_HEIGHT / 2,
-                                    fill='grey')
+        # x = element.center[0]
+        # y = element.center[1]
+        # rect = canvas.create_rectangle(x - RECT_WIDTH/2, y - RECT_HEIGHT/2, x + RECT_WIDTH/2, y + RECT_HEIGHT/2,
+        #                             fill='grey')    #create_rectangle(x1, y1, x2, y2, **kwargs), (x1, y1) - top left, (x2, y2) - bottom right
+
+
+        x1 = element.x1
+        x2 = element.x2
+        y1 = element.y1
+        y2 = element.y2
+        rect = canvas.create_rectangle(x1, y1, x2, y2, fill="grey")
+
         balloon = Pmw.Balloon()
         balloon.tagbind(canvas, rect, test[number].replace('  ', '').replace('}\n]','').replace('}',''))
         visual_to_node[rect] = element
@@ -304,8 +330,8 @@ def draw(query_plan, query):
 
     for element in all_operators:
         for child in element.children:
-            canvas.create_line(child.center[0], child.center[1] - RECT_HEIGHT / 2, element.center[0],
-                            element.center[1] + RECT_HEIGHT / 2, arrow = tk.LAST) 
+            canvas.create_line(child.center[0], child.center[1] - RECT_HEIGHT/2, element.center[0],
+                            element.center[1] + RECT_HEIGHT/2, arrow = tk.LAST) 
     
     root.mainloop()
 

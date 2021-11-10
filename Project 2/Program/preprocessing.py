@@ -35,7 +35,6 @@ class ConnectAndQuery():
             json.dump(self.query_plan, f, ensure_ascii=False, indent=4)
         
         parse_query_plan = (json.dumps(self.query_plan, sort_keys=False, indent=4))
-        print(parse_query_plan)
         # return json.dumps(self.query_plan, sort_keys=False, indent=4)
         return parse_query_plan
 
