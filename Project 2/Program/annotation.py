@@ -43,8 +43,6 @@ def build_plan(curr_op, json_plan):
     curr_op.operation = plan["Node Type"]
     curr_op.information = get_current_operator_info(plan)
 
-    print("operator, x1, y1, x2, y2, info:", curr_op.operation, curr_op.x1, curr_op.y1, curr_op.x2, curr_op.y2, curr_op.information)
-
     all_operators.append(curr_op)
 
     #   (x1, y1) ======================== (x2, y1)
@@ -71,8 +69,8 @@ def build_plan(curr_op, json_plan):
             for i in range(children_num):
                 x2 = curr_op.x1 - RECT_WIDTH + i*(4*RECT_WIDTH)
                 x1 = x2 - RECT_WIDTH
-                y1 = curr_op.y2 + RECT_HEIGHT
-                y2 = y1 + RECT_HEIGHT
+                y1 = curr_op.y2 + 120
+                y2 = y1 + 120
                 
                 child_op = Operator(x1, x2, y1, y2, "", "")
                 curr_op.add_child(child_op)
@@ -87,11 +85,11 @@ def get_current_operator_info(operator):
     duration = "\nDuration: " + str(data['Actual Total Time'] - data['Actual Startup Time']) + " ms"
     
     if node_type == 'Bitmap Heap Scan':
-        info = 'Peform ' + node_type +  ' on table ' + data['Relation Name'] + ' with filter ' + data['Filter']
+        info = 'Peform ' + node_type +  ', on table ' + data['Relation Name'] + ' with filter ' + data['Filter']
         info += duration
         
     elif node_type == 'Bitmap Index Scan':
-        info = 'Peform ' + node_type + ' on index ' + data['Index Name'] + ' with index condition ' + data['Index Cond']
+        info = 'Peform ' + node_type + ', on index ' + data['Index Name'] + ' with index condition ' + data['Index Cond']
         info += duration
     
     elif node_type == 'BitmapAnd':
@@ -105,9 +103,11 @@ def get_current_operator_info(operator):
     elif node_type == 'Aggregate':
         info = 'Perform ' + node_type
         if 'Group Key' in data:
-            info += ' with grouping on attribute(s) ' + ''.join(str(e) + " " for e in data['Group Key'])
+                info += ', with grouping on attribute(s) ' + ''.join(str(e) + ", " for e in data['Group Key'])
+        if 'Filter' in data:
+                info += ', with filter on ' + data['Filter']
         if 'Hash Key' in data:
-            info += ' with hashing on attribute(s) ' + ''.join(str(e) + " " for e in data['Hash Key'])
+            info += ', with hashing on attribute(s) ' + ''.join(str(e) + ", " for e in data['Hash Key'])
         info += duration
     
     elif node_type == 'Gather':
@@ -115,9 +115,9 @@ def get_current_operator_info(operator):
         info += duration
 
     elif node_type == 'Seq Scan':
-        info = 'Perform ' + node_type + ' on relation ' + data['Relation Name']
-        # info += data['Relation Name'] + '\n'
-        # info += 'Filter on ' + data['Filter'] + '\n'
+        info = 'Perform ' + node_type + ', on relation ' + data['Relation Name']
+        if 'Filter' in data:
+            info += ', with filter ' + data['Filter']
         info += duration
     
     elif node_type == 'Gather Merge':
@@ -125,7 +125,7 @@ def get_current_operator_info(operator):
         info += duration
     
     elif node_type == 'Sort':
-        info = 'Perform ' + node_type + ' on attribute(s) ' + ''.join(str(e) + ", " for e in data['Sort Key']) + ' using ' + data['Sort Method']
+        info = 'Perform ' + node_type + ', on attribute(s) ' + ''.join(str(e) + ", " for e in data['Sort Key']) + ' using ' + data['Sort Method']
         info += duration
 
     elif node_type == 'Limit':
@@ -133,19 +133,19 @@ def get_current_operator_info(operator):
         info += duration
 
     elif node_type == 'Nested Loop':
-        info = 'Perform ' + node_type + ' using join type ' + data['Join Type']
+        info = 'Perform ' + node_type + ', using join type ' + data['Join Type']
         info += duration
 
     elif node_type == 'Hash Join':
-        info = 'Perform ' + node_type + ' using join type ' + data['Join Type'] + ' with hash condition ' + data['Hash Cond']
+        info = 'Perform ' + node_type + ', using join type ' + data['Join Type'] + ', with hash condition ' + data['Hash Cond']
         info += duration
     
     elif node_type == 'Merge Join':
-        info = 'Perform ' + node_type + ' using join type ' + data['Join Type'] + ' with merge condition ' + data['Merge Cond']
+        info = 'Perform ' + node_type + ', using join type ' + data['Join Type'] + ', with merge condition ' + data['Merge Cond']
         info += duration
 
     elif node_type == 'Merge Append':
-        info = 'Perform ' + node_type + ' on attribute(s) ' + ''.join(str(e) + ", " for e in data['Sort Key'])
+        info = 'Perform ' + node_type + ', on attribute(s) ' + ''.join(str(e) + ", " for e in data['Sort Key'])
         info += duration
 
     elif node_type == 'Hash':
@@ -153,85 +153,85 @@ def get_current_operator_info(operator):
         info += duration
     
     elif node_type == 'HashAggregate':
-        info = 'Perform' + node_type
+        info = 'Perform ' + node_type
         if 'Group Key' in data:
-            info += ' with grouping on ' + ''.join(str(e) + ", " for e in data['Group Key'])
+            info += ', with grouping on ' + ''.join(str(e) + ", " for e in data['Group Key'])
         if 'Hash Key' in data:
-            info += ' with grouping on ' + ''.join(str(e) + " " for e in data['Hash Key'])
+            info += ', with grouping on ' + ''.join(str(e) + " " for e in data['Hash Key'])
         info += duration
     
     elif node_type == 'HashSetOp':
-        info = 'Perform' + node_type
+        info = 'Perform ' + node_type
         info += duration
 
     elif node_type == 'Index Scan':
-        info = 'Perform' + node_type + ' on index ' + data['Index Name'] + ' of relation ' + data['Relation Name'] + ' with index condition ' + data['Index Cond']
+        info = 'Perform ' + node_type + ', on index ' + data['Index Name'] + ', of relation ' + data['Relation Name'] + ', with index condition ' + data['Index Cond']
         info += duration
     
     elif node_type == 'Append':
-        info = 'Perform' + node_type
+        info = 'Perform ' + node_type
         info += duration
     
     elif node_type == 'CTE Scan':
-        info = 'Perform' + node_type + ' with filter on ' + data['Filter']
+        info = 'Perform ' + node_type + ', with filter on ' + data['Filter']
         info += duration
     
     elif node_type == 'Function Scan':
-        info = 'Perform' + node_type + ' with filter on ' + data['Filter']
+        info = 'Perform ' + node_type + ', with filter on ' + data['Filter']
         info += duration
     
     elif node_type == 'Group':
-        info = 'Perform' + node_type
+        info = 'Perform ' + node_type
         info += duration
     
     elif node_type == 'GroupAggregate':
-        info = 'Perform' + node_type
+        info = 'Perform ' + node_type
         info += duration
     
     elif node_type == 'Incremental Sort':
-        info = 'Perform' + node_type + ' on attribute(s) ' + ''.join(str(e) + ", " for e in data['Sort Key']) + ' using sort method ' + data['Sort Method']
+        info = 'Perform ' + node_type + ', on attribute(s) ' + ''.join(str(e) + ", " for e in data['Sort Key']) + ' using sort method ' + data['Sort Method']
         info += duration
     
     elif node_type == 'Materialize':
-        info = 'Perform' + node_type
+        info = 'Perform ' + node_type
         info += duration
 
     elif node_type == 'ModifyTable':
-        info = 'Perform' + node_type + ' on relation ' + data['Relation Name'] 
+        info = 'Perform ' + node_type + ', on relation ' + data['Relation Name'] 
         info += duration
     
     elif node_type == 'Recursive Union':
-        info = 'Perform' + node_type
+        info = 'Perform ' + node_type
         info += duration
 
     elif node_type == 'Result':
-        info = 'Perform' + node_type
+        info = 'Perform ' + node_type
         info += duration
 
     elif node_type == 'SetOp':
-        info = 'Perform' + node_type
+        info = 'Perform ' + node_type
         info += duration
     
     elif node_type == 'Subquery Scan':
-        info = 'Perform' + node_type + ' with filter ' + data['Filter']
+        info = 'Perform ' + node_type + ', with filter ' + data['Filter']
         info += duration
 
     elif node_type == 'TID Scan':
-        info = 'Perform' + node_type + ' on relation ' + data['Relation Name']
+        info = 'Perform ' + node_type + ', on relation ' + data['Relation Name']
         if 'Tid Cond' in data:
             info += ' with TID Cond ' + data['Tid Cond']
         info += duration
     
     elif node_type == 'Unique':
-        info = 'Perform' + node_type
+        info = 'Perform ' + node_type
         info += duration
     
     elif node_type == 'Values Scan':
-        info = 'Perform' + node_type
+        info = 'Perform ' + node_type
         info += duration
     
     elif node_type == 'WorkTable Scan':
-        info = 'Perform' + node_type + ' with filter ' + data['Filter']
+        info = 'Perform ' + node_type + ', with filter ' + data['Filter']
         info += duration
 
     return info
@@ -251,7 +251,7 @@ def draw(query_plan, query):
     data = json.loads(query_plan)
     all_operators.clear()
 
-    root_op = Operator(0, 0+RECT_WIDTH, 0, 0+RECT_HEIGHT, "", "")    #CANVAS_WIDTH = 1000, RECT_HEIGHT = 60, CENTER = (500, 35)
+    root_op = Operator(500, 500+RECT_WIDTH, 0, 0+RECT_HEIGHT, "", "")    #CANVAS_WIDTH = 1000, RECT_HEIGHT = 60, CENTER = (500, 35)
     build_plan(root_op, data)
 
     root = tk.Tk()
@@ -314,9 +314,6 @@ def draw(query_plan, query):
 
     tk.Misc.lift(button)
 
-    number = 1
-    test = query_plan.replace('"Plans": [', '').split("{")
-
     # 3 different for loops are needed for logical binding of rectangles in the node_list
     for element in all_operators:
         # x = element.center[0]
@@ -334,7 +331,6 @@ def draw(query_plan, query):
         balloon = Pmw.Balloon()
         balloon.tagbind(canvas, rect, element.information)
         visual_to_node[rect] = element
-        number+=1
 
     for element in all_operators:
         gui_text = canvas.create_text((element.center[0], element.center[1]), text=element.operation, tags="clicked")
