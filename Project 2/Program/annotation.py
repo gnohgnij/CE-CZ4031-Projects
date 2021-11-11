@@ -2,13 +2,11 @@
 contains code for generating the annotations
 """
 import json
-from tkinter.constants import BOTTOM, E, SUNKEN, X
 import tkinter as tk
 import Pmw
 
 #
 # GLOBAL VARIABLES
-# Drawing Query Plan Starts Here
 #
 
 RECT_WIDTH = 200
@@ -18,8 +16,6 @@ CANVAS_HEIGHT = 1000
 
 all_operators = []
 visual_to_node = {}
-instance = None
-MAX_DURATION=0
 
 # Information of rectangle
 class Operator:
@@ -38,7 +34,6 @@ class Operator:
         self.children.append(child)
 
 def build_plan(curr_op, json_plan):
-    # plan = json.load(json_plan)
     plan = json_plan
     curr_op.operation = plan["Node Type"]
     curr_op.information = get_current_operator_info(plan)
@@ -51,7 +46,7 @@ def build_plan(curr_op, json_plan):
     #            |                      |
     #   (x1, y2) ======================== (x2, y2)
 
-    #check if they are child plans
+    #check if there are child plans
     if "Plans" in plan:
         children_num = len(plan["Plans"])
         if(children_num == 1):
@@ -257,7 +252,7 @@ def draw(query_plan, query):
     root = tk.Tk()
     root.state("zoomed")
     root.title("CX4031 Project 2 GUI")
-    frame = tk.Frame(root, width = 1000, height = 1200, bg="yellow")
+    frame = tk.Frame(root, width = 1000, height = 1200)
     frame.pack(expand=True, fill="both")
 
     def close():
@@ -314,7 +309,7 @@ def draw(query_plan, query):
 
     tk.Misc.lift(button)
 
-    # 3 different for loops are needed for logical binding of rectangles in the node_list
+    # store unique coordinates
     unique_coordinates = []
     for element in all_operators:
         coordinates = (element.x1, element.x2, element.y1, element.y2)
@@ -327,46 +322,31 @@ def draw(query_plan, query):
             new_coor = (element.x1, element.x2, element.y1, element.y2)
             unique_coordinates.append(new_coor)
 
+    # create rectangles
     for element in all_operators:
-        # x = element.center[0]
-        # y = element.center[1]
-        # rect = canvas.create_rectangle(x - RECT_WIDTH/2, y - RECT_HEIGHT/2, x + RECT_WIDTH/2, y + RECT_HEIGHT/2,
-        #                             fill='grey')    #create_rectangle(x1, y1, x2, y2, **kwargs), (x1, y1) - top left, (x2, y2) - bottom right
         x1 = element.x1
         x2 = element.x2
         y1 = element.y1
         y2 = element.y2
         rect = canvas.create_rectangle(x1, y1, x2, y2, fill="grey")
 
+        # create tooltip
         balloon = Pmw.Balloon()
         balloon.tagbind(canvas, rect, element.information)
         visual_to_node[rect] = element
 
+    # create text on rectangles
     for element in all_operators:
-        gui_text = canvas.create_text((element.center[0], element.center[1]), text=element.operation, tags="clicked")
+        gui_text = canvas.create_text((element.center[0], element.center[1]), text=element.operation)
         visual_to_node[gui_text] = element
 
+    # create arrows
     for element in all_operators:
         for child in element.children:
             canvas.create_line(child.center[0], child.center[1] - RECT_HEIGHT/2, element.center[0],
                             element.center[1] + RECT_HEIGHT/2, arrow = tk.LAST) 
     
     root.mainloop()
-
-def enter(event,canvas):
-    node = visual_to_node[event.widget.find_withtag("current")[0]]
-    global instance
-    if node.duration == MAX_DURATION:
-        instance = canvas.create_text(200, 50, text=node.information,
-                                      fill="red", width=350)
-    else:
-        instance = canvas.create_text(200, 50, text=node.information,
-                                      fill="blue", width=350)
-
-def leave(event,canvas):
-    canvas.delete(instance)
-
-
 
 if __name__ == '__main__':
 

@@ -29,13 +29,8 @@ class ConnectAndQuery():
 
         else:
             self.query_plan = "Failed to generate query plan!"
-
-        #easier to see, can take out later
-        with open('query_plan.json', 'w', encoding='utf-8') as f:
-            json.dump(self.query_plan, f, ensure_ascii=False, indent=4)
         
         parse_query_plan = (json.dumps(self.query_plan, sort_keys=False, indent=4))
-        # return json.dumps(self.query_plan, sort_keys=False, indent=4)
         return parse_query_plan
 
 if __name__ == '__main__':
