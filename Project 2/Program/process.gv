@@ -1,5 +1,0 @@
-graph G {
-	Aggregate -- Gather
-	Gather -- Aggregate
-	Aggregate -- "Seq Scan"
-}
