@@ -69,8 +69,8 @@ def build_plan(curr_op, json_plan):
             for i in range(children_num):
                 x2 = curr_op.x1 - RECT_WIDTH + i*(4*RECT_WIDTH)
                 x1 = x2 - RECT_WIDTH
-                y1 = curr_op.y2 + 120
-                y2 = y1 + 120
+                y1 = curr_op.y2 + RECT_HEIGHT
+                y2 = y1 + RECT_HEIGHT
                 
                 child_op = Operator(x1, x2, y1, y2, "", "")
                 curr_op.add_child(child_op)
@@ -315,13 +315,23 @@ def draw(query_plan, query):
     tk.Misc.lift(button)
 
     # 3 different for loops are needed for logical binding of rectangles in the node_list
+    unique_coordinates = []
+    for element in all_operators:
+        coordinates = (element.x1, element.x2, element.y1, element.y2)
+        if coordinates not in unique_coordinates:
+            unique_coordinates.append(coordinates)
+        else:
+            element.x1 += 3*RECT_WIDTH/2
+            element.x2 += 3*RECT_WIDTH/2
+            element.center = ((element.x1+element.x2)/2,(element.y1+element.y2)/2)
+            new_coor = (element.x1, element.x2, element.y1, element.y2)
+            unique_coordinates.append(new_coor)
+
     for element in all_operators:
         # x = element.center[0]
         # y = element.center[1]
         # rect = canvas.create_rectangle(x - RECT_WIDTH/2, y - RECT_HEIGHT/2, x + RECT_WIDTH/2, y + RECT_HEIGHT/2,
         #                             fill='grey')    #create_rectangle(x1, y1, x2, y2, **kwargs), (x1, y1) - top left, (x2, y2) - bottom right
-
-
         x1 = element.x1
         x2 = element.x2
         y1 = element.y1
