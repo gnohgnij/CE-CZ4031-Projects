@@ -85,7 +85,7 @@ def get_current_operator_info(operator):
     duration = "\nDuration: " + str(data['Actual Total Time'] - data['Actual Startup Time']) + " ms"
     
     if node_type == 'Bitmap Heap Scan':
-        info = 'Peform ' + node_type +  ', on table ' + data['Relation Name'] + ' with filter ' + data['Filter']
+        info = 'Peform ' + node_type +  ', on table ' + data['Relation Name'] + ' with filter ' + data['Filter'].replace("AND", "AND \n")
         info += duration
         
     elif node_type == 'Bitmap Index Scan':
@@ -105,7 +105,7 @@ def get_current_operator_info(operator):
         if 'Group Key' in data:
                 info += ', with grouping on attribute(s) ' + ''.join(str(e) + ", " for e in data['Group Key'])
         if 'Filter' in data:
-                info += ', with filter on ' + data['Filter']
+                info += ', with filter on ' + data['Filter'].replace("AND", "AND \n")
         if 'Hash Key' in data:
             info += ', with hashing on attribute(s) ' + ''.join(str(e) + ", " for e in data['Hash Key'])
         info += duration
@@ -117,7 +117,7 @@ def get_current_operator_info(operator):
     elif node_type == 'Seq Scan':
         info = 'Perform ' + node_type + ', on relation ' + data['Relation Name']
         if 'Filter' in data:
-            info += ', with filter ' + data['Filter']
+            info += ', with filter ' + data['Filter'].replace("AND", "AND \n")
         info += duration
     
     elif node_type == 'Gather Merge':
@@ -173,11 +173,11 @@ def get_current_operator_info(operator):
         info += duration
     
     elif node_type == 'CTE Scan':
-        info = 'Perform ' + node_type + ', with filter on ' + data['Filter']
+        info = 'Perform ' + node_type + ', with filter on ' + data['Filter'].replace("AND", "AND \n")
         info += duration
     
     elif node_type == 'Function Scan':
-        info = 'Perform ' + node_type + ', with filter on ' + data['Filter']
+        info = 'Perform ' + node_type + ', with filter on ' + data['Filter'].replace("AND", "AND \n")
         info += duration
     
     elif node_type == 'Group':
@@ -213,7 +213,7 @@ def get_current_operator_info(operator):
         info += duration
     
     elif node_type == 'Subquery Scan':
-        info = 'Perform ' + node_type + ', with filter ' + data['Filter']
+        info = 'Perform ' + node_type + ', with filter ' + data['Filter'].replace("AND", "AND \n")
         info += duration
 
     elif node_type == 'TID Scan':
@@ -231,7 +231,7 @@ def get_current_operator_info(operator):
         info += duration
     
     elif node_type == 'WorkTable Scan':
-        info = 'Perform ' + node_type + ', with filter ' + data['Filter']
+        info = 'Perform ' + node_type + ', with filter ' + data['Filter'].replace("AND", "AND \n")
         info += duration
 
     return info
